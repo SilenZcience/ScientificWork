@@ -1,0 +1,30 @@
+\documentclass{report}
+
+\input{preamble}
+
+\begin{document}
+
+\title{\Huge{Social Engineering}}
+\author{Silas A. Kraume}
+\date{\today}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+    "Surveys, like Verizon's “Data Breach Investigations Report 2012” [2], state that SE threatens not only companies and government agencies, but also individuals (mostly regarding identity fraud)."\cite{7_mdpi}
+\end{abstract}
+
+\include{chapter_1}
+\include{chapter_2}
+\include{chapter_3}
+\include{chapter_4}
+\include{chapter_5}
+\include{chapter_6}
+
+\addcontentsline{toc}{bibliography}{\bibname}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

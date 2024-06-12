@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE IMPORTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{graphicx, float}
+\graphicspath{{res/}}
+\usepackage{tikz}     % tableofcontents
+\usepackage{titletoc} % tableofcontents
+\usepackage{mathptmx}
+\usepackage[skip=0.8em, indent=0pt]{parskip}
+
+\usepackage[hidelinks]{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODIFIED COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\renewcommand{\abstractname}{Zusammenfassung}
+\renewcommand{\contentsname}{Inhalt}
+\newcommand{\replacechaptername}{Kapitel}
+\renewcommand{\chaptername}{\replacechaptername}
+\renewcommand{\bibname}{Quellenverzeichnis}
+\newcommand{\replacepagename}{Seite}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SELF MADE COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\definecolor{doc}{RGB}{0,60,110}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\contentsmargin{0cm}
+\titlecontents{chapter}[3.7pc]
+{\addvspace{30pt}
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw[fill=doc!60,draw=doc!60] (-7,-.1) rectangle (-0.9,.5);
+		\pgftext[left,x=-3.5cm,y=0.2cm]{\color{white}\Large\sc\bfseries \replacechaptername\ \thecontentslabel};
+	\end{tikzpicture}\color{doc!60}\large\sc\bfseries}
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries \replacepagename\space\thecontentspage
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw[fill=doc!60,draw=doc!60] (2pt,0) rectangle (4,0.1pt);
+	\end{tikzpicture}}
+\titlecontents{section}[3.7pc]
+{\addvspace{2pt}}
+{\contentslabel[\thecontentslabel]{2pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[4.7pc]
+{\addvspace{-1pt}\small}
+{}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{bibliography}[3.7pc]
+{\addvspace{30pt}
+	\color{doc!60}\large\sc\bfseries}
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries \replacepagename\space\thecontentspage
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw[fill=doc!60,draw=doc!60] (2pt,0) rectangle (4,0.1pt);
+	\end{tikzpicture}}
+
+\makeatletter
+\renewcommand{\tableofcontents}{
+	\chapter*{
+	  \vspace*{-20\p@}
+	  \begin{tikzpicture}[remember picture, overlay]
+		  \pgftext[right,x=15cm,y=0.2cm]{\color{doc!60}\Huge\sc\bfseries \contentsname};
+		  \draw[fill=doc!60,draw=doc!60] (13.5,-.75) rectangle (20,1);
+		  \clip (13.5,-.75) rectangle (20,1);
+		  \pgftext[right,x=15cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};
+	  \end{tikzpicture}}
+	\@starttoc{toc}}
+\makeatother
+
