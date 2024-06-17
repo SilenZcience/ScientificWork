@@ -1,59 +1,139 @@
-\chapter{Konsequenzen}
+\chapter{Social Engineering Angriffe}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=.5]{Barracuda_Social.Engineering.Attacks.png}
-    \caption{Barracuda - Social Engineering Attacks}
-\end{figure}
+\section{Klassifikation}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=5in]{IBM_Data.Breach.Report.png}
-    \caption{IBM - Measured in USD millions}
-\end{figure}
-Avg. Kosten pro Breach (2022)
-
-\newpage
-
-"Actor Motives Financial (89\%), Espionage (11\%) (breaches)"\cite{9_verizon}
-"Actor Motives Financial (95\%), Espionage (5\%) (breaches)"\cite{8_verizon}
-
-conversation hijacking wenig ,denn verlangt etwas erfolg bei vorherigen angriffen.
-z.b. folgt onversation hijacking oftmals auf account takeover.
-
-"Hackers are starting to increasingly use phishing as part of their
-ransomware attacks."\cite{3_barracuda}
-
-"Extortion attacks make up only 2\% of the total number of
-targeted phishing attacks we have seen in the past year. These
-attacks were mostly sextortion email threats, where hackers
-threaten to expose sensitive or embarrassing content to their
-victim’s contacts unless a ransom is paid. Demands are usually
-a few hundred or a few thousand dollars and need to be paid
-in bitcoin, which is difficult to trace. In the UK, the number of
-sextortion cases reported to National Crime Agency increased
-by 88\% between 2018 and 2020, and the number is expected to
-continue to increase"\cite{3_barracuda} stand 2021
-stand 2024: Extortion: ($\sim$ 25\%) \cite{8_verizon}
-Darunter fällt auch Ransomware
-
-Pretexting: 2022 (27\%), 2024 (more than 40\%)
-Phishing: 2022 ($\sim$ 70\%), 2024 (31\%)\cite{8_verizon,9_verizon}
-
-"Account takeover is a form of identity theft and fraud where a
-malicious third party successfully gains access to a user’s account
-credentials"\cite{3_barracuda}
-"Account takeover is one of the fastest growing threats. In 2021,
-roughly 1 in 5 organizations (20\%) had at least one of their
-Microsoft 365 accounts compromised. This means that in 2021
-hackers managed to compromise around 500,000 Microsoft 365
-accounts around the globe."\cite{3_barracuda}
-
-Social Engineering MTTI (Mean Time To Identify): 218 Days
-Social Engineering MTTC (Mean Time To Contain) :  80 Days\cite{6_ibmsecurity}
+Stages of Social Engineering:
+"Although social engineering attacks differ from each other, they have a common pattern with similar phases.
+The common pattern involves four phases: (1) collect information about the target; (2) develop relationship with
+the target; (3) exploit the available information and execute the attack; and (4) exit with no traces"\cite{4_mdpi}
 
 
-\section{Beispiele}
+"Die Kommunikation über digitale Kanäle wie E-Mail bietet ein besonders günstiges Umfeld für Social Engineering.
+Während der Täter sein Gegenüber in einer realen Gesprächssituation über alle Sinne hinweg täuschen muss, hat er
+es bei der technisch vermittelten Kommunikation deutlich einfacher"\cite{2_bsi}
 
-verweis auf film etc \dots
-und trojanisches pferd, etc \dots
+we first need to take a look how to classify \dots
+
+
+
+\section{Klassifikation}
+
+"either by using psychological manipulation to get further access to an IT system where the actual objective of
+the scammer resides, e.g. impersonating an important client via a phone call to lure the target into browsing a
+malicious website to infect the target's workstation"\cite{1_enisa}
+"or using IT technologies as support to psychological manipulation techniques to achieve an objective outside
+the IT realm, e.g. obtaining banking credentials via a phishing attack to then steal the target's money."\cite{1_enisa}
+
+depending on what entity is involved:
+"Social engineering attacks can be classified into two categories: human-based or computer-based"\cite{4_mdpi}
+"In human-based attacks, the attacker executes the attack in person by interacting with the target to gather desired information."\cite{4_mdpi}
+"The software-based attacks are performed using devices such as computers or mobile phones to get information from the targets."\cite{4_mdpi}
+
+how the attack is conducted:
+"Social engineering attacks can also be classified into three categories, according to how the attack is conducted:
+social, technical, and physical-based attacks"\cite{4_mdpi}
+"Social-based attacks are performed through relationships with the victims to play on their psychology and emotion. These attacks are
+the most dangerous and successful attacks as they involve human interactions"\cite{4_mdpi} -> baiting, spear fishing
+"Technical-based attacks are conducted through internet via social networks and online services websites and they gather desired
+information such as passwords, credit card details, and security questions"\cite{4_mdpi}
+"Physical-based attacks refer to physical actions performed by the attacker to collect information about the target. An example
+of such attacks is searching in dumpsters for valuable documents"\cite{4_mdpi}
+
+
+
+\section{Techniken}
+
+
+"Pretexting
+This technique involves the use of a pretext -  a false justification for a specific course of action - to gain
+trust and trick the victim.
+Example: the attacker claims to work for IT support and requests the target's password for maintenance purposes."\cite{1_enisa}
+
+"Pretexting Attacks
+Pretexting attacks consist of inventing fake and convincing scenarios in order to steal a victim’s personal information.
+They are based on pretexts that make the victim believe and trust the attacker [27]. The attack is performed via phone calls,
+emails, or physical media. Attackers use publishing information on phone books, public web pages, or conferences where collaborators
+in the same field meet to carry out their attack. The pretext may be an offer to perform a service or to get a job,
+asking about personal information, helping a friend to get access to something, or winning a lottery."\cite{4_mdpi}
+
+"Baiting
+Baiting involves luring the victim into performing a specific task by providing easy access to something the victim wants.  
+Example: a USB flash drive infected with a keylogger and labelled "My private pics" left on the victim's doorstep."\cite{1_enisa}
+
+"Baiting Attacks
+Baiting attacks, also called road apples, are phishing attacks that invite users to click on a link to get free stuff.
+They act like trojan horses where the attack is performed by exploiting unsecured computer materials such as storage media
+or USB drives containing malware in a coffee shop to be found by victims. When the victims plug the USB drive into their computers,
+the drive acts like a real world trojan horse and attacks the computer. This attack performs malicious actions in the background
+without being noticed by the victims.
+In [7], the authors described a baiting attack named controller area network (CANDY) to be launched as a trojan horse in
+the infotainment system of automotive systems. This attack impacts the security capabilities of the vehicle by manipulating the
+communication between the driver and the vehicle. It is performed by recording the driver’s voice which lets the attacker remotely
+access the victim’s vehicle via back door, collect information about the vehicle circulation, and control the operation of the vehicle."\cite{4_mdpi}
+
+"Quid pro quo
+Quid Pro Quo, "something for something" in Latin, involves a request for information in exchange for a compensation.
+Example: the attacker asks the victim's password claiming to be a researcher doing an experiment, in exchange for money."\cite{1_enisa}
+
+piggybacking:
+"Tailgating
+Tailgating is the act of following an authorised person into a restricted area or system.
+Example: the attacker, dressed as an employee, carries a large box and convinces the victim, who is an authorised employee
+entering at the same time, to open the door of the data-centre using the victim's RFID pass."\cite{1_enisa}
+
+"Tailgating Attacks
+Tailgating attacks, also called piggybacking or physical access, consist of accessing an area or building by following someone
+who has the security clearance to that place. They allow attackers access unauthorized buildings. For example, attackers ask a
+victim to hold the door open because they forgot their company’ ID card or RFID (radio-frequency identification) card. They can als
+borrow a computer or cellphone to perform malicious activities such as installing malware software [14].
+For instance, RFID cards attacks are one of the most used attacks to access forbidden spaces for malicious purposes. Due to their
+wide utilization and low cost, RFID systems are considered as the most emerging technology used by companies to control the access to
+their facilities. Despite their advantages, they have vulnerabilities that can be exploited to cause serious security issues to companies.
+RFID attacks can be performed over several layers of the interconnection system model (ISO) [28]. For instance, at the physical layer, the
+RFID devices and the physical interface are targeted to manipulate an RFID communication. These attacks can cause temporary or permanent damage
+of the RFID cards. At the network layer level, the attacker manipulates the RFID network such as the communication between the RFID entities and
+data exchange between these entities."\cite{4_mdpi}
+
+"Reverse Social Engineering Attacks
+Reverse social engineering attackers claim to solve a network’s problem. This involves three main steps: causing a problem such as crashing the network;
+advertising that the attacker is the only person to fix that problem; solving the problem while getting the desired information and leaving without being detected"\cite{4_mdpi}
+
+Pop-Up Windows
+Pop-up window attacks refer to windows appearing on the victim’s screen informing the connection is lost [35]. The user reacts by re-entering the login information
+ which runs a malicious program already installed with the window appearance. This program remotely forwards back the login information to the attacker. For instance,
+ pop-ups can be alert messages showing up randomly for online advertising to lure the victim in clicking on that window. Pop-ups also can be fake messages alerting about
+ a virus detection in the victim’s computer. The pop up will prompt the victim to download and install the suggested anti-virus software to protect the computer. They can
+ also be fake alerts stating that the computer storage is full and that it needs to be scanned and cleaned to save more space [35]. The victim panics and reacts quickly in
+ order to fix the problem, which activates the malware software carried in the pop-up window."\cite{4_mdpi}
+
+"Phone/Email Scams Attacks
+For this type of attacks, the attacker contacts the victim via phone or email seeking specific information or promising a prize or free merchandise.
+They aim at influencing the victim to break the security rules or to provide personal information. Moreover, cellphone-based attacks can be performed
+via calls and via short messaging services (SMS) or text messages, which are known as SMSishing attacks [35]. SMSishing attacks consist of sending fraudulent
+messages and texts via cell phones to victims to influence them. They are similar to phishing attacks but they are performed in different ways. The efficiency of
+the SMSishing attacks resides in the fact that victims can carry their cellphones anywhere and anytime. A received text message can include a malware even if it was
+sent from trusted and known transmitter. The malware works as a background process installing backdoors for attackers to have access to information such as contact list,
+messages, personal email, photos, notes, applications, and calendar. The scammer can install a root kit to control the cellphone completely [20]."\cite{4_mdpi}
+
+"Robocalls Attacks
+Robocall attacks have recently emerged as massive calls coming from computers to targeted persons with known phone numbers. They target cellphones, residential,
+and work phones. A robocall is a device or computer program that automatically dials a list of phone numbers to deliver prerecorded messages. It is mainly based on
+voice over the internet protocol (VoIP) to ensure several VoIP functions such as interactive voice response and text to speech [36]. These calls can be about offering
+or selling services or solving problems. Helping to solve tax problems is a very known example of attack that has risen in intensity in recent years. In general, when
+a victim answers the call, the phone number is stored in the attacker’s database. Even after blocking these calls, attackers’ systems call from other numbers. Robocall
+attacks have become a serious problem in the USA and other countries. The only way for people to stop these calls is by not answering unknown phone numbers."\cite{4_mdpi}
+
+"51\% of social engineering attacks are phishing"\cite{3_barracuda}
+"Microsoft is the most impersonated brand, used in 57\% of phishing attacks"\cite{3_barracuda}
+
+"That leads to a frightening
+finding: The median time for
+users to fall for phishing emails
+is less than 60 seconds. "\cite{verizon2024}
+
+Phishing, Baiting, Pretexting, Tailgating, Ransomware, impersonating on help desk, diversion theft, dumpster diving,
+shoulder surfing, quid pro quo, pup-up windows, robocalls, reverse social engineering, online social engineering, phone social engineering,
+stealing important documents, fake software, pharming, SMSishing, Whitelisting following
+ScareWare, Watering-Hole, honeytraps, whaling, smishing, quishing, tishing, vishing, wishing, pharming, snowshoeing
+
+
