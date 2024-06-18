@@ -1,139 +1,77 @@
-\chapter{Social Engineering Angriffe}
+\chapter{Maßnahmen}
 
-\section{Klassifikation}
+"Proper identification and authentication processes, policies and trainings should be in place to circumvent such attacks."\cite{1_enisa}
+bzg Pretexting
 
-Stages of Social Engineering:
-"Although social engineering attacks differ from each other, they have a common pattern with similar phases.
-The common pattern involves four phases: (1) collect information about the target; (2) develop relationship with
-the target; (3) exploit the available information and execute the attack; and (4) exit with no traces"\cite{4_mdpi}
+"Security policies such as an air gap and the blocking of non-authorised software and hardware will thwart most attempts,
+though staff should also be reminded not to trust unknown sources."\cite{1_enisa}
+bzg Baiting
 
+"Quid pro quo attacks are relatively easy to detect given the asymmetrical value of the information compared to the compensation,
+which is opposite for the attacker and the victim. In these cases the best countermeasure remains the victim integrity and ability to identify, ignore and report."\cite{1_enisa}
+bzg Quid pro quo
 
-"Die Kommunikation über digitale Kanäle wie E-Mail bietet ein besonders günstiges Umfeld für Social Engineering.
-Während der Täter sein Gegenüber in einer realen Gesprächssituation über alle Sinne hinweg täuschen muss, hat er
-es bei der technisch vermittelten Kommunikation deutlich einfacher"\cite{2_bsi}
-
-we first need to take a look how to classify \dots
-
-
-
-\section{Klassifikation}
-
-"either by using psychological manipulation to get further access to an IT system where the actual objective of
-the scammer resides, e.g. impersonating an important client via a phone call to lure the target into browsing a
-malicious website to infect the target's workstation"\cite{1_enisa}
-"or using IT technologies as support to psychological manipulation techniques to achieve an objective outside
-the IT realm, e.g. obtaining banking credentials via a phishing attack to then steal the target's money."\cite{1_enisa}
-
-depending on what entity is involved:
-"Social engineering attacks can be classified into two categories: human-based or computer-based"\cite{4_mdpi}
-"In human-based attacks, the attacker executes the attack in person by interacting with the target to gather desired information."\cite{4_mdpi}
-"The software-based attacks are performed using devices such as computers or mobile phones to get information from the targets."\cite{4_mdpi}
-
-how the attack is conducted:
-"Social engineering attacks can also be classified into three categories, according to how the attack is conducted:
-social, technical, and physical-based attacks"\cite{4_mdpi}
-"Social-based attacks are performed through relationships with the victims to play on their psychology and emotion. These attacks are
-the most dangerous and successful attacks as they involve human interactions"\cite{4_mdpi} -> baiting, spear fishing
-"Technical-based attacks are conducted through internet via social networks and online services websites and they gather desired
-information such as passwords, credit card details, and security questions"\cite{4_mdpi}
-"Physical-based attacks refer to physical actions performed by the attacker to collect information about the target. An example
-of such attacks is searching in dumpsters for valuable documents"\cite{4_mdpi}
+"Access to non public areas should be controlled by access policies and/or the use of access control technologies, the more sensitive the area the stricter the combination.
+Th[e] obligation to wear a badge, the presence of a guard and actual anti-tailgating doors such as mantraps with RFID access control should be sufficient to deter most attackers."\cite{1_enisa}
+bzg Tailgating
 
 
 
-\section{Techniken}
+
+\section{Erkennung}
+
+"n order to detect and prevent these attacks, a number of techniques have been proposed. A list of defense procedures for social-engineering attacks include: encouraging security
+education and training, increasing social awareness of social-engineering attacks, providing the required tools to detect and avoid these attacks, learning how to keep
+confidential information safe, reporting any suspected activity to the security service, organizing security orientations for new employees, and advertising attacks’ risks to
+all employees by forwarding sensitization emails and known fraudulent emails [40]."\cite{4_mdpi}
+
+\section{Vorbeugung}
+
+"In order to detect attacks via phone calls, it is necessary to verify the source of calls using a recording contacts’ list, being aware of unexpected and unsolicited calls, asking to call back, or asking questions with private answers to check the caller’s identity. The most effective way to stop these attacks is by not answering these calls. For help desk attacks, assigning PINs to known callers prevents malicious calls [41]. The help desk is required to stick to the scope while performing a call request. For email-based attacks, some companies use the honeypot email addresses, also called spamtraps, to collect and publish the spams to employees. When an email is sent from one of the spamtraps list, the server considers it as malicious and bans it temporarily. Other procedures that can be done include: verifying emails’ sources before clicking on a link or opening an attachment, examining the emails header, calling the known sender if suspicious, and discarding emails with quick rich or prize-winning announcements.
+For phishing attacks, anti-phishing tools have been proposed to blacklist and block phishing websites. Examples of these tools are McAfee anti-phishing filter, Microsoft phishing filter, and Web sense [42,43]. In [44], the authors proposed to teach students how the spear phishing attack is performed by learning by doing. They developed a framework in which students learn how phishing emails work by performing attacks on a virtual company. After gathering all the possible information from the company’s website, the students launched phishing emails to simulated employees and then scanned all the received emails to decide about their nature.
+In [45], the authors proposed a detection technique based on machine learning algorithms. This technique is based on unsupervised learning, in which there is no past knowledge about the observed attacks. The authors compared the performance of six machine learning algorithms for detecting phishing attacks in terms of speed, reliability, and accuracy: support vector machine, biased support vector machine, artificial neural networks, scaled conjugate gradient, and self-organizing map. They showed that the support vector machine algorithm achieves better results compared to the other algorithms. In [22], the authors proposed a method to detect the credential spear phishing attacks in enterprise sittings. The proposed detection method, called anomaly detection (DAS), performs by analyzing the potential characteristics to the spear phishing attacks in order to derive a number of features used by the attacker. It is a non-parametric anomaly scoring method used for ranking alerts.
+For tailgating attacks, they may be prevented by training employees to never give access to someone without badge with no exceptions and requiring locks and IDs for all employees [35]. For shoulder surfing attacks, individuals are required to be more aware of what is around them, including persons or cameras when they enter sensitive information. For dumpster diving attacks, sensitive discarded documents and materials must be completely destroyed using shredders, memory devices must be secured or erased, and important files must be locked securely and not left for easy access.
+Trojan-based attacks may be prevented by refusing to let someone use other people personal or work computers, using an antivirus for USB scanning before opening it and following the antivirus instructions and warning, examining any unexpected mailing packages, and not picking up and using found digital medias. To prevent fake software attacks, individuals need to check carefully the screen and verify if the software window is legitimate as real websites have always something special than the fake ones. Anti-virus may be limited by human unawareness; they may catch these attacks and send warnings, which most users ignore by closing the window and move on. Other preventions can be considered including verifying if the website has the https logo, not click before examining the URL, and update regularly the computer’s operating system and security software.
+Some security organizations encourage companies to adopt the defense in depth strategy to monitor their network and prepared themselves for possible attacks while neglecting the human aspect. In [46], the authors proposed to identify the requirements of an anti-social engineering attacks framework capable of analyzing and mitigating attack risks. They developed a new layered defense technique named Social Engineering Centered Risk Assessment (SERA). SERA starts by identifying the critical assets to evaluate the company’s information for the next step. Then, each asset is placed in a container and the corresponding social engineering attack vectors are identified. Probability of attack realization is driven by local security experts and the risk analysis is obtained.
+In [47], the authors proposed a flow whitelisting approach to enhance the network security inside companies. The flow whitelisting approach aims at identifying legitimate traffic from malicious traffic coming to the company’s network. Four properties are used to identify these whitelists: address of the client, address of the server, port number of the server, and the protocol used for the traffic transport. The proposed approach is performed by capturing the network’s traffic at a predefined period of time and aggregating that traffic into flows when that traffic is identified as legitimate. It is based on learning to distinguish legitimate traffic from malicious traffic and generating alarms in case of an observed malicious traffic. In [34], the authors proposed a new approach called TabShots to distinguish between legitimate pages from malicious pages. The TabShots is an extension installed in the browser that compares the appearance of the webpages and highlights any observed changes to excite the attention of the user before proceeding.
+In [48], the authors discussed the problem of formalizing actions that are a result of social engineering attacks. They proposed to model these actions through probabilities and graphical models such as Bayesian models. They analyzed the user’s profile to estimate its vulnerabilities and psychological features. Estimating the protection of a user profile against an attack is obtained through four elements: psychological features (F), critical vulnerabilities (V), attack’s actions (A), and user’s accountability at successful attacks (C). In [49], the authors proposed to analyze the human’s behaviors and perceptions to cope with social engineering attacks. They aim at understanding human weaknesses in being deceived easily by attackers and defining factors and features that influence the human abilities to detect attacks. They also aim at identifying vulnerable users by building a user profile that focuses on security education and training programs.
+In [50], the authors evaluated the susceptibility to cybersecurity attacks in cooperative organizations in order to assess the consciousness of social engineering attacks of employees. By performing an attack against the organization based on the available information on the organization’s website, employees reacted to the attack in different ways with different awareness degrees. These results were then benchmarked to establish the organization awareness in terms of ignoring the attack and being tricked or recognizing the attack and appropriately responding to it. Attack victims were then directed to intensive training. In [51], a social engineering awareness program (SEAP) was developed for schools aiming at increasing students’ awareness by providing significant education and training in early age."\cite{4_mdpi}
+
+"Nevertheless, the single most efficient countermeasure to social engineering attacks remains common sense. In this light, ENISA recommend the following: 
+
+frequent awareness campaigns: posters, presentations, emails, information notes;
+staff training and exercising;
+penetration tests to determine an organisation's susceptibility to social engineering attacks, reporting and acting upon the results."\cite{1_enisa}
 
 
-"Pretexting
-This technique involves the use of a pretext -  a false justification for a specific course of action - to gain
-trust and trick the victim.
-Example: the attacker claims to work for IT support and requests the target's password for maintenance purposes."\cite{1_enisa}
+"Use multi-factor authentication. Multi-factor authentication,
+also called MFA, two-factor authentication, and two-step
+verification, provides an additional layer of security above and
+beyond username and password, such as an authentication
+code, thumb print, or retinal scan."\cite{3_barracuda}
 
-"Pretexting Attacks
-Pretexting attacks consist of inventing fake and convincing scenarios in order to steal a victim’s personal information.
-They are based on pretexts that make the victim believe and trust the attacker [27]. The attack is performed via phone calls,
-emails, or physical media. Attackers use publishing information on phone books, public web pages, or conferences where collaborators
-in the same field meet to carry out their attack. The pretext may be an offer to perform a service or to get a job,
-asking about personal information, helping a friend to get access to something, or winning a lottery."\cite{4_mdpi}
+"Train staffers to recognize and report attacks. "\cite{3_barracuda}
 
-"Baiting
-Baiting involves luring the victim into performing a specific task by providing easy access to something the victim wants.  
-Example: a USB flash drive infected with a keylogger and labelled "My private pics" left on the victim's doorstep."\cite{1_enisa}
+\section{Milderung}
 
-"Baiting Attacks
-Baiting attacks, also called road apples, are phishing attacks that invite users to click on a link to get free stuff.
-They act like trojan horses where the attack is performed by exploiting unsecured computer materials such as storage media
-or USB drives containing malware in a coffee shop to be found by victims. When the victims plug the USB drive into their computers,
-the drive acts like a real world trojan horse and attacks the computer. This attack performs malicious actions in the background
-without being noticed by the victims.
-In [7], the authors described a baiting attack named controller area network (CANDY) to be launched as a trojan horse in
-the infotainment system of automotive systems. This attack impacts the security capabilities of the vehicle by manipulating the
-communication between the driver and the vehicle. It is performed by recording the driver’s voice which lets the attacker remotely
-access the victim’s vehicle via back door, collect information about the vehicle circulation, and control the operation of the vehicle."\cite{4_mdpi}
-
-"Quid pro quo
-Quid Pro Quo, "something for something" in Latin, involves a request for information in exchange for a compensation.
-Example: the attacker asks the victim's password claiming to be a researcher doing an experiment, in exchange for money."\cite{1_enisa}
-
-piggybacking:
-"Tailgating
-Tailgating is the act of following an authorised person into a restricted area or system.
-Example: the attacker, dressed as an employee, carries a large box and convinces the victim, who is an authorised employee
-entering at the same time, to open the door of the data-centre using the victim's RFID pass."\cite{1_enisa}
-
-"Tailgating Attacks
-Tailgating attacks, also called piggybacking or physical access, consist of accessing an area or building by following someone
-who has the security clearance to that place. They allow attackers access unauthorized buildings. For example, attackers ask a
-victim to hold the door open because they forgot their company’ ID card or RFID (radio-frequency identification) card. They can als
-borrow a computer or cellphone to perform malicious activities such as installing malware software [14].
-For instance, RFID cards attacks are one of the most used attacks to access forbidden spaces for malicious purposes. Due to their
-wide utilization and low cost, RFID systems are considered as the most emerging technology used by companies to control the access to
-their facilities. Despite their advantages, they have vulnerabilities that can be exploited to cause serious security issues to companies.
-RFID attacks can be performed over several layers of the interconnection system model (ISO) [28]. For instance, at the physical layer, the
-RFID devices and the physical interface are targeted to manipulate an RFID communication. These attacks can cause temporary or permanent damage
-of the RFID cards. At the network layer level, the attacker manipulates the RFID network such as the communication between the RFID entities and
-data exchange between these entities."\cite{4_mdpi}
-
-"Reverse Social Engineering Attacks
-Reverse social engineering attackers claim to solve a network’s problem. This involves three main steps: causing a problem such as crashing the network;
-advertising that the attacker is the only person to fix that problem; solving the problem while getting the desired information and leaving without being detected"\cite{4_mdpi}
-
-Pop-Up Windows
-Pop-up window attacks refer to windows appearing on the victim’s screen informing the connection is lost [35]. The user reacts by re-entering the login information
- which runs a malicious program already installed with the window appearance. This program remotely forwards back the login information to the attacker. For instance,
- pop-ups can be alert messages showing up randomly for online advertising to lure the victim in clicking on that window. Pop-ups also can be fake messages alerting about
- a virus detection in the victim’s computer. The pop up will prompt the victim to download and install the suggested anti-virus software to protect the computer. They can
- also be fake alerts stating that the computer storage is full and that it needs to be scanned and cleaned to save more space [35]. The victim panics and reacts quickly in
- order to fix the problem, which activates the malware software carried in the pop-up window."\cite{4_mdpi}
-
-"Phone/Email Scams Attacks
-For this type of attacks, the attacker contacts the victim via phone or email seeking specific information or promising a prize or free merchandise.
-They aim at influencing the victim to break the security rules or to provide personal information. Moreover, cellphone-based attacks can be performed
-via calls and via short messaging services (SMS) or text messages, which are known as SMSishing attacks [35]. SMSishing attacks consist of sending fraudulent
-messages and texts via cell phones to victims to influence them. They are similar to phishing attacks but they are performed in different ways. The efficiency of
-the SMSishing attacks resides in the fact that victims can carry their cellphones anywhere and anytime. A received text message can include a malware even if it was
-sent from trusted and known transmitter. The malware works as a background process installing backdoors for attackers to have access to information such as contact list,
-messages, personal email, photos, notes, applications, and calendar. The scammer can install a root kit to control the cellphone completely [20]."\cite{4_mdpi}
-
-"Robocalls Attacks
-Robocall attacks have recently emerged as massive calls coming from computers to targeted persons with known phone numbers. They target cellphones, residential,
-and work phones. A robocall is a device or computer program that automatically dials a list of phone numbers to deliver prerecorded messages. It is mainly based on
-voice over the internet protocol (VoIP) to ensure several VoIP functions such as interactive voice response and text to speech [36]. These calls can be about offering
-or selling services or solving problems. Helping to solve tax problems is a very known example of attack that has risen in intensity in recent years. In general, when
-a victim answers the call, the phone number is stored in the attacker’s database. Even after blocking these calls, attackers’ systems call from other numbers. Robocall
-attacks have become a serious problem in the USA and other countries. The only way for people to stop these calls is by not answering unknown phone numbers."\cite{4_mdpi}
-
-"51\% of social engineering attacks are phishing"\cite{3_barracuda}
-"Microsoft is the most impersonated brand, used in 57\% of phishing attacks"\cite{3_barracuda}
-
-"That leads to a frightening
-finding: The median time for
-users to fall for phishing emails
-is less than 60 seconds. "\cite{verizon2024}
-
-Phishing, Baiting, Pretexting, Tailgating, Ransomware, impersonating on help desk, diversion theft, dumpster diving,
-shoulder surfing, quid pro quo, pup-up windows, robocalls, reverse social engineering, online social engineering, phone social engineering,
-stealing important documents, fake software, pharming, SMSishing, Whitelisting following
-ScareWare, Watering-Hole, honeytraps, whaling, smishing, quishing, tishing, vishing, wishing, pharming, snowshoeing
+"Human-based attacks are sophisticated and hard to detect, making their mitigation necessary. Mitigating techniques for social engineering attacks aim at
+decreasing the attacks’ impact on the individuals or the companies [52]. They aim at saving what can be saved after a human is already attacked or a company’s
+system is already hacked. The cyber security entity needs to minimize the loss as much as possible by defining security actions in case of emergency. For instance,
+building a corporate security culture among the company’s employees is a mitigation technique against the attacks targeting companies or groups of individuals [53].
+This positive culture helps the attack’s victim not feel ashamed of being manipulated as the social engineer exploits the misplaced trust and not because the victim
+is unintelligent or foolish."\cite{7_mdpi}
 
 
+"Gehen Sie verantwortungsvoll mit Sozialen Netzwerken um. Überlegen Sie genau, welche persönlichen Informationen Sie dort offenlegen, da diese von
+Kriminellen gesammelt und für Täuschungsversuche missbraucht werden können."\cite{2_bsi}
+
+"Geben Sie in privaten und beruflichen Sozialen Netzwerken keine vertraulichen Informationen über Ihren Arbeitgeber und Ihre Arbeit preis."\cite{2_bsi}
+
+"Teilen Sie Passwörter, Zugangsdaten oder Kontoinformationen niemals per Telefon oder E-Mail mit. Banken und seriöse Firmen fordern ihre Kunden nie per
+E-Mail oder per Telefon zur Eingabe von vertraulichen Informationen auf."\cite{2_bsi}
+
+"3-Sekunden-Sicherheits-Check."\cite{2_bsi}
+-- > "Absender, Betreff und Anhang sind hierbei drei kritische Punkte, die vor dem Öffnen jeder E-Mail bedacht werden sollten."
+
+"Sollte eine Reaktion zwingend erforderlich sein, vergewissern Sie sich durch einen Anruf bei der Absenderin oder dem Absender, dass es sich um eine
+legitime E-Mail handelt."\cite{2_bsi}
