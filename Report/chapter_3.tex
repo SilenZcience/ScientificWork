@@ -1,81 +1,78 @@
-\chapter{Konsequenzen}
-\label{chapter:konsequenzen}
+\chapter{Maßnahmen}
+\label{chapter:massnahmen}
 
-\section{Motivation}
+"Proper identification and authentication processes, policies and trainings should be in place to circumvent such attacks."\cite{1_enisa}
+bzg Pretexting
 
-Das primäre Motiv von Cyber-Kriminellen ist finanziell. Im Durchschnitt richtet ein 'Data Breach'
-4.45 Millionen US-Dollar an Schaden an, wobei Social Engineering als initialer Angriffsvektor noch
-über diesem Wert liegt \bcite{6_ibmsecurity}.
+"Security policies such as an air gap and the blocking of non-authorised software and hardware will thwart most attempts,
+though staff should also be reminded not to trust unknown sources."\cite{1_enisa}
+bzg Baiting
 
+"Quid pro quo attacks are relatively easy to detect given the asymmetrical value of the information compared to the compensation,
+which is opposite for the attacker and the victim. In these cases the best countermeasure remains the victim integrity and ability to identify, ignore and report."\cite{1_enisa}
+bzg Quid pro quo
 
-Der Verlust, nach erfolgreichen Social Engineering Angriffen, ist jedoch für Unternehmen weitreichender.
-Neben dem direkten finanziellen Verlust, durch den Diebstahl der Angreifer erleiden Unternehmen zusätzlich
-Wiederherstellungskosten, da etwaige Daten verloren gegangen sind, und Sicherheitslücken gefunden und repariert
-werden müssen. Des Weiteren entsteht eine Betriebsdisruption, was zu indirektem finanziellen Schaden, durch
-Verlust von Produktivität, führt. Zuletzt erleiden Unternehmen einen Reputationsschaden, was in vielen Fällen
-den verheerendsten Faktor ausmacht, insbesondere für kleinere Firmen \bcite{agony}.
-Für Unternehmen können Cyber-Angriffe auch eine Form der Espionage darstellen, weshalb der Schaden eines
-Unternehmens zusätzlich einen kompetitiven Schaden in der Marktwirtschaft darstellen kann.
-
-Individuen erleiden ebenfalls, neben finanziellen-, auch weitere Formen von Schäden.
-Nicht außer Acht zu lassen ist der emotionale Schaden, da Personen oft, in Folge einer erfolgreichen
-Manipulation, als naiv dargestellt werden.
-
-
-% TODO: verweis auf explizite SE angriffe im film
+"Access to non public areas should be controlled by access policies and/or the use of access control technologies, the more sensitive the area the stricter the combination.
+Th[e] obligation to wear a badge, the presence of a guard and actual anti-tailgating doors such as mantraps with RFID access control should be sufficient to deter most attackers."\cite{1_enisa}
+bzg Tailgating
 
 
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=5in]{IBM_Data.Breach.Report.png}
-%     \caption{IBM - Measured in USD millions}
-% \end{figure}
-% Avg. Kosten pro Breach (2022)
+
+\section{Erkennung}
+
+"n order to detect and prevent these attacks, a number of techniques have been proposed. A list of defense procedures for social-engineering attacks include: encouraging security
+education and training, increasing social awareness of social-engineering attacks, providing the required tools to detect and avoid these attacks, learning how to keep
+confidential information safe, reporting any suspected activity to the security service, organizing security orientations for new employees, and advertising attacks’ risks to
+all employees by forwarding sensitization emails and known fraudulent emails [40]."\cite{4_mdpi}
+
+\section{Vorbeugung}
+
+"In order to detect attacks via phone calls, it is necessary to verify the source of calls using a recording contacts’ list, being aware of unexpected and unsolicited calls, asking to call back, or asking questions with private answers to check the caller’s identity. The most effective way to stop these attacks is by not answering these calls. For help desk attacks, assigning PINs to known callers prevents malicious calls [41]. The help desk is required to stick to the scope while performing a call request. For email-based attacks, some companies use the honeypot email addresses, also called spamtraps, to collect and publish the spams to employees. When an email is sent from one of the spamtraps list, the server considers it as malicious and bans it temporarily. Other procedures that can be done include: verifying emails’ sources before clicking on a link or opening an attachment, examining the emails header, calling the known sender if suspicious, and discarding emails with quick rich or prize-winning announcements.
+For phishing attacks, anti-phishing tools have been proposed to blacklist and block phishing websites. Examples of these tools are McAfee anti-phishing filter, Microsoft phishing filter, and Web sense [42,43]. In [44], the authors proposed to teach students how the spear phishing attack is performed by learning by doing. They developed a framework in which students learn how phishing emails work by performing attacks on a virtual company. After gathering all the possible information from the company’s website, the students launched phishing emails to simulated employees and then scanned all the received emails to decide about their nature.
+In [45], the authors proposed a detection technique based on machine learning algorithms. This technique is based on unsupervised learning, in which there is no past knowledge about the observed attacks. The authors compared the performance of six machine learning algorithms for detecting phishing attacks in terms of speed, reliability, and accuracy: support vector machine, biased support vector machine, artificial neural networks, scaled conjugate gradient, and self-organizing map. They showed that the support vector machine algorithm achieves better results compared to the other algorithms. In [22], the authors proposed a method to detect the credential spear phishing attacks in enterprise sittings. The proposed detection method, called anomaly detection (DAS), performs by analyzing the potential characteristics to the spear phishing attacks in order to derive a number of features used by the attacker. It is a non-parametric anomaly scoring method used for ranking alerts.
+For tailgating attacks, they may be prevented by training employees to never give access to someone without badge with no exceptions and requiring locks and IDs for all employees [35]. For shoulder surfing attacks, individuals are required to be more aware of what is around them, including persons or cameras when they enter sensitive information. For dumpster diving attacks, sensitive discarded documents and materials must be completely destroyed using shredders, memory devices must be secured or erased, and important files must be locked securely and not left for easy access.
+Trojan-based attacks may be prevented by refusing to let someone use other people personal or work computers, using an antivirus for USB scanning before opening it and following the antivirus instructions and warning, examining any unexpected mailing packages, and not picking up and using found digital medias. To prevent fake software attacks, individuals need to check carefully the screen and verify if the software window is legitimate as real websites have always something special than the fake ones. Anti-virus may be limited by human unawareness; they may catch these attacks and send warnings, which most users ignore by closing the window and move on. Other preventions can be considered including verifying if the website has the https logo, not click before examining the URL, and update regularly the computer’s operating system and security software.
+Some security organizations encourage companies to adopt the defense in depth strategy to monitor their network and prepared themselves for possible attacks while neglecting the human aspect. In [46], the authors proposed to identify the requirements of an anti-social engineering attacks framework capable of analyzing and mitigating attack risks. They developed a new layered defense technique named Social Engineering Centered Risk Assessment (SERA). SERA starts by identifying the critical assets to evaluate the company’s information for the next step. Then, each asset is placed in a container and the corresponding social engineering attack vectors are identified. Probability of attack realization is driven by local security experts and the risk analysis is obtained.
+In [47], the authors proposed a flow whitelisting approach to enhance the network security inside companies. The flow whitelisting approach aims at identifying legitimate traffic from malicious traffic coming to the company’s network. Four properties are used to identify these whitelists: address of the client, address of the server, port number of the server, and the protocol used for the traffic transport. The proposed approach is performed by capturing the network’s traffic at a predefined period of time and aggregating that traffic into flows when that traffic is identified as legitimate. It is based on learning to distinguish legitimate traffic from malicious traffic and generating alarms in case of an observed malicious traffic. In [34], the authors proposed a new approach called TabShots to distinguish between legitimate pages from malicious pages. The TabShots is an extension installed in the browser that compares the appearance of the webpages and highlights any observed changes to excite the attention of the user before proceeding.
+In [48], the authors discussed the problem of formalizing actions that are a result of social engineering attacks. They proposed to model these actions through probabilities and graphical models such as Bayesian models. They analyzed the user’s profile to estimate its vulnerabilities and psychological features. Estimating the protection of a user profile against an attack is obtained through four elements: psychological features (F), critical vulnerabilities (V), attack’s actions (A), and user’s accountability at successful attacks (C). In [49], the authors proposed to analyze the human’s behaviors and perceptions to cope with social engineering attacks. They aim at understanding human weaknesses in being deceived easily by attackers and defining factors and features that influence the human abilities to detect attacks. They also aim at identifying vulnerable users by building a user profile that focuses on security education and training programs.
+In [50], the authors evaluated the susceptibility to cybersecurity attacks in cooperative organizations in order to assess the consciousness of social engineering attacks of employees. By performing an attack against the organization based on the available information on the organization’s website, employees reacted to the attack in different ways with different awareness degrees. These results were then benchmarked to establish the organization awareness in terms of ignoring the attack and being tricked or recognizing the attack and appropriately responding to it. Attack victims were then directed to intensive training. In [51], a social engineering awareness program (SEAP) was developed for schools aiming at increasing students’ awareness by providing significant education and training in early age."\cite{4_mdpi}
+
+"Nevertheless, the single most efficient countermeasure to social engineering attacks remains common sense. In this light, ENISA recommend the following: 
+
+frequent awareness campaigns: posters, presentations, emails, information notes;
+staff training and exercising;
+penetration tests to determine an organisation's susceptibility to social engineering attacks, reporting and acting upon the results."\cite{1_enisa}
 
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[scale=.5]{Barracuda_Social.Engineering.Attacks.png}
-%     \caption{Barracuda - Social Engineering Attacks}
-% \end{figure}
+"Use multi-factor authentication. Multi-factor authentication,
+also called MFA, two-factor authentication, and two-step
+verification, provides an additional layer of security above and
+beyond username and password, such as an authentication
+code, thumb print, or retinal scan."\cite{3_barracuda}
+
+"Train staffers to recognize and report attacks. "\cite{3_barracuda}
+
+\section{Milderung}
+
+"Human-based attacks are sophisticated and hard to detect, making their mitigation necessary. Mitigating techniques for social engineering attacks aim at
+decreasing the attacks’ impact on the individuals or the companies [52]. They aim at saving what can be saved after a human is already attacked or a company’s
+system is already hacked. The cyber security entity needs to minimize the loss as much as possible by defining security actions in case of emergency. For instance,
+building a corporate security culture among the company’s employees is a mitigation technique against the attacks targeting companies or groups of individuals [53].
+This positive culture helps the attack’s victim not feel ashamed of being manipulated as the social engineer exploits the misplaced trust and not because the victim
+is unintelligent or foolish."\cite{7_mdpi}
 
 
-% \newpage
+"Gehen Sie verantwortungsvoll mit Sozialen Netzwerken um. Überlegen Sie genau, welche persönlichen Informationen Sie dort offenlegen, da diese von
+Kriminellen gesammelt und für Täuschungsversuche missbraucht werden können."\cite{2_bsi}
 
-% "Actor Motives Financial (89\%), Espionage (11\%) (breaches)"\cite{verizon2022}
-% "Actor Motives Financial (95\%), Espionage (5\%) (breaches)"\cite{verizon2024}
+"Geben Sie in privaten und beruflichen Sozialen Netzwerken keine vertraulichen Informationen über Ihren Arbeitgeber und Ihre Arbeit preis."\cite{2_bsi}
 
-% conversation hijacking wenig ,denn verlangt etwas erfolg bei vorherigen angriffen.
-% z.b. folgt onversation hijacking oftmals auf account takeover.
+"Teilen Sie Passwörter, Zugangsdaten oder Kontoinformationen niemals per Telefon oder E-Mail mit. Banken und seriöse Firmen fordern ihre Kunden nie per
+E-Mail oder per Telefon zur Eingabe von vertraulichen Informationen auf."\cite{2_bsi}
 
-% "Hackers are starting to increasingly use phishing as part of their
-% ransomware attacks."\cite{3_barracuda}
+"3-Sekunden-Sicherheits-Check."\cite{2_bsi}
+-- > "Absender, Betreff und Anhang sind hierbei drei kritische Punkte, die vor dem Öffnen jeder E-Mail bedacht werden sollten."
 
-% "Extortion attacks make up only 2\% of the total number of
-% targeted phishing attacks we have seen in the past year. These
-% attacks were mostly sextortion email threats, where hackers
-% threaten to expose sensitive or embarrassing content to their
-% victim’s contacts unless a ransom is paid. Demands are usually
-% a few hundred or a few thousand dollars and need to be paid
-% in bitcoin, which is difficult to trace. In the UK, the number of
-% sextortion cases reported to National Crime Agency increased
-% by 88\% between 2018 and 2020, and the number is expected to
-% continue to increase"\cite{3_barracuda} stand 2021
-% stand 2024: Extortion: ($\sim$ 25\%) \cite{verizon2024}
-% Darunter fällt auch Ransomware
-
-% Pretexting: 2022 (27\%), 2024 (more than 40\%)
-% Phishing: 2022 ($\sim$ 70\%), 2024 (31\%)\cite{verizon2024,verizon2022}
-
-% "Account takeover is a form of identity theft and fraud where a
-% malicious third party successfully gains access to a user’s account
-% credentials"\cite{3_barracuda}
-% "Account takeover is one of the fastest growing threats. In 2021,
-% roughly 1 in 5 organizations (20\%) had at least one of their
-% Microsoft 365 accounts compromised. This means that in 2021
-% hackers managed to compromise around 500,000 Microsoft 365
-% accounts around the globe."\cite{3_barracuda}
-
-% Social Engineering MTTI (Mean Time To Identify): 218 Days
-% Social Engineering MTTC (Mean Time To Contain) :  80 Days\cite{6_ibmsecurity}
+"Sollte eine Reaktion zwingend erforderlich sein, vergewissern Sie sich durch einen Anruf bei der Absenderin oder dem Absender, dass es sich um eine
+legitime E-Mail handelt."\cite{2_bsi}

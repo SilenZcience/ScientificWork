@@ -33,7 +33,12 @@ MTTI sehr hoch, z.b. weil leute sich nicht trauen angriffe zu melden -> ungesund
 
 --- conclusion ----
 -> schwer zu verhindern, wegen angriffsflut (quantität) technisch ist quantitativ so extrem hoch, weil simple (aber oftmals nicht sehr effektiv in relation zu quantität), {und lässt sich technisch entgegensteuern (e.g. mit mail-filtern)}
+
+maßnahmen:
 -> laut bka studie: die meisten menschen kennen SE nicht, also fehlt allgemeine Kenntnis in der Bevölkerung -> schwer zu erkennen und sich zu schützen -> SE nimmt zu
+
+psyhcologsisch:
+-> jeder ist auf irgendwas manioulierbar
 -> es wird verhalten ausgenutzt, was gesellschaftlich erwünscht ist (e.g. hilfsbereitschaft, freundlichkeit etc.) -> quasi unmöglich dem entgegenzuwirken, daher soziale angriffe so stark
 
 Prognose

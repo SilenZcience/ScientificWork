@@ -14,12 +14,12 @@ Unter derartige Aktionen fallen beispielsweise das Aushebeln von Sicherheitsfunk
 das Installieren von Schadsoftware \bcite{1_enisa,2_bsi}.
 
 Das Bundeskriminalamt legt in einer Forschungsstudie die offizielle Definition des Verfassungsschutzes Brandenburg
-zugrunde: "Social Engineering ist der Versuch unter Ausnutzung menschlicher Eigenschaften Zugang zu Know-how zu erhalten.
+zugrunde: \qq{Social Engineering ist der Versuch unter Ausnutzung menschlicher Eigenschaften Zugang zu Know-how zu erhalten.
 Der Angreifer nutzt dabei Dankbarkeit, Hilfsbereitschaft, Stolz, Karrierestreben, Geltungssucht, Bequemlichkeit oder Konfliktvermeidung aus.
 Dabei bieten häufig soziale Netzwerke oder auch Firmenwebseiten Möglichkeiten, um sich auf sein Opfer gründlich vorzubereiten.
 Zu diesen 'Vorfeldermittlungen' können auch Anrufe im Unternehmen gehören.
 Professionelle Angreifer versuchen dabei nicht, mit einem Anruf alle gewünschten Informationen zu erlangen,
-dies könnte misstrauisch stimmen. Der Angerufene wird dabei im Gespräch nach vermeintlich nebensächlich erscheinenden Informationen gefragt."
+dies könnte misstrauisch stimmen. Der Angerufene wird dabei im Gespräch nach vermeintlich nebensächlich erscheinenden Informationen gefragt.}
 
 In der Kurzfassung: Social Engineering ist eine zwischenmenschliche Manipulation,
 bei der ein Unbefugter unter Vortäuschung falscher Tatsachen versucht, unberechtigten Zugang zu Informationen oder IT-Systemen zu erlangen \bcite{10_bka}.
@@ -123,7 +123,7 @@ Somit entstehen die folgenden drei Klassifikationen:
 \hfill
 \begin{minipage}{.5\linewidth}
     \centering
-    \begin{tikzpicture}[node distance={2.5cm}, thick, main/.style = {draw, rectangle, minimum size=15mm}]
+    \begin{tikzpicture}[node distance={2cm}, thick, main/.style = {draw, rectangle, minimum size=15mm}]
         \node[main] (1) {Social Engineering Angriffe};
         \node[main] (3) [below of=1] {technisch};
         \node[main] (2) [left of=3] {sozial};
@@ -136,45 +136,29 @@ Somit entstehen die folgenden drei Klassifikationen:
 \bcite{4_mdpi}
 
 \subsubsection{menschliche Angriffe}
-
 Im Falle von menschlichen Angriffen kommt es, durch persönlichen Kontakt, zu direkter Interaktion zwischen dem Angreifer und seinem Opfer.
 Diese Angriffe können durchaus auch digital ablaufen, etwa über beliebige Messaging-Plattformen, und verwenden gezielte psychologische Manipulation,
 die der Angreifer spezifisch auf sein Opfer abstimmt \bcite{4_mdpi, 1_enisa}.
 
 \subsubsection{computerbasierte Angriffe}
-
 Computerbasierte Angriffe, oder auch Softwarebasierte Angriffe, werden mithilfe von Computern\footnote{darunter zählen auch Smartphones oder anderweitige computerähnliche Geräte}
 ausgeführt, um Informationen des Opfers zu sammeln. Diese Art von Angriff ist in der Lage eine Vielzahl
 von potentiellen Opfern in kürzester Zeit zu erreichen \bcite{4_mdpi, 1_enisa}.
 
 \subsubsection{technische Angriffe}
-
 Technische Angriffe zielen darauf ab, Information, wie Passwörter oder Kreditkarteninformationen, zu erlangen. Sie werden ausgeführt über das Internet durch die sozialen Medien,
-Webseiten oder anderweitigen online Diensten \bcite{4_mdpi,seofwnep}. "Die Kommunikation über digitale Kanäle wie E-Mail bietet ein besonders günstiges Umfeld für Social Engineering.
+Webseiten oder anderweitigen online Diensten \bcite{4_mdpi,seofwnep}. \qq{Die Kommunikation über digitale Kanäle wie E-Mail bietet ein besonders günstiges Umfeld für Social Engineering.
 Während der Täter sein Gegenüber in einer realen Gesprächssituation über alle Sinne hinweg täuschen muss, hat er
-es bei der technisch vermittelten Kommunikation deutlich einfacher"\bcite{2_bsi}.
+es bei der technisch vermittelten Kommunikation deutlich einfacher}\bcite{2_bsi}.
 
 \subsubsection{soziale Angriffe}
-
 Bei sozialen Angriffen wird das psychologische Verhalten und die Emotionen des Opfers ausgenutzt. Diese Angriffe sind am gefährlichsten und in Relation zu ihrer Quantität am
 erfolgreichsten, da sie menschlichte Interaktion beinhalten \bcite{4_mdpi}.
 
 \subsubsection{physische Angriffe}
-
 Physische Angriffe definieren diejenigen Aktionen, bei denen der Angreifer selbst materiellen Daten sammelt und nach Informationen sucht.
 Beispielsweise durchsucht der Angreifer Mülleimer,
 rekonstruiert zerstörte Dokumente oder begeht Diebstahl \bcite{4_mdpi}.
-
-
-
-% "Social-based attacks are performed through relationships with the victims to play on their psychology and emotion. These attacks are
-% the most dangerous and successful attacks as they involve human interactions"\cite{4_mdpi} -> baiting, spear fishing
-% "Technical-based attacks are conducted through internet via social networks and online services websites and they gather desired
-% information such as passwords, credit card details, and security questions"\cite{4_mdpi}
-% "Physical-based attacks refer to physical actions performed by the attacker to collect information about the target. An example
-% of such attacks is searching in dumpsters for valuable documents"\cite{4_mdpi}
-
-
 
 \subsection{Techniken}
 
@@ -184,7 +168,6 @@ Etwaige Angriffsmethoden sind wie folgt:
 
 \subsubsection{Phishing}
 \label{phishing}
-
 Phishing ist eine der üblichsten Angriffsmethoden des Social Engineering. Es handelt sich um semantische Angriffe durch elektronische
 Kommunikationswege (wie etwa E-Mails, HTTP, SMS, VoIP) um manipulative Nachrichten zu übermitteln, die das Opfer dahingehend beeinflussen
 sollen, konkrete Aktionen auszuführen. Diese Aktionen beinhalten etwa das Klicken von illegitimen Links oder das Eingeben von (Anmelde-) Informationen.
@@ -204,107 +187,66 @@ Quishing (QR-Code-Phishing) oder Tishing (Microsoft-Teams-Phishing) definiert \b
 
 \subsubsection{Pretexting}
 \label{pretexting}
-
 Diese Technik verwendet einen Vorwand (engl. "Pretext"), also eine falsche Rechtfertigung für eine bestimmte Vorgehensweise, um das Vertrauen des
 Opfers zu gewinnen und dieses zur Kooperation zu manipulieren. Pretexting zielt auf die Emotionen des Opfers ab, um neben Vertrauen ein Gefühl von
 Dringlichkeit oder Symphatie zu erzeugen. Das Hauptmerkmal dieses Angriffes ist seine kreative Komponente. Oftmals täuschen Cyber-Kriminelle
 eine Autoritätsperson vor, wie etwa einen Investor, und legen sogar fälschliche online Persona mitsamt Webseiten und Bewertungen an, um seriös zu wirken.
 Populär ist auch das Ausgeben als IT support mit der Anfrage auf Login Daten, welche angeblich zu Wartungszwecken gebraucht werden.
 Andere Methoden enthalten Romance-Scams, in denen der Betrüger ein Interesse an einer romantischen Beziehung vorspielt, oder Nachahmung, wobei der
-Angreifer sich zum Beispiel als Firmenkollege ausgibt und das Opfer um "dringende Hilfe" bittet \bcite{1_enisa,4_mdpi}.
+Angreifer sich zum Beispiel als Firmenkollege ausgibt und das Opfer um \qq{dringende Hilfe} bittet \bcite{1_enisa,4_mdpi}.
 
 \subsubsection{Tailgaiting}
-
-Unter Tailgating, oder auch Piggybacking, versteht man das physische Eindringen eines Social Engineers in unbefugte Areale.
+Unter Tailgating versteht man das physische Eindringen eines Social Engineers in unbefugte Areale.
 Dies wird erreicht, indem der Kriminelle Personen mit Sicherheitsbefugnis dicht folgt, Sperrzonen bewusst umgeht oder Pretexting (\autoref{pretexting})
 verwendet. Beispielsweise erkären Angreifer selbstweusst, dass sie ID Karte verloren oder vergessen haben. In vielen Szenarien wird die
 Befugnis durch das äußere Erscheinungsbild, wie zum Beispiel dem Tragen von Warnwesten oder dem Dresscode eines Unternehmens, vorgetäuscht, oder die Hilfsbereitschaft Anderer ausgenutzt,
-indem der Angreifer zum Beispiel schwere/viele Boxen trägt.
+indem der Angreifer zum Beispiel schwere/viele Boxen trägt. Insofern im Prozess des Angriffes die Erlaubnis von befugtem Personal erlangt wird, handelt es sich um sogenanntes Piggybacking \bcite{4_mdpi}.
 
 \subsubsection{Baiting}
-
+\label{baiting}
 Baiting ist eine Social Engineering Methode, die sich die Neugierde der Menschen zunutze macht.
 Sie zeichnet sich dadurch aus, bewusst einfachen Zugang zu einem Köder zu bieten, welcher darauf abzielt eine konkrete Handlung
 des Opfers auszulösen. Im Kontext der Phishing Angriffe lädt eine Baiting E-Mail etwa dazu ein, auf einen Link zu klicken, der beispielsweise
-kostenlose Premien verspricht. Under Baiting Angriffe fallen ebenfalls sogenannte Media-Drops. Beispielsweise werden bei USB-Drops absichtlich
+kostenlose Premien verspricht. Unter Baiting Angriffe fallen ebenfalls sogenannte Media-Drops. Beispielsweise werden bei USB-Drops absichtlich
 USB-Sticks platziert, die darauf abzielen gefunden zu werden, und bei Verwendung den Computer infizieren. Eine weitere Möglichkeit ist es, die
 infinzierten Medien, wie CDs oder anderweitige, beliebige Datenträger, vor Firmengeländen als Werbegeschenke zu verteilen. Bei erfolgreicher Infektion eines Computers haben die Akteure bereits
 die Möglichkeit Informationen zu stehlen, oder anderweitige Malware zu installieren; Beliebt sind Trojaner zu langzeitlichen Kontrolle eines
 Systems, Ransomware als Form der Erpressung \bcite{1_enisa,4_mdpi,ransomware} oder Spyware zur kontinuierlichen Informationssammlung.
 
 \subsubsection{Quid Pro Quo}
-
 Quid pro quo (lateinisch für "dies für das") funktioniert auf eine ähnliche Weise wie Baiting Angriffe, wobei dieser Angriffsvektor nicht
 Neugierde, sondern Vertrauen ausnutzt. Es handelt sich um eine Anfrage nach persönlichen oder geschäftlichen Informationen im Austausch gegen Kompensation.
 Angreifer bieten zumeist einen Service an, der für ds Opfer verlockend oder hilfreich ist. Quid Pro Quo wird oftmals in gezielten
 Spear Phishing Angriffen (\autoref{phishing}) verwendet. Möglich ist auch, dass der Angreifer eine Studie oder ein Experiment vortäuscht, was bei Teilnahme Kontaktdaten
 benötigt und im Gegenzug eine Geldsumme verspricht \bcite{1_enisa}.
 
+\subsubsection{Reverse Social Engineering}
+Reverse Social Engineering Angriffe lassen ihre Opfer glauben, es gäbe ein (technisches) Problem, oder inszenieren einen tatsächlichen Schaden, wenn sie beispielsweise
+ein Netzwerk zum Absturz bringen. Im Folgenden überzeugen sie ihre Opfer auf verschiedenste Weise, dass sie alleine das Problem beheben können. Während sie das Problem
+lösen, erlangen sie die gewünschten Informationen, und ziehen sich abschließend zurück, ohne jemals ihre Identität preiszugeben \bcite{4_mdpi}.
+Im Gegensatz zu anderen Social Engineering Angriffen, sind es nicht die Angreifer, die auf ihre Opfer zugehen, sondern die Opfer die gutgläubig Hilfe
+bei den Angreifern suchern.
 
+\subsubsection{Pop-Up Windows}
+Es existieren zwei verschiedene Grundstrukturen im Aufbau von Pop-Up Fenstern als Social Engineering Taktik. Erstere verwendet eine Methodik ähnlich zum Baiting (\autoref{baiting}).
+Hierbei wird zum Beispiel vorgetäuscht, das potentielle Opfer habe in einer Verlosung oder der Lotterie gewonnen.
+Zweitere verwendet elementar die Taktik von Scareware; Es wird also Panik beim Opfer ausgelöst, mit dem Ziel dieses verängstigt in unüberlegte Handlungen zu bewegen. Die hierbei
+dargestellte Gefahr wirkt bedrohlich, ist allerdings lediglich simuliert und nicht existent. Unter den populärsten Pop-Up Windows sind fälschliche Nachrichten, die davon
+überzeugen sollen, der Computer habe bereits Malware installiert, und benötige nun ein Antiviren Programm, welches im selbigen Pop-Up Fenster angeboten wird.
+Insgesamt lassen sich derartige Angriffe primär eingebunden in Webseiten finden, durch (Browser-) Plugins oder
+zuvor installierten Programmen. Das Ziel dieser Fenster ist es, dazu zu bewegen Informationen einzugeben, auf Links zu klicken oder Fake Software\footnote{Fake Software enthält oft zu teilen legitime Software, welche der Social Engineer neu verpackt} herunterzuladen.
 
+\subsubsection{Weiteres}
+Es gibt viele weitere Arten von Angriffsvektoren. Einige davon lassen sich wie folgt zusammenfassen:
 
+\begin{itemize}
+    \setlength\itemsep{-1em}
+    \item Impersonation/Masquerading: Eine Form des Identitätsdiebstahles, bei der der Angreifer vorgibt jemand anderes zu sein.
+    \item Eavesdropping: Das unbemerkte Mithören, oder Lesen, von der Kommunikation Anderer, ohne deren Erlaubnis.
+    \item Shoulder surfing: Das Beobachten von Personen, während diese sensible Daten, wie Passwörter, eingeben.
+    \item Dumpster diving: Der Angreifer sammelt sensible Informationen, wie (geschredderte) Dokumente, in dem Mülleimern seines Ziels.
+    \item Diversion Theft: Ein Transportunternehmen, oder -vehikel, wird mit falschen Anweisungen beauftragt, ein Paket an einen vom Kriminellen gewünschten Ort zu bringen.
+    \item Pharming: Der Datenverkehr einer Webseite wird auf eine andere, bösartige Webseite umgeleitet.
+\end{itemize}
 
-
-
-piggybacking:
-"Tailgating
-Tailgating is the act of following an authorised person into a restricted area or system.
-Example: the attacker, dressed as an employee, carries a large box and convinces the victim, who is an authorised employee
-entering at the same time, to open the door of the data-centre using the victim's RFID pass."\cite{1_enisa}
-
-"Tailgating Attacks
-Tailgating attacks, also called piggybacking or physical access, consist of accessing an area or building by following someone
-who has the security clearance to that place. They allow attackers access unauthorized buildings. For example, attackers ask a
-victim to hold the door open because they forgot their company’ ID card or RFID (radio-frequency identification) card. They can als
-borrow a computer or cellphone to perform malicious activities such as installing malware software [14].
-For instance, RFID cards attacks are one of the most used attacks to access forbidden spaces for malicious purposes. Due to their
-wide utilization and low cost, RFID systems are considered as the most emerging technology used by companies to control the access to
-their facilities. Despite their advantages, they have vulnerabilities that can be exploited to cause serious security issues to companies.
-RFID attacks can be performed over several layers of the interconnection system model (ISO) [28]. For instance, at the physical layer, the
-RFID devices and the physical interface are targeted to manipulate an RFID communication. These attacks can cause temporary or permanent damage
-of the RFID cards. At the network layer level, the attacker manipulates the RFID network such as the communication between the RFID entities and
-data exchange between these entities."\cite{4_mdpi}
-
-"Reverse Social Engineering Attacks
-Reverse social engineering attackers claim to solve a network’s problem. This involves three main steps: causing a problem such as crashing the network;
-advertising that the attacker is the only person to fix that problem; solving the problem while getting the desired information and leaving without being detected"\cite{4_mdpi}
-
-Pop-Up Windows
-Pop-up window attacks refer to windows appearing on the victim’s screen informing the connection is lost [35]. The user reacts by re-entering the login information
-which runs a malicious program already installed with the window appearance. This program remotely forwards back the login information to the attacker. For instance,
-pop-ups can be alert messages showing up randomly for online advertising to lure the victim in clicking on that window. Pop-ups also can be fake messages alerting about
-a virus detection in the victim’s computer. The pop up will prompt the victim to download and install the suggested anti-virus software to protect the computer. They can
-also be fake alerts stating that the computer storage is full and that it needs to be scanned and cleaned to save more space [35]. The victim panics and reacts quickly in
-order to fix the problem, which activates the malware software carried in the pop-up window."\cite{4_mdpi}
-
-"Phone/Email Scams Attacks
-For this type of attacks, the attacker contacts the victim via phone or email seeking specific information or promising a prize or free merchandise.
-They aim at influencing the victim to break the security rules or to provide personal information. Moreover, cellphone-based attacks can be performed
-via calls and via short messaging services (SMS) or text messages, which are known as SMSishing attacks [35]. SMSishing attacks consist of sending fraudulent
-messages and texts via cell phones to victims to influence them. They are similar to phishing attacks but they are performed in different ways. The efficiency of
-the SMSishing attacks resides in the fact that victims can carry their cellphones anywhere and anytime. A received text message can include a malware even if it was
-sent from trusted and known transmitter. The malware works as a background process installing backdoors for attackers to have access to information such as contact list,
-messages, personal email, photos, notes, applications, and calendar. The scammer can install a root kit to control the cellphone completely [20]."\cite{4_mdpi}
-
-"Robocalls Attacks
-Robocall attacks have recently emerged as massive calls coming from computers to targeted persons with known phone numbers. They target cellphones, residential,
-and work phones. A robocall is a device or computer program that automatically dials a list of phone numbers to deliver prerecorded messages. It is mainly based on
-voice over the internet protocol (VoIP) to ensure several VoIP functions such as interactive voice response and text to speech [36]. These calls can be about offering
-or selling services or solving problems. Helping to solve tax problems is a very known example of attack that has risen in intensity in recent years. In general, when
-a victim answers the call, the phone number is stored in the attacker’s database. Even after blocking these calls, attackers’ systems call from other numbers. Robocall
-attacks have become a serious problem in the USA and other countries. The only way for people to stop these calls is by not answering unknown phone numbers."\cite{4_mdpi}
-
-"51\% of social engineering attacks are phishing"\cite{3_barracuda}
-"Microsoft is the most impersonated brand, used in 57\% of phishing attacks"\cite{3_barracuda}
-
-"That leads to a frightening
-finding: The median time for
-users to fall for phishing emails
-is less than 60 seconds. "\cite{verizon2024}
-
-Baiting, Tailgating, Ransomware, impersonating on help desk, diversion theft, dumpster diving,
-shoulder surfing, pup-up windows, robocalls, reverse social engineering, online social engineering, phone social engineering,
-stealing important documents, fake software, Whitelisting following
-ScareWare, Watering-Hole, honeytraps, USB Drop
-
-
+\bcite{4_mdpi,ceh}
