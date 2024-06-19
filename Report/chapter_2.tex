@@ -182,36 +182,69 @@ Es ist nahezu unmöglich einen vollständigen Überblich über alle existenten A
 zu liefern. Wie zuvor in \autoref{chapter:einleitung} erwähnt sind diverse Social Engineering Techniken mit aktuellen ICT konstant im Wandel.
 Etwaige Angriffsmethoden sind wie folgt:
 
-"Pretexting
-This technique involves the use of a pretext -  a false justification for a specific course of action - to gain
-trust and trick the victim.
-Example: the attacker claims to work for IT support and requests the target's password for maintenance purposes."\cite{1_enisa}
+\subsubsection{Phishing}
+\label{phishing}
 
-"Pretexting Attacks
-Pretexting attacks consist of inventing fake and convincing scenarios in order to steal a victim’s personal information.
-They are based on pretexts that make the victim believe and trust the attacker [27]. The attack is performed via phone calls,
-emails, or physical media. Attackers use publishing information on phone books, public web pages, or conferences where collaborators
-in the same field meet to carry out their attack. The pretext may be an offer to perform a service or to get a job,
-asking about personal information, helping a friend to get access to something, or winning a lottery."\cite{4_mdpi}
+Phishing ist eine der üblichsten Angriffsmethoden des Social Engineering. Es handelt sich um semantische Angriffe durch elektronische
+Kommunikationswege (wie etwa E-Mails, HTTP, SMS, VoIP) um manipulative Nachrichten zu übermitteln, die das Opfer dahingehend beeinflussen
+sollen, konkrete Aktionen auszuführen. Diese Aktionen beinhalten etwa das Klicken von illegitimen Links oder das Eingeben von (Anmelde-) Informationen.
+Die Daten, auf die es ein Angreifer abgesehen hat, erstrecken sich von Kreditkarteninformationen und explizit sensiblen Daten bishin zu Informationen
+wie dem Namen eines Elternteils oder Haustieres. Solche Informationen sind oft unscheinbar, können allerdings ein immenses Sicherheitsrisiko
+darstellen, etwa im Kontext von Sicherheitsfragen beim Login in einen Account. Die am weitesten verbreitete Methode des Phishings ist das
+simple Verschicken vorgefertigter E-Mails an zahlreiche Individuen \bcite{4_mdpi,ieee_phishing}.
 
-"Baiting
-Baiting involves luring the victim into performing a specific task by providing easy access to something the victim wants.
-Example: a USB flash drive infected with a keylogger and labelled "My private pics" left on the victim's doorstep."\cite{1_enisa}
+Phishing Angriffe lassen sich in weitere Unterkategorien einteilen. Darunter liegen zum Beipsiel Spear Phishing und Whaling.
+Spear Phishing bezieht sich auf Phishing Angriffe, die auf spezifische Individuen oder ausgewählte Gruppen abzielen.
+Diese Angriffe sammeln im Vorfeld Informationen, um den Angriff präziser auf ihre Opfer maßzuschneidern. Insofern diese ausgewählten Angriffsziele
+hochrangige Persönlichkeiten verkörpern, die als "Big Fishes" oder "Whales" bezeichnet werden, handelt es sich um Whaling Angriffe \bcite{4_mdpi}.
 
-"Baiting Attacks
-Baiting attacks, also called road apples, are phishing attacks that invite users to click on a link to get free stuff.
-They act like trojan horses where the attack is performed by exploiting unsecured computer materials such as storage media
-or USB drives containing malware in a coffee shop to be found by victims. When the victims plug the USB drive into their computers,
-the drive acts like a real world trojan horse and attacks the computer. This attack performs malicious actions in the background
-without being noticed by the victims.
-In [7], the authors described a baiting attack named controller area network (CANDY) to be launched as a trojan horse in
-the infotainment system of automotive systems. This attack impacts the security capabilities of the vehicle by manipulating the
-communication between the driver and the vehicle. It is performed by recording the driver’s voice which lets the attacker remotely
-access the victim’s vehicle via back door, collect information about the vehicle circulation, and control the operation of the vehicle."\cite{4_mdpi}
+Phishing wird im großflächigeren Raum auch als *ishing dargestellt, da die Namensgebung bei dieser Form des Social Engineering abhängig von der
+technischen Angriffsmethode ist. So sind beispielsweise Vishing (Voice-Phishing, das Phishing über Telefon), Smishing (SMS-Phishing),
+Quishing (QR-Code-Phishing) oder Tishing (Microsoft-Teams-Phishing) definiert \bcite{verizon2024}.
 
-"Quid pro quo
-Quid Pro Quo, "something for something" in Latin, involves a request for information in exchange for a compensation.
-Example: the attacker asks the victim's password claiming to be a researcher doing an experiment, in exchange for money."\cite{1_enisa}
+\subsubsection{Pretexting}
+\label{pretexting}
+
+Diese Technik verwendet einen Vorwand (engl. "Pretext"), also eine falsche Rechtfertigung für eine bestimmte Vorgehensweise, um das Vertrauen des
+Opfers zu gewinnen und dieses zur Kooperation zu manipulieren. Pretexting zielt auf die Emotionen des Opfers ab, um neben Vertrauen ein Gefühl von
+Dringlichkeit oder Symphatie zu erzeugen. Das Hauptmerkmal dieses Angriffes ist seine kreative Komponente. Oftmals täuschen Cyber-Kriminelle
+eine Autoritätsperson vor, wie etwa einen Investor, und legen sogar fälschliche online Persona mitsamt Webseiten und Bewertungen an, um seriös zu wirken.
+Populär ist auch das Ausgeben als IT support mit der Anfrage auf Login Daten, welche angeblich zu Wartungszwecken gebraucht werden.
+Andere Methoden enthalten Romance-Scams, in denen der Betrüger ein Interesse an einer romantischen Beziehung vorspielt, oder Nachahmung, wobei der
+Angreifer sich zum Beispiel als Firmenkollege ausgibt und das Opfer um "dringende Hilfe" bittet \bcite{1_enisa,4_mdpi}.
+
+\subsubsection{Tailgaiting}
+
+Unter Tailgating, oder auch Piggybacking, versteht man das physische Eindringen eines Social Engineers in unbefugte Areale.
+Dies wird erreicht, indem der Kriminelle Personen mit Sicherheitsbefugnis dicht folgt, Sperrzonen bewusst umgeht oder Pretexting (\autoref{pretexting})
+verwendet. Beispielsweise erkären Angreifer selbstweusst, dass sie ID Karte verloren oder vergessen haben. In vielen Szenarien wird die
+Befugnis durch das äußere Erscheinungsbild, wie zum Beispiel dem Tragen von Warnwesten oder dem Dresscode eines Unternehmens, vorgetäuscht, oder die Hilfsbereitschaft Anderer ausgenutzt,
+indem der Angreifer zum Beispiel schwere/viele Boxen trägt.
+
+\subsubsection{Baiting}
+
+Baiting ist eine Social Engineering Methode, die sich die Neugierde der Menschen zunutze macht.
+Sie zeichnet sich dadurch aus, bewusst einfachen Zugang zu einem Köder zu bieten, welcher darauf abzielt eine konkrete Handlung
+des Opfers auszulösen. Im Kontext der Phishing Angriffe lädt eine Baiting E-Mail etwa dazu ein, auf einen Link zu klicken, der beispielsweise
+kostenlose Premien verspricht. Under Baiting Angriffe fallen ebenfalls sogenannte Media-Drops. Beispielsweise werden bei USB-Drops absichtlich
+USB-Sticks platziert, die darauf abzielen gefunden zu werden, und bei Verwendung den Computer infizieren. Eine weitere Möglichkeit ist es, die
+infinzierten Medien, wie CDs oder anderweitige, beliebige Datenträger, vor Firmengeländen als Werbegeschenke zu verteilen. Bei erfolgreicher Infektion eines Computers haben die Akteure bereits
+die Möglichkeit Informationen zu stehlen, oder anderweitige Malware zu installieren; Beliebt sind Trojaner zu langzeitlichen Kontrolle eines
+Systems, Ransomware als Form der Erpressung \bcite{1_enisa,4_mdpi,ransomware} oder Spyware zur kontinuierlichen Informationssammlung.
+
+\subsubsection{Quid Pro Quo}
+
+Quid pro quo (lateinisch für "dies für das") funktioniert auf eine ähnliche Weise wie Baiting Angriffe, wobei dieser Angriffsvektor nicht
+Neugierde, sondern Vertrauen ausnutzt. Es handelt sich um eine Anfrage nach persönlichen oder geschäftlichen Informationen im Austausch gegen Kompensation.
+Angreifer bieten zumeist einen Service an, der für ds Opfer verlockend oder hilfreich ist. Quid Pro Quo wird oftmals in gezielten
+Spear Phishing Angriffen (\autoref{phishing}) verwendet. Möglich ist auch, dass der Angreifer eine Studie oder ein Experiment vortäuscht, was bei Teilnahme Kontaktdaten
+benötigt und im Gegenzug eine Geldsumme verspricht \bcite{1_enisa}.
+
+
+
+
+
+
 
 piggybacking:
 "Tailgating
@@ -269,9 +302,9 @@ finding: The median time for
 users to fall for phishing emails
 is less than 60 seconds. "\cite{verizon2024}
 
-Phishing, Baiting, Pretexting, Tailgating, Ransomware, impersonating on help desk, diversion theft, dumpster diving,
-shoulder surfing, quid pro quo, pup-up windows, robocalls, reverse social engineering, online social engineering, phone social engineering,
-stealing important documents, fake software, pharming, SMSishing, Whitelisting following
-ScareWare, Watering-Hole, honeytraps, whaling, smishing, quishing, tishing, vishing, wishing, pharming, snowshoeing, USB Drop
+Baiting, Tailgating, Ransomware, impersonating on help desk, diversion theft, dumpster diving,
+shoulder surfing, pup-up windows, robocalls, reverse social engineering, online social engineering, phone social engineering,
+stealing important documents, fake software, Whitelisting following
+ScareWare, Watering-Hole, honeytraps, USB Drop
 
 
