@@ -3,7 +3,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\usepackage[T1]{fontenc}
+% \usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{array}    % table/tabular
 \usepackage{graphicx, float}
 \graphicspath{{res/}}
 \usepackage{tikz}     % tableofcontents
@@ -19,7 +21,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\newcommand{\qq}[1]{\textquotestraightdblbase #1\textquotedblleft\ }
+\newcommand{\qq}[1]{\textquotestraightdblbase #1\textquotedblleft}
+\newcommand{\qqq}[1]{\textquotesingle #1\textquotesingle}
 \newcommand{\bcite}[1]{\textbf{\cite{#1}}}
 \renewcommand{\footnoterule}{\vfill\kern -3pt \hrule width 0.4\columnwidth \kern 2.6pt}
 

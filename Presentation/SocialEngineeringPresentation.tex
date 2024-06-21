@@ -1,5 +1,12 @@
 \documentclass{beamer}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[upright]{fourier} 
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tkz-kiviat,numprint,fullpage} 
 \usepackage{amsfonts,amsmath,oldgerm}
+\usetikzlibrary{arrows}
+\thispagestyle{empty}
 \usetheme{sintef}
 
 \usefonttheme[onlymath]{serif}
@@ -55,6 +62,22 @@
               \end{equation*}
 
     \end{itemize}
+\end{frame}
+
+\begin{frame}{THIS IS ME}
+    Compared to PowerPoint, using \LaTeX\ is better because:
+    \begin{center}
+        \begin{tikzpicture}
+            \tkzKiviatDiagram[scale=1.5,label distance=1cm,
+                radial  = 1,
+                gap     = 0.3,
+                lattice = 5, label space = 0.7]{        Offenheit,Gewissenhaftigkeit,Extraversion,Verträglichkeit,Neurotizismus}
+            \tkzKiviatLine[thick,color=blue,mark=none,
+                fill=blue!20,opacity=.5](4.25,4.65,2.8,4.35,2.8) % 85, 93, 56, 87, 56
+            \tkzKiviatGrad[unity=20](1)
+        \end{tikzpicture}
+    \end{center}
+
 \end{frame}
 
 % \begin{frame}[fragile]{Getting Started}
