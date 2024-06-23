@@ -26,12 +26,12 @@
 \newcommand{\bcite}[1]{\textbf{\cite{#1}}}
 \renewcommand{\footnoterule}{\vfill\kern -3pt \hrule width 0.4\columnwidth \kern 2.6pt}
 
-\renewcommand{\abstractname}{Zusammenfassung}
-\renewcommand{\contentsname}{Inhalt}
-\newcommand{\replacechaptername}{Kapitel}
-\renewcommand{\chaptername}{\replacechaptername}
-\renewcommand{\bibname}{Quellenverzeichnis}
-\newcommand{\replacepagename}{Seite}
+\AtBeginDocument{\renewcommand{\abstractname}{Zusammenfassung}}
+\AtBeginDocument{\renewcommand{\contentsname}{Inhalt}}
+\AtBeginDocument{\newcommand{\replacechaptername}{Kapitel}}
+\AtBeginDocument{\renewcommand{\chaptername}{\replacechaptername}}
+\AtBeginDocument{\renewcommand{\bibname}{Quellenverzeichnis}}
+\AtBeginDocument{\newcommand{\replacepagename}{Seite}}
 
 \renewcommand{\chapterautorefname}{\textit{Kapitel}}
 \renewcommand{\sectionautorefname}{\textit{Sektion}}
@@ -100,4 +100,3 @@
 	  \end{tikzpicture}}
 	\@starttoc{toc}}
 \makeatother
-
