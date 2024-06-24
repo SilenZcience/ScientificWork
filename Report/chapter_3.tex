@@ -24,9 +24,24 @@ Unter keinen Umständen sollten private oder berufliche Informationen öffenlich
 Angriffen wie Baiting (\autoref{baiting}) kann entgegengewirkt werden, wenn entsprechende Systeme installiert sind, welche unauthorisierte Software und Hardware blockieren.
 Grundsetzlich gilt, keinen unbekannten Kontaktaufnahmen zu vertrauen \bcite{1_enisa}, und die Legitimität von Anrufen und E-Mails (oder anderweitigen Quellen) ausreichend zu prüfen.
 Insbesondere sollten bei E-Mails die drei kritischen Punkte Absender, Betreff und Anhang vor dem Öffnen bedacht und überprüft werden \bcite{2_bsi}.
-Links sollten nicht geöffnet werden, bevor diese verifiziert wurden. Beispielsweise lässt sich die URL eines Links bereits inspizieren, bevor dieser angeklickt wurde, beispielsweise durch das Bewegen des Mauszeigers über den Link.
+Links sollten nicht geöffnet werden, bevor diese verifiziert wurden. Beispielsweise lässt sich die URL eines Links bereits durch das Bewegen des Mauszeigers über den Link inspizieren, bevor dieser angeklickt wurde.
 Merkmale, auf die hierbei geachtet werden sollte, sind, ob die URL semantisch unseriös wirkt, und mit \qqq{https} (nicht \qqq{http}) beginnt. 
 
-\section{Justiz}
+\section{Juristik}
 
-\bcite{criminal}
+Social Engineering wird juristisch zumeist nur mit Geldbußen bestraft.
+\qq{Da sich der Angreifer Zugang zu einem Computersystem verschafft, über das er nicht oder
+nicht alleine verfügen darf, ist ein Teil des objektiven Tatbestandes des §118a StGB erfüllt.
+Dieser erfordert jedoch weiters, dass die Zugangsverschaffung durch die Verletzung einer
+Sicherheitsvorkehrung erfolgt, die sich \qqq{im Computersystem} befindet. Da sich die durch
+Social Engineering Angriffe verletzte Sicherheitsvorkehrung Mensch jedoch nicht \qqq{im
+Computersystem} befindet, ist der objektive Tatbestand des §118a StGB idR nicht erfüllt.}\bcite{criminal}
+
+Social Engineering ist rechtlich gesehen somit allenfalls eine Täuschung.
+Insofern Social Engineering aber das Ziel erreicht, Authentifizierungsdaten zu ermitteln, gilt §126c Abs 1 Fall 2 des Strafgesetzbuches:
+\qq{Wer [\dots] ein Computerpasswort, einen Zugangscode oder vergleichbare Daten, die den Zugriff auf ein Computersystem oder einen Teil davon ermöglichen,
+mit dem Vorsatz [\dots] verschafft [\dots], dass sie zur Begehung einer der [\dots] strafbaren Handlungen gebraucht werden, ist mit Freiheitsstrafe bis zu sechs Monaten oder mit Geldstrafe bis zu 360 Tagessätzen zu bestrafen.}
+Erlangt der Angreifer jedoch anderweitige Daten, wie etwa Konfigurationsinformationen des Sicherheitssystems, bleibt es grundsätzlich bei Straflosigkeit \bcite{criminal}.
+
+Selbstverständlich ist die typische Folge eines gelungenen Social Engineering Angriffes oftmals eine weitere Straftat, wie Identitätsdiebstahl, Verbraucherbetrug oder Diebstahl.
+Diese werden als eigenständige Tatbestände behandelt \bcite{illegal}.
