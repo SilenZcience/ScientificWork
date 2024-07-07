@@ -34,7 +34,6 @@
         \today
         \vfill
 
-        %\section*{Supervision}
         \large\begin{itemize}
             \item Erstgutachter: \space\space\space -
             \item Zweitgutachter: -
@@ -54,18 +53,16 @@ ProB wird bereits von mehreren Unternehmen verwendet und ist November 2022 mit d
 \section{Problembeschreibung}
 Um Prädikate zu lösen ist in ProB der von Microsoft Research entwickelte Z3 Solver(C++) \parencite{Z3_2} in einer Programmerweiterung als Backend eingebunden.
 Dieser stellt jedoch insofern ein Problem dar, dass sporadisch Speicherlecks und Segmentation Faults auftreten.
-Zudem werden aktuell mehrere Prädikate sequentiell gelöst, wodurch es gegebenenfalls zum Erreichen einer Performance Grenze kommen kann.
-% TODO: Das enthält keine Information.
-% "gegebenenfalls" und "Performance Grenze" - was ist die Grenze hier? Wann kann das erreicht werden? Wie realistisch ist das?
-% Ist einfach langsam, wenn man nicht parallelisieren kann.
-Ersteres stellt insbesondere bezüglich der Hintergrundinformationen, dass ProB zur Datenvalidierung für sicherheitskritische Systeme verwendet wird, eine ernstzunehmende Problematik dar.
-% TODO: Ist halt sehr unangenehm; solange aber kein falsches Ergebnis zurückkommt, ist das kein soo ernstes Problem.
+Grundsätzlich kann dies zu einer unangenehmen und zeitraubenden Verwendung der Z3 Solver Komponente von ProB führen.
+Zudem erfolgt aktuell eine sequentielle Lösung mehrerer Prädikate, was im Wesentlichen zeitaufwändiger ist als eine Parallelisierung der Anwendung.
+
+
 \section{Ziele}
 In dieser Bachelorarbeit soll der Z3 Solver in einen seperaten (C++) Prozess ausgelagert werden, sodass ProB und Z3 entkoppelt sind.
 Es wird also die bestehende Vorgehensweise, die Prädikate im C-Interface zusammenzubauen und zu lösen, verworfen.
 Stattdessen wird hiermit ein System eingeführt, bei dem die Prädikate an den Z3 Prozess gesendet werden, wo diese gelöst und zurückgeschickt werden.
 Als Technologie zur Kommunikation zwischen den zwei Prozessen wird die ZeroMQ-Bibliothek \parencite{ZeroMQ_2} verwendet, um eine direkte IPC-Protokoll Verbindung zu legen.
-ZeroMQ (auch ØMQ, 0MQ oder ZMQ) ist eine Nachrichtenaustauschbibliothek, die speziell für verteilte Systeme entwickelt wurde, und zeichnet sich durch ihre geringe Latenz aus.
+ZeroMQ\footnote{auch ØMQ, 0MQ oder ZMQ} ist eine Nachrichtenaustauschbibliothek, die speziell für verteilte Systeme entwickelt wurde, und zeichnet sich durch ihre geringe Latenz aus.
 
 Diese Arbeit wird mit dem Interesse der Erweiterbarkeit vollrichtet, sodass zukünftig die Option besteht, gegebenenfalls mehrere Instanzen des Z3 Prozesses zu starten und
 das Lösen der Prädikate zu parallelisieren.
@@ -118,7 +115,7 @@ das Lösen der Prädikate zu parallelisieren.
 Zuletzt besteht die Möglichkeit diese Arbeit insofern zu erweitern, dass die Leistungsfähigkeit der Entkopplung, durch etwaige Benchmarks und Tests, evaluiert wird.
 In diesem Fall wird der Einfluss auf die Gesamtperformance der Programmerweiterung hinsichtlich dem Vergleich zur vorherigen Vorgehensweise analysiert.
 % \newpage
-
+% TODO: evtl programm documentation als erweiterung?
 \section{Minimalanforderungen}
 \begin{itemize}
     \item Trennung von ProB und Z3 mittels ZeroMQ
@@ -143,18 +140,14 @@ Dies stellt zunächst ein Hinderniss dar, da diese Sprache noch unvertraut ist. 
 \section{Ungefährer Zeitplan}
 Eine grobe Herangehensweise im Entkoppeln der Z3 Komponente lautet wie folgt:
 
-% TODO: irgendwo währenddessen wirst du für deine Ausarbeitung auch Dinge aufschreiben müssen.
-% Meine Empfehlung ist es, das möglichst früh parallel zu machen, wenn du noch genau drin bist, in dem was du tust.
-% Ich empfehle auch währenddessen die Techniken, die Rich Hickey hier vorstellt, zu berücksichtigen:
-% https://www.youtube.com/watch?v=c5QF2HjHLSE
 \begin{table}[!htp]
     \begin{tabular}{p{0.7\linewidth}r}
-        Aufstellen einer ZeroMQ Kommunikation zwischen einem simplen Client-Server Modell:                                                       & bis Woche 1    \\
-        Das Client Modell in das C-Interface von ProB integrieren:                                                                               & bis Woche 1    \\
-        Implementieren einer einzelnen Funktion im Server Prozess:                                                                               & bis Woche 3    \\
-        den Server ausbauen um das Erweitern weiterer Funktion zu erleichtern:                                                                   & bis Woche 4-5  \\
-        nacheinander alle Funktionen in die neue Architektur transferieren: \newline (Hier sind die meisten Probleme und EdgeCases zu erwarten.) & bis Woche 8-10 \\
-        Performance Analyse:                                                                                                                     & bis Woche 12   \\
+        Aufstellen einer ZeroMQ Kommunikation zwischen einem simplen Client-Server Modell                                                       & bis Woche 1    \\
+        Das Client Modell in das C-Interface von ProB integrieren                                                                               & bis Woche 1    \\
+        Implementieren einer einzelnen Funktion im Server Prozess                                                                               & bis Woche 3    \\
+        den Server ausbauen um das Erweitern weiterer Funktion zu erleichtern                                                                   & bis Woche 4-5  \\
+        nacheinander alle Funktionen in die neue Architektur transferieren \newline (Hier sind die meisten Probleme und EdgeCases zu erwarten.) & bis Woche 8-10 \\
+        Performance Analyse:                                                                                                                    & bis Woche 12   \\
     \end{tabular}
 \end{table}
 \FloatBarrier
