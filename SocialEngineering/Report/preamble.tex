@@ -4,6 +4,7 @@
 
 
 % \usepackage[T1]{fontenc}
+\usepackage[bitstream-charter]{mathdesign}
 \usepackage[ngerman]{babel}
 \usepackage{array}    % table/tabular
 \usepackage{graphicx, float}
@@ -27,7 +28,7 @@
 \renewcommand{\footnoterule}{\vfill\kern -3pt \hrule width 0.4\columnwidth \kern 2.6pt}
 
 \AtBeginDocument{\renewcommand{\abstractname}{Zusammenfassung}}
-\AtBeginDocument{\renewcommand{\contentsname}{Inhalt}}
+\AtBeginDocument{\renewcommand{\contentsname}{INHALT}}
 \AtBeginDocument{\newcommand{\replacechaptername}{Kapitel}}
 \AtBeginDocument{\renewcommand{\chaptername}{\replacechaptername}}
 \AtBeginDocument{\renewcommand{\bibname}{Quellenverzeichnis}}
@@ -38,6 +39,9 @@
 \renewcommand{\subsectionautorefname}{\textit{Untersektion}}
 \renewcommand{\figureautorefname}{\textit{Abbildung}}
 \renewcommand{\tableautorefname}{\textit{Tabelle}}
+
+
+\hfuzz1pt % Don't bother to report over-full boxes if over-edge is < 1pt
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -94,8 +98,8 @@
 	  \vspace*{-20\p@}
 	  \begin{tikzpicture}[remember picture, overlay]
 		  \pgftext[right,x=15cm,y=0.2cm]{\color{doc!60}\Huge\sc\bfseries \contentsname};
-		  \draw[fill=doc!60,draw=doc!60] (13.5,-.75) rectangle (20,1);
-		  \clip (13.5,-.75) rectangle (20,1);
+		  \draw[fill=doc!60,draw=doc!60] (13.28,-.60) rectangle (20,1);
+		  \clip (13.28,-.60) rectangle (20,1);
 		  \pgftext[right,x=15cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};
 	  \end{tikzpicture}}
 	\@starttoc{toc}}

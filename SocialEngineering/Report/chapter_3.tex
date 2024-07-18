@@ -29,19 +29,42 @@ Merkmale, auf die hierbei geachtet werden sollte, sind, ob die URL semantisch un
 
 \section{Juristik}
 
-Social Engineering wird juristisch zumeist nur mit Geldbußen bestraft.
+Die strafrechtlichen Folgen von Social Engineering haben im digitalen Zeitalter beständig angepasst und verbessert werden müssen.
+Wie zuvor etabliert ist Social Engineering zudem umfangreich in seinen Möglichkeiten, weshalb Tatbestände detailreich und sachbezogen behandelt werden müssen.
+Es folgt keine vollständige strafrechtliche Beurteilung, vielmehr ein grundlegender Überblick über die essenziellsten juristischen Grundlagen.
+Des Weiteren ist die Handhabung von Social Engineering als Straftat nicht uniform sondern variiert in unterschiedlichen Ländern.
+
+In Österreich wird Social Engineering beispielsweise juristisch zumeist nur mit Geldbußen bestraft.
 \qq{Da sich der Angreifer Zugang zu einem Computersystem verschafft, über das er nicht oder
 nicht alleine verfügen darf, ist ein Teil des objektiven Tatbestandes des §118a StGB erfüllt.
 Dieser erfordert jedoch [zusätzlich], dass die Zugangsverschaffung durch die Verletzung einer
 Sicherheitsvorkehrung erfolgt, die sich \qqq{im Computersystem} befindet. Da sich die durch
 Social Engineering Angriffe verletzte Sicherheitsvorkehrung Mensch jedoch nicht \qqq{im
 Computersystem} befindet, ist der objektive Tatbestand des §118a StGB idR nicht erfüllt.}\bcite{criminal}
+Die Fassung von §118a StGB wurde in den Jahren 2007, 2015 und 2023 neu aufgelegt, enthält in jeder dieser Auflagen jedoch dieselbe Formulieren bezüglich der Verletzung von Sicherheitsvorkehrungen.
+Social Engineering ist hier rechtlich gesehen somit allenfalls eine Täuschung \bcite{criminal}.
 
-Social Engineering ist rechtlich gesehen somit allenfalls eine Täuschung.
-Insofern Social Engineering aber das Ziel erreicht, Authentifizierungsdaten zu ermitteln, gilt §126c Abs 1 Fall 2 des Strafgesetzbuches:
-\qq{Wer [\dots] ein Computerpasswort, einen Zugangscode oder vergleichbare Daten, die den Zugriff auf ein Computersystem oder einen Teil davon ermöglichen,
-mit dem Vorsatz [\dots] verschafft [\dots], dass sie zur Begehung einer der [\dots] strafbaren Handlungen gebraucht werden, ist mit Freiheitsstrafe bis zu sechs Monaten oder mit Geldstrafe bis zu 360 Tagessätzen zu bestrafen.}
-Erlangt der Angreifer jedoch anderweitige Daten, wie etwa Konfigurationsinformationen des Sicherheitssystems, bleibt es grundsätzlich bei Straflosigkeit \bcite{criminal}.
+In Deutschland fällt Social Engineering zumeist unter die \qqq{Verletzung des persönlichen Lebens- und Geheimbereichs}, insbesondere §202a\footnote{Ausspähen von Daten}, §202b\footnote{Abfangen von Daten} und §202c\footnote{Vorbereiten des Ausspähens und Abfangens von Daten}.
+Nach §202a Abs 1 StGB gilt:
+\qq{Wer unbefugt sich oder einem anderen Zugang zu Daten, die nicht für ihn bestimmt und die gegen unberechtigten Zugang besonders gesichert sind, unter Überwindung der Zugangssicherung verschafft, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.}
+Für technische Angriffsvektoren (\autoref{technisch}) gilt zudem explizit §202b, welches das unbefugte Verschaffen von nichtöffentlichen Daten unter Anwendung technischer Mittel behandelt.
+§202c beschreibt das Vorbereiten der in §202a und §202b erklärten Tatbestände, etwa durch den Besitz von \qq{Computerprogramme[n], deren Zweck die Begehung einer solchen Tat ist}. 
+
+% Insofern Social Engineering aber das Ziel erreicht, Authentifizierungsdaten zu ermitteln, gilt §126c Abs 1 Fall 2 des Strafgesetzbuches:
+% \qq{Wer [\dots] ein Computerpasswort, einen Zugangscode oder vergleichbare Daten, die den Zugriff auf ein Computersystem oder einen Teil davon ermöglichen,
+% mit dem Vorsatz [\dots] verschafft [\dots], dass sie zur Begehung einer der [\dots] strafbaren Handlungen gebraucht werden, ist mit Freiheitsstrafe bis zu sechs Monaten oder mit Geldstrafe bis zu 360 Tagessätzen zu bestrafen.}
+% Erlangt der Angreifer jedoch anderweitige Daten, wie etwa Konfigurationsinformationen des Sicherheitssystems, bleibt es hierbei grundsätzlich bei Straflosigkeit \bcite{criminal}. % -> Österreich!
+
+Social Engineering kann ebenfalls eine Straftat gegen die öffentliche Ordnung darstellen, wenn eine Gefährdung der Verbreitung personenbezogener Daten (§126a) vorliegt.
+Insofern bei einem Social Engineering Angriff beispielsweise ein Passwort erlangt wird, muss geprüft werden, ob die Entwendung ein konkretes Individualrecht verletzt.
+Dies ist der Fall, insofern das Passwort eine personenbezogene Informationen darstellt, also die Identität einer Person in Zusammenhang des öffentlich bekannten Benutzernamen bestimmbar ist.
+Ist das Passwort hingegen für einen administrativen Account eines unpersönlichen Computersystems, so liegen bei der Entwendung keine personenbezogenen Daten vor.
+% Bezüglich des Individualrechtes des Datenschutzes gilt, dass das Erlangen von personenbezogenen Daten selbst rechtswidrig ist.
+% Dass durch spätere Verwendung derartiger Daten weitere Rechte verletzt werden (können), hat außer Betracht zu bleiben.
+% Das Ermitteln von Passwörtern fällt unter 
+
+Bei dem Straftatbestand des Datendiebstahls sowie der Datenhehlerei (§202d) handelt es sich um ein sogenanntes Antragsdelikt, sodass die Polizei erst nach einer entsprechenden Strafanzeige ein Ermittlungsverfahren eröffnen kann \bcite{kotz}.
+
 
 Selbstverständlich ist die typische Folge eines gelungenen Social Engineering Angriffes oftmals eine weitere Straftat wie Identitätsdiebstahl, Verbraucherbetrug oder Diebstahl.
 Diese werden als eigenständige Tatbestände behandelt \bcite{illegal}.
