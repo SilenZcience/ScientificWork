@@ -1,0 +1,962 @@
+1505
+% Solve using solver double_check(z3): 101 ms (365 ms walltime).
+% Solve using solver double_check(z3): 4 ms (7 ms walltime).
+1506
+% Solve using solver double_check(z3): 105 ms (329 ms walltime).
+% Solve using solver double_check(z3): 7 ms (25 ms walltime).
+% Solve using solver double_check(z3): 9 ms (46 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 24 ms (39 ms walltime).
+% Solve using solver double_check(z3): 3 ms (17 ms walltime).
+% Solve using solver double_check(z3): 196 ms (213 ms walltime).
+15007
+1508
+% Solve using solver double_check(z3): 90 ms (339 ms walltime).
+% Solve using solver double_check(z3): 1 ms (28 ms walltime).
+% Solve using solver z3: 1 ms (26 ms walltime).
+1509
+% Solve using solver double_check(z3): 107 ms (291 ms walltime).
+% Solve using solver double_check(z3): 12 ms (39 ms walltime).
+% Solve using solver double_check(z3): 9 ms (36 ms walltime).
+% Solve using solver double_check(z3): 15 ms (53 ms walltime).
+1510
+% Solve using solver double_check(z3): 132 ms (401 ms walltime).
+% Solve using solver double_check(z3): 12 ms (39 ms walltime).
+% Solve using solver double_check(z3): 5 ms (23 ms walltime).
+1511
+% Solve using solver double_check(z3): 85 ms (349 ms walltime).
+% Solve using solver double_check(z3): 16 ms (49 ms walltime).
+1513
+% Solve using solver double_check(z3): 97 ms (292 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+1516
+% Solve using solver double_check(z3): 97 ms (337 ms walltime).
+% Solve using solver double_check(z3): 15 ms (34 ms walltime).
+1517
+% Solve using solver double_check(z3): 58 ms (59 ms walltime).
+% Solve using solver double_check(z3): 60 ms (255 ms walltime).
+1523
+% Solve using solver double_check(z3): 131 ms (165 ms walltime).
+% Solve using solver double_check(z3): 5 ms (23 ms walltime).
+% Solve using solver double_check(z3): 15 ms (29 ms walltime).
+1527
+% Solve using solver double_check(z3): 178 ms (512 ms walltime).
+1719
+1813
+1814
+1815
+1947
+% Runtime for SOLUTION for SETUP_CONSTANTS: 24 ms (walltime: 25 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 75 ms (308 ms walltime).
+% Solve using solver double_check(z3): 7 ms (20 ms walltime).
+% Solve using solver double_check(z3): 2 ms (16 ms walltime).
+% Solve using solver double_check(z3): 3 ms (15 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 8 ms (29 ms walltime).
+% Solve using solver double_check(z3): 14 ms (36 ms walltime).
+2055
+% Solve using solver double_check(z3): 193 ms (493 ms walltime).
+2060
+% Solve using solver double_check(z3): 95 ms (123 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 5 ms (30 ms walltime).
+% Solve using solver double_check(z3): 8 ms (35 ms walltime).
+% Solve using solver double_check(z3): 3 ms (28 ms walltime).
+% Solve using solver double_check(z3): 1 ms (26 ms walltime).
+% Solve using solver double_check(z3): 3 ms (16 ms walltime).
+% Solve using solver double_check(z3): 5 ms (17 ms walltime).
+% Solve using solver z3: 9 ms (21 ms walltime).
+% Solve using solver z3: 26 ms (39 ms walltime).
+% Solve using solver z3: 1 ms (12 ms walltime).
+% Solve using solver z3: 2 ms (12 ms walltime).
+% Solve using solver z3: 1 ms (11 ms walltime).
+% Solve using solver z3: 1 ms (11 ms walltime).
+% Solve using solver z3: 1 ms (10 ms walltime).
+% Solve using solver z3: 2 ms (13 ms walltime).
+% Solve using solver z3: 3 ms (16 ms walltime).
+% Solve using solver z3: 1 ms (12 ms walltime).
+% Solve using solver z3: 5 ms (19 ms walltime).
+% Solve using solver z3: 1 ms (15 ms walltime).
+% Solve using solver z3: 2 ms (13 ms walltime).
+% Solve using solver z3: 6 ms (20 ms walltime).
+% Solve using solver z3: 6 ms (19 ms walltime).
+% Solve using solver z3: 3 ms (18 ms walltime).
+% Solve using solver z3: 9 ms (19 ms walltime).
+% Solve using solver double_check(z3): 1 ms (15 ms walltime).
+% Solve using solver double_check(z3): 4 ms (15 ms walltime).
+% Solve using solver double_check(z3): 5 ms (14 ms walltime).
+% Solve using solver double_check(z3): 8 ms (23 ms walltime).
+% Solve using solver double_check(z3): 6 ms (21 ms walltime).
+% Solve using solver z3: 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 8 ms (26 ms walltime).
+% Solve using solver z3: 1 ms (0 ms walltime).
+% Solve using solver double_check(z3): 13 ms (52 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 12 ms (16 ms walltime).
+% Solve using solver z3: 3 ms (4 ms walltime).
+% Solve using solver z3: 4 ms (4 ms walltime).
+% Solve using solver double_check(z3): 6 ms (5 ms walltime).
+% Solve using solver z3: 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 7 ms (7 ms walltime).
+% Solve using solver z3: 3 ms (4 ms walltime).
+% Solve using solver double_check(z3): 1 ms (2 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 2 ms (1 ms walltime).
+% Solve using solver z3: 2 ms (2 ms walltime).
+% Solve using solver double_check(z3): 2 ms (3 ms walltime).
+% Solve using solver double_check(z3): 2 ms (2 ms walltime).
+% Solve using solver double_check(z3): 4 ms (4 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 7 ms (9 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 2 ms (2 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 1 ms (2 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (2 ms walltime).
+% Solve using solver double_check(z3): 4 ms (3 ms walltime).
+% Solve using solver z3: 2 ms (4 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (16 ms walltime).
+% Solve using solver double_check(z3): 4 ms (14 ms walltime).
+% Solve using solver double_check(z3): 1 ms (12 ms walltime).
+% Solve using solver z3: 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 5 ms (18 ms walltime).
+2063
+% Runtime for SOLUTION for SETUP_CONSTANTS: 17 ms (walltime: 18 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 331 ms (952 ms walltime).
+2096
+% Solve using solver double_check(z3): 137 ms (345 ms walltime).
+% Solve using solver double_check(z3): 5 ms (32 ms walltime).
+% Solve using solver double_check(z3): 6 ms (5 ms walltime).
+% Solve using solver double_check(z3): 11 ms (39 ms walltime).
+% Solve using solver double_check(z3): 2 ms (25 ms walltime).
+% Solve using solver double_check(z3): 3 ms (29 ms walltime).
+% Solve using solver double_check(z3): 15 ms (43 ms walltime).
+% Solve using solver double_check(z3): 4 ms (33 ms walltime).
+% Solve using solver double_check(z3): 9 ms (37 ms walltime).
+% Solve using solver double_check(z3): 3 ms (31 ms walltime).
+% Solve using solver double_check(z3): 4 ms (38 ms walltime).
+% Solve using solver double_check(z3): 4 ms (31 ms walltime).
+2117
+% Solve using solver double_check(z3): 90 ms (336 ms walltime).
+% Solve using solver double_check(z3): 1 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 1 ms (24 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 27 ms (42 ms walltime).
+% Solve using solver double_check(z3): 54 ms (83 ms walltime).
+% Solve using solver double_check(z3): 9 ms (28 ms walltime).
+2118
+% Solve using solver double_check(z3): 98 ms (271 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 3 ms (14 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+2119
+% Runtime for SOLUTION for SETUP_CONSTANTS: 22 ms (walltime: 22 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 125 ms (354 ms walltime).
+% Solve using solver double_check(z3): 35 ms (54 ms walltime).
+2120
+% Runtime for SOLUTION for SETUP_CONSTANTS: 101 ms (walltime: 103 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 23 ms (23 ms walltime).
+2121
+% Solve using solver double_check(z3): 119 ms (368 ms walltime).
+% Solve using solver double_check(z3): 5 ms (20 ms walltime).
+% Solve using solver double_check(z3): 4 ms (17 ms walltime).
+% Solve using solver double_check(z3): 3 ms (18 ms walltime).
+% Solve using solver z3: 10 ms (28 ms walltime).
+% Solve using solver double_check(z3): 19 ms (40 ms walltime).
+% Solve using solver double_check(z3): 2 ms (8 ms walltime).
+% Solve using solver double_check(z3): 13 ms (28 ms walltime).
+% Solve using solver double_check(z3): 32 ms (48 ms walltime).
+% Solve using solver double_check(z3): 9 ms (23 ms walltime).
+% Solve using solver double_check(z3): 6 ms (17 ms walltime).
+% Solve using solver double_check(z3): 3 ms (16 ms walltime).
+% Solve using solver double_check(z3): 4 ms (14 ms walltime).
+% Solve using solver double_check(z3): 3 ms (14 ms walltime).
+% Solve using solver double_check(z3): 4 ms (15 ms walltime).
+% Solve using solver double_check(z3): 26 ms (57 ms walltime).
+% Solve using solver double_check(z3): 25 ms (53 ms walltime).
+2122
+% Solve using solver double_check(z3): 51 ms (50 ms walltime).
+% Solve using solver double_check(z3): 5 ms (4 ms walltime).
+% Solve using solver double_check(z3): 2 ms (1 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 44 ms (75 ms walltime).
+% Solve using solver double_check(z3): 12 ms (41 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (18 ms walltime).
+% Solve using solver double_check(z3): 3 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (12 ms walltime).
+% Solve using solver double_check(z3): 12 ms (24 ms walltime).
+% Solve using solver double_check(z3): 16 ms (34 ms walltime).
+% Solve using solver double_check(z3): 7 ms (20 ms walltime).
+% Solve using solver double_check(z3): 2 ms (8 ms walltime).
+% Solve using solver double_check(z3): 4 ms (16 ms walltime).
+% Solve using solver double_check(z3): 1 ms (7 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 0 ms (7 ms walltime).
+% Solve using solver double_check(z3): 3 ms (20 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 5 ms (18 ms walltime).
+% Solve using solver double_check(z3): 3 ms (17 ms walltime).
+% Solve using solver double_check(z3): 3 ms (15 ms walltime).
+% Solve using solver double_check(z3): 0 ms (14 ms walltime).
+% Solve using solver double_check(z3): 3 ms (14 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 2 ms (16 ms walltime).
+% Solve using solver double_check(z3): 1 ms (15 ms walltime).
+% Solve using solver double_check(z3): 1 ms (16 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 2 ms (19 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 1 ms (14 ms walltime).
+% Solve using solver double_check(z3): 1 ms (17 ms walltime).
+% Solve using solver double_check(z3): 1 ms (16 ms walltime).
+% Solve using solver double_check(z3): 6 ms (17 ms walltime).
+% Solve using solver double_check(z3): 3 ms (14 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (21 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 10 ms (23 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 4 ms (18 ms walltime).
+% Solve using solver double_check(z3): 5 ms (21 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(z3): 3 ms (18 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 3 ms (12 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 1 ms (12 ms walltime).
+% Solve using solver double_check(z3): 23 ms (36 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 3 ms (15 ms walltime).
+% Solve using solver double_check(z3): 1 ms (14 ms walltime).
+% Solve using solver double_check(z3): 4 ms (18 ms walltime).
+% Solve using solver double_check(z3): 2 ms (16 ms walltime).
+% Solve using solver double_check(z3): 6 ms (29 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 23 ms (41 ms walltime).
+% Solve using solver double_check(z3): 2 ms (7 ms walltime).
+% Solve using solver double_check(z3): 422 ms (448 ms walltime).
+% Solve using solver double_check(z3): 10 ms (25 ms walltime).
+% Solve using solver double_check(z3): 11 ms (32 ms walltime).
+% Solve using solver double_check(z3): 10 ms (42 ms walltime).
+% Solve using solver double_check(z3): 8 ms (42 ms walltime).
+% Solve using solver double_check(z3): 16 ms (45 ms walltime).
+% Solve using solver double_check(z3): 3 ms (21 ms walltime).
+% Solve using solver double_check(z3): 3 ms (22 ms walltime).
+% Solve using solver double_check(z3): 7 ms (26 ms walltime).
+% Solve using solver double_check(z3): 3 ms (22 ms walltime).
+% Solve using solver double_check(z3): 1 ms (25 ms walltime).
+% Solve using solver double_check(z3): 4 ms (29 ms walltime).
+% Solve using solver double_check(z3): 3 ms (16 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (13 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 3 ms (13 ms walltime).
+% Solve using solver double_check(z3): 5 ms (18 ms walltime).
+% Solve using solver double_check(z3): 4 ms (19 ms walltime).
+% Solve using solver double_check(z3): 0 ms (27 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 5 ms (28 ms walltime).
+% Solve using solver double_check(z3): 7 ms (27 ms walltime).
+% Solve using solver double_check(z3): 1 ms (8 ms walltime).
+% Solve using solver double_check(z3): 410 ms (440 ms walltime).
+% Solve using solver double_check(z3): 19 ms (47 ms walltime).
+% Solve using solver double_check(z3): 8 ms (26 ms walltime).
+% Solve using solver double_check(z3): 4 ms (26 ms walltime).
+% Solve using solver double_check(z3): 4 ms (19 ms walltime).
+% Solve using solver double_check(z3): 5 ms (21 ms walltime).
+% Solve using solver double_check(z3): 6 ms (24 ms walltime).
+% Solve using solver double_check(z3): 9 ms (28 ms walltime).
+% Solve using solver double_check(z3): 104 ms (117 ms walltime).
+% Solve using solver double_check(z3): 19 ms (35 ms walltime).
+% Solve using solver double_check(z3): 26 ms (42 ms walltime).
+% Solve using solver double_check(z3): 12 ms (27 ms walltime).
+% Solve using solver double_check(z3): 9 ms (33 ms walltime).
+% Solve using solver double_check(z3): 17 ms (37 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver double_check(z3): 0 ms (6 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 2 ms (15 ms walltime).
+% Solve using solver double_check(z3): 2 ms (14 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 12 ms (51 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (18 ms walltime).
+% Solve using solver double_check(z3): 5 ms (18 ms walltime).
+% Solve using solver double_check(z3): 1 ms (19 ms walltime).
+% Solve using solver double_check(z3): 277 ms (287 ms walltime).
+% Solve using solver double_check(z3): 1 ms (15 ms walltime).
+% Solve using solver double_check(z3): 4 ms (26 ms walltime).
+% Solve using solver double_check(z3): 1 ms (14 ms walltime).
+% Solve using solver double_check(z3): 3 ms (17 ms walltime).
+% Solve using solver double_check(z3): 3 ms (14 ms walltime).
+2147
+% Solve using solver double_check(z3): 92 ms (283 ms walltime).
+% Solve using solver double_check(z3): 0 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (12 ms walltime).
+2149
+% Solve using solver double_check(z3): 156 ms (347 ms walltime).
+% Solve using solver double_check(z3): 13 ms (13 ms walltime).
+% Solve using solver double_check(z3): 7 ms (31 ms walltime).
+% Solve using solver double_check(z3): 12 ms (27 ms walltime).
+% Solve using solver double_check(z3): 6 ms (19 ms walltime).
+% Solve using solver double_check(z3): 11 ms (27 ms walltime).
+% Solve using solver double_check(z3): 6 ms (20 ms walltime).
+% Solve using solver double_check(z3): 7 ms (27 ms walltime).
+% Solve using solver double_check(z3): 4 ms (23 ms walltime).
+% Solve using solver double_check(z3): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 4 ms (18 ms walltime).
+% Solve using solver double_check(z3): 3 ms (19 ms walltime).
+% Solve using solver double_check(z3): 2 ms (17 ms walltime).
+% Solve using solver double_check(z3): 2 ms (16 ms walltime).
+% Solve using solver double_check(z3): 7 ms (23 ms walltime).
+% Solve using solver double_check(z3): 5 ms (16 ms walltime).
+% Solve using solver double_check(z3): 4 ms (15 ms walltime).
+% Solve using solver double_check(z3): 4 ms (13 ms walltime).
+2162
+% Solve using solver z3: 83 ms (291 ms walltime).
+% Solve using solver cdclt: 52 ms (61 ms walltime).
+% Solve using solver z3: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (1 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 1 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (1 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+% Solve using solver cdclt: 1 ms (0 ms walltime).
+% Solve using solver cdclt: 0 ms (1 ms walltime).
+% Solve using solver cdclt: 0 ms (0 ms walltime).
+2174
+% Runtime for SOLUTION for SETUP_CONSTANTS: 22 ms (walltime: 22 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver prob(default): 15 ms (16 ms walltime).
+% Solve using solver prob(default): 18 ms (18 ms walltime).
+% Solve using solver prob(default): 1 ms (1 ms walltime).
+% Solve using solver prob(default): 1 ms (0 ms walltime).
+% Solve using solver nostate(z3): 65 ms (264 ms walltime).
+% Solve using solver nostate(z3): 48 ms (365 ms walltime).
+% Solve using solver nostate(z3): 70 ms (341 ms walltime).
+% Solve using solver nostate(z3): 112 ms (510 ms walltime).
+2175
+% Solve using solver double_check(z3): 144 ms (395 ms walltime).
+% Solve using solver double_check(z3): 7 ms (33 ms walltime).
+% Solve using solver double_check(z3): 8 ms (33 ms walltime).
+% Solve using solver z3cns: 6 ms (24 ms walltime).
+% Solve using solver z3cns: 0 ms (11 ms walltime).
+% Solve using solver z3cns: 3 ms (14 ms walltime).
+% Solve using solver double_check(z3): 3 ms (17 ms walltime).
+% Solve using solver z3: 240 ms (953 ms walltime).
+2176
+% Solve using solver double_check(cdclt): 146 ms (145 ms walltime).
+% Solve using solver double_check(cdclt): 2 ms (2 ms walltime).
+% Solve using solver double_check(cdclt): 10 ms (11 ms walltime).
+% Solve using solver double_check(z3): 64 ms (282 ms walltime).
+% Solve using solver double_check(cdclt): 18 ms (20 ms walltime).
+% Solve using solver double_check(cdclt): 3 ms (3 ms walltime).
+% Solve using solver double_check(cdclt): 3 ms (3 ms walltime).
+% Solve using solver double_check(cdclt): 3 ms (3 ms walltime).
+% Solve using solver double_check(cdclt): 3 ms (3 ms walltime).
+% Solve using solver double_check(cdclt): 1 ms (1 ms walltime).
+% Solve using solver double_check(z3): 18 ms (39 ms walltime).
+% Solve using solver double_check(z3): 4 ms (24 ms walltime).
+% Solve using solver double_check(cdclt): 7 ms (8 ms walltime).
+% Solve using solver double_check(cdclt): 9 ms (9 ms walltime).
+% Solve using solver double_check(cdclt): 6 ms (6 ms walltime).
+% Solve using solver double_check(z3): 8 ms (27 ms walltime).
+2251
+% Solve using solver double_check(z3): 1903 ms (6203 ms walltime).
+% Solve using solver double_check(z3): 358 ms (1399 ms walltime).
+% Solve using solver double_check(z3): 5233 ms (18844 ms walltime).
+% Solve using solver double_check(z3): 800 ms (2378 ms walltime).
+% Solve using solver double_check(z3): 5461 ms (19939 ms walltime).
+% Solve using solver double_check(z3): 4662 ms (17081 ms walltime).
+% Solve using solver double_check(z3): 240 ms (914 ms walltime).
+% Solve using solver double_check(z3): 55 ms (192 ms walltime).
+% Solve using solver double_check(z3): 4148 ms (16040 ms walltime).
+% Solve using solver double_check(nostate(z3)): 1823 ms (6184 ms walltime).
+% Solve using solver double_check(nostate(z3)): 329 ms (1541 ms walltime).
+% Solve using solver double_check(nostate(z3)): 5772 ms (20915 ms walltime).
+% Solve using solver double_check(nostate(z3)): 859 ms (2525 ms walltime).
+% Solve using solver double_check(nostate(z3)): 5657 ms (20633 ms walltime).
+% Solve using solver double_check(nostate(z3)): 4834 ms (18042 ms walltime).
+% Solve using solver double_check(nostate(z3)): 121 ms (492 ms walltime).
+% Solve using solver double_check(nostate(z3)): 56 ms (228 ms walltime).
+2254
+% Runtime for SOLUTION for SETUP_CONSTANTS: 36 ms (walltime: 36 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 1 ms (walltime: 1 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 54 ms (54 ms walltime).
+% Solve using solver double_check(z3): 19 ms (165 ms walltime).
+% Solve using solver double_check(z3): 6 ms (7 ms walltime).
+% Solve using solver double_check(z3): 9 ms (10 ms walltime).
+% Solve using solver double_check(z3): 5 ms (8 ms walltime).
+% Solve using solver double_check(z3): 45 ms (86 ms walltime).
+% Solve using solver double_check(nostate(z3)): 53 ms (142 ms walltime).
+% Solve using solver double_check(nostate(z3)): 81 ms (194 ms walltime).
+% Solve using solver double_check(nostate(z3)): 217 ms (326 ms walltime).
+% Solve using solver double_check(nostate(z3)): 63 ms (147 ms walltime).
+% Solve using solver double_check(nostate(z3)): 41 ms (126 ms walltime).
+% Solve using solver double_check(nostate(z3)): 139 ms (234 ms walltime).
+2257
+% Runtime for SOLUTION for SETUP_CONSTANTS: 37 ms (walltime: 36 ms)
+% Solve using solver double_check(z3): 61 ms (66 ms walltime).
+% Solve using solver double_check(z3): 9 ms (9 ms walltime).
+% Solve using solver double_check(z3): 7 ms (6 ms walltime).
+% Solve using solver double_check(z3): 6 ms (7 ms walltime).
+% Solve using solver double_check(z3): 6 ms (6 ms walltime).
+% Solve using solver double_check(z3): 53 ms (295 ms walltime).
+% Solve using solver double_check(nostate(z3)): 94 ms (186 ms walltime).
+% Solve using solver double_check(nostate(z3)): 84 ms (147 ms walltime).
+% Solve using solver double_check(nostate(z3)): 135 ms (217 ms walltime).
+% Solve using solver double_check(nostate(z3)): 265 ms (351 ms walltime).
+% Solve using solver double_check(nostate(z3)): 267 ms (350 ms walltime).
+% Solve using solver double_check(nostate(z3)): 149 ms (232 ms walltime).
+2259
+% Runtime for SOLUTION for SETUP_CONSTANTS: 22 ms (walltime: 23 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 138 ms (602 ms walltime).
+% Solve using solver double_check(z3): 8 ms (8 ms walltime).
+% Solve using solver double_check(z3): 41 ms (176 ms walltime).
+% Solve using solver double_check(z3): 83 ms (618 ms walltime).
+% Solve using solver double_check(z3): 135 ms (2035 ms walltime).
+% Solve using solver double_check(nostate(z3)): 55 ms (358 ms walltime).
+% Solve using solver double_check(nostate(z3)): 1 ms (13 ms walltime).
+% Solve using solver double_check(nostate(z3)): 50 ms (355 ms walltime).
+% Solve using solver double_check(nostate(z3)): 85 ms (347 ms walltime).
+% Solve using solver double_check(nostate(z3)): 123 ms (534 ms walltime).
+2260
+% Solve using solver double_check(z3): 67 ms (72 ms walltime).
+% Solve using solver double_check(z3): 22 ms (23 ms walltime).
+% Solve using solver double_check(z3): 33 ms (33 ms walltime).
+% Solve using solver double_check(z3): 131 ms (133 ms walltime).
+% Solve using solver double_check(z3): 133 ms (136 ms walltime).
+% Solve using solver double_check(z3): 135 ms (141 ms walltime).
+% Solve using solver double_check(nostate(z3)): 7 ms (7 ms walltime).
+% Solve using solver double_check(nostate(z3)): 19 ms (20 ms walltime).
+% Solve using solver double_check(nostate(z3)): 33 ms (32 ms walltime).
+% Solve using solver double_check(nostate(z3)): 128 ms (131 ms walltime).
+% Solve using solver double_check(nostate(z3)): 133 ms (138 ms walltime).
+% Solve using solver double_check(nostate(z3)): 135 ms (140 ms walltime).
+2263
+% Runtime for SOLUTION for SETUP_CONSTANTS: 41 ms (walltime: 40 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 1 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 43 ms (45 ms walltime).
+% Solve using solver double_check(z3): 12 ms (12 ms walltime).
+% Solve using solver double_check(z3): 417 ms (784 ms walltime).
+% Solve using solver double_check(z3): 462 ms (880 ms walltime).
+% Solve using solver double_check(nostate(z3)): 15 ms (70 ms walltime).
+% Solve using solver double_check(nostate(z3)): 36 ms (99 ms walltime).
+% Solve using solver double_check(nostate(z3)): 387 ms (600 ms walltime).
+% Solve using solver double_check(nostate(z3)): 3079 ms (3625 ms walltime).
+2288
+% Runtime for SOLUTION for SETUP_CONSTANTS: 36 ms (walltime: 36 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 65 ms (293 ms walltime).
+% Solve using solver double_check(z3): 90 ms (139 ms walltime).
+% Solve using solver z3: 341 ms (547 ms walltime).
+% Solve using solver double_check(nostate(z3)): 134 ms (250 ms walltime).
+% Solve using solver double_check(nostate(z3)): 279 ms (401 ms walltime).
+% Solve using solver nostate(z3): 290 ms (411 ms walltime).
+2289
+% Solve using solver double_check(z3): 101 ms (307 ms walltime).
+% Solve using solver double_check(z3): 7 ms (27 ms walltime).
+% Solve using solver double_check(z3): 31 ms (63 ms walltime).
+% Solve using solver double_check(z3): 10 ms (33 ms walltime).
+% Solve using solver double_check(z3): 24 ms (44 ms walltime).
+% Solve using solver double_check(z3): 10 ms (40 ms walltime).
+% Solve using solver double_check(z3): 5 ms (26 ms walltime).
+% Solve using solver double_check(z3): 8 ms (41 ms walltime).
+% Solve using solver double_check(z3): 9 ms (40 ms walltime).
+% Solve using solver double_check(z3): 6 ms (31 ms walltime).
+% Solve using solver double_check(z3): 0 ms (1 ms walltime).
+% Solve using solver double_check(nostate(z3)): 3 ms (19 ms walltime).
+% Solve using solver double_check(nostate(z3)): 5 ms (23 ms walltime).
+% Solve using solver double_check(nostate(z3)): 7 ms (32 ms walltime).
+% Solve using solver double_check(nostate(z3)): 6 ms (33 ms walltime).
+% Solve using solver double_check(nostate(z3)): 3 ms (26 ms walltime).
+% Solve using solver double_check(nostate(z3)): 9 ms (37 ms walltime).
+% Solve using solver double_check(nostate(z3)): 4 ms (25 ms walltime).
+% Solve using solver double_check(nostate(z3)): 12 ms (40 ms walltime).
+% Solve using solver double_check(nostate(z3)): 5 ms (40 ms walltime).
+% Solve using solver double_check(nostate(z3)): 4 ms (30 ms walltime).
+% Solve using solver double_check(nostate(z3)): 0 ms (0 ms walltime).
+% Solve using solver double_check(nostate(z3)): 9 ms (67 ms walltime).
+% Solve using solver double_check(nostate(z3)): 13 ms (62 ms walltime).
+2292
+% Runtime for SOLUTION for SETUP_CONSTANTS: 35 ms (walltime: 36 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 135 ms (484 ms walltime).
+% Solve using solver double_check(z3): 3 ms (33 ms walltime).
+% Solve using solver double_check(z3): 10 ms (63 ms walltime).
+% Solve using solver double_check(nostate(z3)): 57 ms (210 ms walltime).
+% Solve using solver double_check(nostate(z3)): 3 ms (33 ms walltime).
+% Solve using solver double_check(nostate(z3)): 12 ms (58 ms walltime).
+2319
+% Solve using solver double_check(z3): 24 ms (26 ms walltime).
+% Solve using solver double_check(z3): 61 ms (255 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 5 ms (13 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (9 ms walltime).
+% Solve using solver double_check(z3): 17 ms (36 ms walltime).
+% Solve using solver double_check(z3): 5 ms (26 ms walltime).
+% Solve using solver double_check(z3): 1 ms (17 ms walltime).
+% Solve using solver double_check(z3): 2 ms (10 ms walltime).
+% Solve using solver double_check(z3): 3 ms (12 ms walltime).
+% Solve using solver double_check(z3): 0 ms (9 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (9 ms walltime).
+% Solve using solver double_check(z3): 29 ms (40 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 1 ms (12 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (9 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver z3: 1 ms (9 ms walltime).
+% Solve using solver z3: 1 ms (9 ms walltime).
+% Solve using solver z3: 0 ms (9 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (9 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver z3: 2 ms (12 ms walltime).
+% Solve using solver z3: 1 ms (11 ms walltime).
+% Solve using solver z3: 1 ms (11 ms walltime).
+% Solve using solver z3: 2 ms (11 ms walltime).
+% Solve using solver z3: 0 ms (15 ms walltime).
+% Solve using solver z3: 18 ms (33 ms walltime).
+% Solve using solver double_check(z3): 2 ms (9 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 20 ms (33 ms walltime).
+% Solve using solver double_check(z3): 3 ms (12 ms walltime).
+% Solve using solver z3: 9 ms (22 ms walltime).
+2334
+% Solve using solver double_check(z3): 60 ms (62 ms walltime).
+2352
+% Solve using solver double_check(z3): 103 ms (275 ms walltime).
+% Solve using solver double_check(z3): 2 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (13 ms walltime).
+% Solve using solver double_check(z3): 0 ms (12 ms walltime).
+% Solve using solver double_check(z3): 6 ms (14 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (12 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 2 ms (11 ms walltime).
+% Solve using solver double_check(z3): 4 ms (4 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 1 ms (13 ms walltime).
+% Solve using solver double_check(z3): 1 ms (12 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 2 ms (12 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 1 ms (10 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (10 ms walltime).
+% Solve using solver double_check(z3): 1 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (11 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 0 ms (0 ms walltime).
+% Solve using solver double_check(z3): 2 ms (10 ms walltime).
+% Solve using solver double_check(z3): 15 ms (33 ms walltime).
+% Solve using solver double_check(z3): 4 ms (23 ms walltime).
+% Solve using solver double_check(z3): 6 ms (28 ms walltime).
+% Solve using solver double_check(z3): 3 ms (25 ms walltime).
+% Solve using solver double_check(z3): 3 ms (22 ms walltime).
+% Solve using solver double_check(z3): 4 ms (24 ms walltime).
+2356
+% Solve using solver double_check(nostate(z3)): 326 ms (611 ms walltime).
+% Solve using solver double_check(nostate(z3)): 4 ms (25 ms walltime).
+% Solve using solver double_check(nostate(z3)): 39 ms (75 ms walltime).
+% Solve using solver double_check(nostate(z3)): 411 ms (622 ms walltime).
+% Solve using solver double_check(z3): 3 ms (3 ms walltime).
+% Solve using solver double_check(z3): 37 ms (46 ms walltime).
+2371
+% Runtime for SOLUTION for SETUP_CONSTANTS: 35 ms (walltime: 36 ms)
+% Solve using solver double_check(z3): 95 ms (348 ms walltime).
+% Solve using solver double_check(z3): 300 ms (342 ms walltime).
+% Solve using solver double_check(z3): 8 ms (10 ms walltime).
+% Solve using solver double_check(z3): 7 ms (9 ms walltime).
+% Solve using solver double_check(z3): 7 ms (7 ms walltime).
+% Solve using solver double_check(z3): 8 ms (9 ms walltime).
+% Solve using solver double_check(z3): 8 ms (8 ms walltime).
+% Solve using solver double_check(z3): 12 ms (31 ms walltime).
+% Solve using solver double_check(nostate(z3)): 74 ms (161 ms walltime).
+% Solve using solver double_check(nostate(z3)): 306 ms (395 ms walltime).
+% Solve using solver double_check(nostate(z3)): 95 ms (168 ms walltime).
+% Solve using solver double_check(nostate(z3)): 84 ms (143 ms walltime).
+% Solve using solver double_check(nostate(z3)): 139 ms (214 ms walltime).
+% Solve using solver double_check(nostate(z3)): 267 ms (352 ms walltime).
+% Solve using solver double_check(nostate(z3)): 257 ms (340 ms walltime).
+% Solve using solver double_check(nostate(z3)): 144 ms (232 ms walltime).
+2372
+% Runtime for SOLUTION for SETUP_CONSTANTS: 34 ms (walltime: 35 ms)
+% Solve using solver double_check(z3): 109 ms (358 ms walltime).
+% Solve using solver double_check(z3): 16 ms (35 ms walltime).
+% Solve using solver double_check(z3): 266 ms (299 ms walltime).
+% Solve using solver double_check(z3): 242 ms (315 ms walltime).
+% Solve using solver double_check(z3): 267 ms (305 ms walltime).
+% Solve using solver double_check(z3): 286 ms (331 ms walltime).
+% Solve using solver double_check(z3): 282 ms (325 ms walltime).
+% Solve using solver double_check(z3): 283 ms (329 ms walltime).
+% Solve using solver double_check(nostate(z3)): 14 ms (64 ms walltime).
+% Solve using solver double_check(nostate(z3)): 255 ms (332 ms walltime).
+% Solve using solver double_check(nostate(z3)): 292 ms (347 ms walltime).
+% Solve using solver nostate(z3): 271 ms (342 ms walltime).
+% Solve using solver nostate(z3): 278 ms (360 ms walltime).
+% Solve using solver nostate(z3): 280 ms (365 ms walltime).
+% Solve using solver nostate(z3): 298 ms (393 ms walltime).
+% Solve using solver nostate(z3): 295 ms (399 ms walltime).
+2373
+% Runtime for SOLUTION for SETUP_CONSTANTS: 36 ms (walltime: 36 ms)
+% Solve using solver double_check(z3): 62 ms (260 ms walltime).
+% Solve using solver double_check(z3): 53 ms (106 ms walltime).
+% Solve using solver double_check(z3): 288 ms (334 ms walltime).
+% Solve using solver double_check(z3): 302 ms (361 ms walltime).
+% Solve using solver double_check(z3): 314 ms (386 ms walltime).
+% Solve using solver double_check(z3): 337 ms (431 ms walltime).
+% Solve using solver double_check(z3): 351 ms (457 ms walltime).
+% Solve using solver double_check(z3): 338 ms (498 ms walltime).
+% Solve using solver double_check(nostate(z3)): 144 ms (233 ms walltime).
+% Solve using solver double_check(nostate(z3)): 283 ms (409 ms walltime).
+% Solve using solver nostate(z3): 312 ms (443 ms walltime).
+% Solve using solver nostate(z3): 341 ms (486 ms walltime).
+% Solve using solver nostate(z3): 343 ms (526 ms walltime).
+% Solve using solver nostate(z3): 361 ms (584 ms walltime).
+% Solve using solver nostate(z3): 382 ms (628 ms walltime).
+% Solve using solver nostate(z3): 402 ms (664 ms walltime).
+2377
+% Runtime for SOLUTION for SETUP_CONSTANTS: 46 ms (walltime: 46 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Runtime for SOLUTION for SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver double_check(z3): 68 ms (67 ms walltime).
+% Solve using solver double_check(z3): 282 ms (642 ms walltime).
+% Solve using solver double_check(z3): 339 ms (524 ms walltime).
+% Solve using solver double_check(z3): 385 ms (591 ms walltime).
+% Solve using solver double_check(z3): 390 ms (696 ms walltime).
+% Solve using solver double_check(z3): 407 ms (702 ms walltime).
+% Solve using solver double_check(z3): 443 ms (816 ms walltime).
+% Solve using solver double_check(z3): 459 ms (942 ms walltime).
+% Solve using solver double_check(z3): 485 ms (977 ms walltime).
+% Solve using solver double_check(z3): 530 ms (1059 ms walltime).
+% Solve using solver double_check(z3): 542 ms (1108 ms walltime).
+% Solve using solver double_check(nostate(z3)): 14 ms (42 ms walltime).
+% Solve using solver double_check(nostate(z3)): 276 ms (371 ms walltime).
+% Solve using solver double_check(nostate(z3)): 343 ms (511 ms walltime).
+% Solve using solver nostate(z3): 338 ms (525 ms walltime).
+% Solve using solver nostate(z3): 364 ms (705 ms walltime).
+% Solve using solver nostate(z3): 358 ms (772 ms walltime).
+% Solve using solver nostate(z3): 399 ms (942 ms walltime).
+% Solve using solver nostate(z3): 425 ms (1613 ms walltime).
+% Solve using solver nostate(z3): 447 ms (2796 ms walltime).
+% Solve using solver nostate(z3): 487 ms (7575 ms walltime).
+% Solve using solver nostate(z3): 507 ms (11471 ms walltime).
+2394
+% Solve using solver z3sat: 44 ms (263 ms walltime).
+% Solve using solver z3sat: 5 ms (28 ms walltime).
+% Solve using solver z3sat: 39 ms (67 ms walltime).
+% Solve using solver z3sat: 3 ms (13 ms walltime).
+% Solve using solver z3sat: 1 ms (7 ms walltime).
+% Solve using solver z3sat: 2 ms (10 ms walltime).
+% Solve using solver z3sat: 1 ms (7 ms walltime).
+% Solve using solver z3sat: 2 ms (9 ms walltime).
+% Solve using solver z3sat: 0 ms (12 ms walltime).
+% Solve using solver z3sat: 0 ms (11 ms walltime).
+% Solve using solver z3sat: 1 ms (7 ms walltime).
+2395
+Updating stats b_to_cnf_walltime : 31
+% Runtime for Converting B to CNF: 31 ms (with gc: 31 ms, walltime: 32 ms); since start: 5 sec 413 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 1 ms (with gc: 1 ms, walltime: 2 ms); since start: 5 sec 596 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 598 ms
+Updating stats sat_walltime : 189
+% Runtime for Formula is SATisfiable: 10 ms (with gc: 10 ms, walltime: 189 ms); since start: 5 sec 602 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 74 ms (264 ms walltime).
+Updating stats b_to_cnf_walltime : 33
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 2 ms); since start: 5 sec 637 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 1 ms (with gc: 1 ms, walltime: 2 ms); since start: 5 sec 645 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 646 ms
+Updating stats sat_walltime : 205
+% Runtime for Formula is UNSATisfiable: 2 ms (with gc: 2 ms, walltime: 16 ms); since start: 5 sec 653 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 6 ms (21 ms walltime).
+Updating stats b_to_cnf_walltime : 34
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 660 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 667 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 669 ms
+Updating stats sat_walltime : 214
+% Runtime for Formula is SATisfiable: 0 ms (with gc: 1 ms, walltime: 9 ms); since start: 5 sec 669 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 4 ms (22 ms walltime).
+Updating stats b_to_cnf_walltime : 34
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 5 sec 684 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 692 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 694 ms
+Updating stats sat_walltime : 230
+% Runtime for Formula is UNSATisfiable: 0 ms (with gc: 0 ms, walltime: 16 ms); since start: 5 sec 700 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 0 ms (16 ms walltime).
+Updating stats b_to_cnf_walltime : 34
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 5 sec 704 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 2 ms (with gc: 2 ms, walltime: 1 ms); since start: 5 sec 712 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 714 ms
+Updating stats sat_walltime : 241
+% Runtime for Formula is SATisfiable: 2 ms (with gc: 2 ms, walltime: 11 ms); since start: 5 sec 715 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 4 ms (19 ms walltime).
+Updating stats b_to_cnf_walltime : 57
+% Runtime for Converting B to CNF: 22 ms (with gc: 22 ms, walltime: 23 ms); since start: 5 sec 759 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 4 ms); since start: 5 sec 770 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 772 ms
+Updating stats sat_walltime : 254
+% Runtime for Formula is SATisfiable: 1 ms (with gc: 1 ms, walltime: 13 ms); since start: 5 sec 772 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 40 ms (61 ms walltime).
+Updating stats b_to_cnf_walltime : 57
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 5 sec 801 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 4 ms); since start: 5 sec 812 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 814 ms
+Updating stats sat_walltime : 267
+% Runtime for Formula is SATisfiable: 0 ms (with gc: 0 ms, walltime: 13 ms); since start: 5 sec 814 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 2 ms (20 ms walltime).
+Updating stats b_to_cnf_walltime : 58
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 1 ms); since start: 5 sec 825 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 5 ms); since start: 5 sec 837 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 839 ms
+Updating stats sat_walltime : 287
+% Runtime for Formula is UNSATisfiable: 0 ms (with gc: 0 ms, walltime: 20 ms); since start: 5 sec 845 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 5 ms (28 ms walltime).
+Updating stats b_to_cnf_walltime : 59
+% Runtime for Converting B to CNF: 2 ms (with gc: 2 ms, walltime: 1 ms); since start: 5 sec 858 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 3 ms (with gc: 3 ms, walltime: 9 ms); since start: 5 sec 874 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 876 ms
+Updating stats sat_walltime : 305
+% Runtime for Formula is SATisfiable: 3 ms (with gc: 3 ms, walltime: 18 ms); since start: 5 sec 877 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 10 ms (31 ms walltime).
+Updating stats b_to_cnf_walltime : 60
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 892 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 3 ms (with gc: 3 ms, walltime: 16 ms); since start: 5 sec 914 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 916 ms
+Updating stats sat_walltime : 336
+% Runtime for Formula is UNSATisfiable: 3 ms (with gc: 4 ms, walltime: 31 ms); since start: 5 sec 923 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 7 ms (36 ms walltime).
+Updating stats b_to_cnf_walltime : 61
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 1 ms); since start: 5 sec 932 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 4 ms (with gc: 4 ms, walltime: 12 ms); since start: 5 sec 950 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 5 sec 952 ms
+Updating stats sat_walltime : 357
+% Runtime for Formula is SATisfiable: 5 ms (with gc: 5 ms, walltime: 21 ms); since start: 5 sec 953 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 6 ms (29 ms walltime).
+Updating stats b_to_cnf_walltime : 61
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 5 sec 963 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 3 ms (with gc: 3 ms, walltime: 11 ms); since start: 5 sec 981 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 5 sec 982 ms
+Updating stats sat_walltime : 383
+% Runtime for Formula is UNSATisfiable: 3 ms (with gc: 4 ms, walltime: 26 ms); since start: 5 sec 989 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 4 ms (27 ms walltime).
+Updating stats b_to_cnf_walltime : 61
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 5 sec 993 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 5 ms (with gc: 5 ms, walltime: 12 ms); since start: 6 sec 12 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 6 sec 14 ms
+Updating stats sat_walltime : 404
+% Runtime for Formula is SATisfiable: 5 ms (with gc: 5 ms, walltime: 21 ms); since start: 6 sec 14 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 7 ms (29 ms walltime).
+Updating stats b_to_cnf_walltime : 61
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 6 sec 25 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 3 ms (with gc: 3 ms, walltime: 11 ms); since start: 6 sec 42 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 6 sec 43 ms
+Updating stats sat_walltime : 429
+% Runtime for Formula is UNSATisfiable: 4 ms (with gc: 4 ms, walltime: 25 ms); since start: 6 sec 50 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 6 ms (27 ms walltime).
+Updating stats b_to_cnf_walltime : 62
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 1 ms); since start: 6 sec 54 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 6 sec 62 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 6 sec 63 ms
+Updating stats sat_walltime : 439
+% Runtime for Formula is SATisfiable: 0 ms (with gc: 0 ms, walltime: 10 ms); since start: 6 sec 64 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 1 ms (17 ms walltime).
+Updating stats b_to_cnf_walltime : 63
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 1 ms); since start: 6 sec 73 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 6 sec 81 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 6 sec 83 ms
+Updating stats sat_walltime : 455
+% Runtime for Formula is UNSATisfiable: 0 ms (with gc: 0 ms, walltime: 16 ms); since start: 6 sec 89 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 1 ms (18 ms walltime).
+Updating stats b_to_cnf_walltime : 66
+% Runtime for Converting B to CNF: 2 ms (with gc: 3 ms, walltime: 3 ms); since start: 6 sec 95 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 66 ms (with gc: 66 ms, walltime: 251 ms); since start: 6 sec 354 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 9 ms); since start: 6 sec 363 ms
+Updating stats sat_walltime : 736
+% Runtime for Formula is UNSATisfiable: 68 ms (with gc: 68 ms, walltime: 281 ms); since start: 6 sec 376 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 114 ms (333 ms walltime).
+Updating stats b_to_cnf_walltime : 67
+% Runtime for Converting B to CNF: 2 ms (with gc: 2 ms, walltime: 1 ms); since start: 6 sec 430 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 93 ms (with gc: 94 ms, walltime: 373 ms); since start: 6 sec 814 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 1 ms (with gc: 1 ms, walltime: 12 ms); since start: 6 sec 826 ms
+Updating stats sat_walltime : 1143
+% Runtime for Formula is SATisfiable: 98 ms (with gc: 101 ms, walltime: 407 ms); since start: 6 sec 837 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 103 ms (427 ms walltime).
+Updating stats b_to_cnf_walltime : 73
+% Runtime for Converting B to CNF: 3 ms (with gc: 5 ms, walltime: 6 ms); since start: 6 sec 866 ms
+Updating stats sat_walltime : 1259
+% Runtime for Formula is UNSATisfiable: 108 ms (with gc: 113 ms, walltime: 116 ms); since start: 6 sec 983 ms
+% Solve using solver satsolver(glucose,with_state): 111 ms (123 ms walltime).
+Updating stats b_to_cnf_walltime : 75
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 2 ms); since start: 6 sec 987 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 503 ms (with gc: 534 ms, walltime: 2112 ms); since start: 9 sec 112 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 129 ms); since start: 9 sec 241 ms
+Updating stats sat_walltime : 3582
+% Runtime for Formula is SATisfiable: 533 ms (with gc: 572 ms, walltime: 2323 ms); since start: 9 sec 310 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 540 ms (2352 ms walltime).
+Updating stats b_to_cnf_walltime : 76
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 341 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 349 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 351 ms
+Updating stats sat_walltime : 3592
+% Runtime for Formula is SATisfiable: 0 ms (with gc: 0 ms, walltime: 10 ms); since start: 9 sec 351 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 1 ms (20 ms walltime).
+Updating stats b_to_cnf_walltime : 76
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 9 sec 362 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 371 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 372 ms
+Updating stats sat_walltime : 3609
+% Runtime for Formula is UNSATisfiable: 1 ms (with gc: 1 ms, walltime: 17 ms); since start: 9 sec 379 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 2 ms (17 ms walltime).
+Updating stats b_to_cnf_walltime : 78
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 2 ms); since start: 9 sec 384 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 5 ms (with gc: 5 ms, walltime: 16 ms); since start: 9 sec 407 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 409 ms
+Updating stats sat_walltime : 3634
+% Runtime for Formula is SATisfiable: 6 ms (with gc: 7 ms, walltime: 25 ms); since start: 9 sec 409 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 8 ms (34 ms walltime).
+Updating stats b_to_cnf_walltime : 78
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 9 sec 419 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 428 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 429 ms
+Updating stats sat_walltime : 3650
+% Runtime for Formula is UNSATisfiable: 1 ms (with gc: 1 ms, walltime: 16 ms); since start: 9 sec 435 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 2 ms (17 ms walltime).
+Updating stats b_to_cnf_walltime : 79
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 439 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 3 ms); since start: 9 sec 448 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 449 ms
+Updating stats sat_walltime : 3667
+% Runtime for Formula is UNSATisfiable: 1 ms (with gc: 1 ms, walltime: 17 ms); since start: 9 sec 456 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 2 ms (18 ms walltime).
+Updating stats b_to_cnf_walltime : 79
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 9 sec 459 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 3 ms); since start: 9 sec 468 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 470 ms
+Updating stats sat_walltime : 3678
+% Runtime for Formula is SATisfiable: 0 ms (with gc: 1 ms, walltime: 11 ms); since start: 9 sec 470 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 0 ms (18 ms walltime).
+Updating stats b_to_cnf_walltime : 79
+% Runtime for Converting B to CNF: 1 ms (with gc: 1 ms, walltime: 0 ms); since start: 9 sec 479 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 2 ms (with gc: 2 ms, walltime: 3 ms); since start: 9 sec 489 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 490 ms
+Updating stats sat_walltime : 3696
+% Runtime for Formula is UNSATisfiable: 2 ms (with gc: 2 ms, walltime: 18 ms); since start: 9 sec 497 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 4 ms (19 ms walltime).
+Updating stats b_to_cnf_walltime : 79
+% Runtime for Converting B to CNF: 0 ms (with gc: 0 ms, walltime: 0 ms); since start: 9 sec 500 ms
+% Runtime for sending_cnf_to_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 1 ms); since start: 9 sec 508 ms
+% Runtime for solving_cnf_with_smt_solver(z3): 0 ms (with gc: 0 ms, walltime: 2 ms); since start: 9 sec 510 ms
+Updating stats sat_walltime : 3706
+% Runtime for Formula is SATisfiable: 1 ms (with gc: 2 ms, walltime: 10 ms); since start: 9 sec 510 ms
+% Solve using solver double_check(satsolver(z3,with_state)): 1 ms (17 ms walltime).
+2414
+% Runtime for SOLUTION for SETUP_CONSTANTS: 122 ms (walltime: 124 ms)
+% Runtime to FINALISE SETUP_CONSTANTS: 0 ms (walltime: 0 ms)
+% Solve using solver z3: 53 ms (53 ms walltime).
+% Solve using solver z3: 2009 ms (8424 ms walltime).
+% Solve using solver z3: 1916 ms (8340 ms walltime).
