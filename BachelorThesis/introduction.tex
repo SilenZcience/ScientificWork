@@ -8,9 +8,27 @@
 \subsection{Motivation}
 
 
+Jedoch birgt der Einsatz des Z3 Solvers auch Herausforderungen, die die Effizienz und Zuverlässigkeit der Anwendung beeinträchtigen können.
+Ein bekanntes Problem besteht in dem sporadischen Auftreten von Speicherlecks und Segmentation Faults,
+die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3 Interface negativ beeinflussen.
+Diese technischen Mängel erschweren nicht nur die Durchführung formaler Verifikationen,
+sondern können auch zu einer zeitraubenden Verwendung der Z3 Solver Komponente sowie Unterbrechung von Arbeitsprozessen führen.
 
+Ein weiterer Mangel liegt in der aktuellen sequentiellen Lösung mehrerer Prädikate.
+Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden
+ist in seiner Natur ressourcenintensiv und zeitaufwändig.
+Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequentielle Verarbeitung immer offensichtlicher.
+Eine Parallelisierung der Lösung von Prädikaten könnte hier erhebliche Leistungsverbesserungen bringen,
+indem moderne Mehrkernarchitekturen effizienter ausgenutzt werden.
 
-
+Die Kombination dieser Herausforderungen (sporadische technische Instabilitäten und begrenzte Effizienz durch sequentielle Verarbeitung) macht es notwendig,
+alternative Ansätze oder Verbesserungen für die Integration des Z3 Solvers in ProB zu erforschen.
+Ziel ist es, sowohl die Zuverlässigkeit als auch die Leistung zu steigern,
+um den Anforderungen der Nutzer und der immer komplexer werdenden Modelle gerecht zu werden.
+Diese Problematik bildet die Grundlage und Motivation für die vorliegende Arbeit.
+Sie zielt darauf ab, die Integration des Z3 Solvers in ProB zu verbessern,
+indem die bestehende Vorgehensweise verworfen und durch eine neue Architektur ersetzt wird.
 
 
 \subsection{Architekturänderung}
+
