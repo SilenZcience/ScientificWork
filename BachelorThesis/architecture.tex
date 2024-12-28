@@ -5,20 +5,57 @@
 
 \subsection{Prolog Datentypen}
 
+- atoms string
+- integers longs (laut dokumentation bis version blabla)
+- floats doubles
+- typerefs problem, weil kann alles sein
 
+\subsection{Struktur der Nachrichten}
+
+- function identifier
+- status identifier
+- message
 
 
 \subsection{Interfacefunktionen}
 
-\subsubsection{Optimierungen}
+porting of all 53 interface function
 
 
 
 \subsection{Hilfsfunktionen}
 
+inbesondere $mk_type$
+statemachines
+
+
+
+
+\subsubsection{Optimierungen}
+
+loops 2 von 4
+
+manchmal $ctx_data -> blabla$ unnötige $ctx-data$
 
 
 \subsection{Server Struktur}
 
+long damn switch case
+threading
+
+
+
+
+
+\subsection{Serveranbindung}
+
+server als subprozess
+starting as needed
 
 \subsection{Logging}
+
+via sys argv
+stdout not captureable in sicstus prolog
+
+
+
