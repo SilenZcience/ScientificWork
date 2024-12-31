@@ -53,7 +53,7 @@ Die Zeitmessungen sind in Nanosekunden (ns) angegeben und zeigen die Laufzeit de
 Innerhalb der gegebenen Größenordnung sind die Werte ebenfalls in Millisekunden (ms) zu interpretieren und damit ausschlaggebend für die Performance.
 Innerhalb der eigentlichen Daten wurden die Messungen mehrfach unabhängig voneinander wiederholt, um eine statistische Aussagekraft zu gewährleisten.
 Da dennoch von Messfehlern und Schwankungen auszugehen ist, werden die Daten in einem statistischen Kontext betrachtet.
-Es wird davon ausgegangen, dass die Messfehler normalverteilt sind.
+Es wird angenommen, dass die Messfehler normalverteilt sind.
 
 \begin{figure}[!htp]
     \centering
@@ -115,7 +115,7 @@ Der induzierte Overhead wird also wie folgt definiert:
 Der oberste Subgraph in \cref{fig:overhead} zeigt den induzierten Overhead der neuen Architektur in Abhängigkeit der Anzahl der ZeroMQ-Anfragen auf einer logarithmischen Skala.
 Im groben Verlauf ist zu erkennen, dass der Overhead mit steigender Anzahl der Anfragen annähernd linear zunimmt.
 Zusätzlich scheint jedoch eine ausgeprägte Systematik vorzuliegen, welche sich inhaltlich durch die horizontale Verzerrung der Daten ausprägt.
-Einige wenige Datenpunkte weichen stark von jeglicher Systematik ab und sind als Ausreißer zu betrachten.
+Einige wenige Datenpunkte weichen stark von jeglicher Systematik ab und sind als Ausreißer zu klassifizieren.
 
 Im zweiten Subgraphen wird die lineare Abhängigkeit des Overheads von der Anzahl der Anfragen untersucht, indem der Zusammenhang linear gefittet wird.
 Dies geschieht unter Berücksichtigung des kombinierten Standardfehlers der Mittelwerte der alten und neuen IPC-Architektur
