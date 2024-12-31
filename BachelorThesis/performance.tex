@@ -90,11 +90,11 @@ Auf der anderen Seite zeigt der untere rechte Subgraph die Rohdaten im Bereich d
 Hier haben die Laufzeit Messungen einen vergleichsweise hohen Wert und es ist zu erkennen,
 dass die alte Architektur in diesem Bereich schneller ist. 
 
-Insgesamt scheint die neu eingeführte Server-Architektur bis zu einer gewissen Grenze der Gesamtlaufzeit schneller geworden zu sein.
-Dennoch wurde durch die Protokollkommunikation ein Performance-Overhead eingeführt, der sich in den Rohdaten dahingehend widerspiegelt,
+Entsprechend wurde durch die Protokollkommunikation ein Performance-Overhead eingeführt, der sich in den Rohdaten dahingehend widerspiegelt,
 dass Prädikate, welche bereits eine hohe Laufzeit aufgewiesen haben, nun in der neuen Architektur noch langsamer gelöst werden.
-Neben diesem Overhead wurde jedoch eine signifikante Laufzeitverbesserung erworben, die bis zu einer gewissen Grenze der Gesamtlaufzeit den
+Neben diesem Overhead wurde jedoch eine signifikante Laufzeitverbesserung erworben, die bis zu einer gewissen Gesamtlaufzeitsgrenze den
 Overhead nicht nur annulliert, sondern überkompensiert.
+Insgesamt scheint die neu eingeführte Server-Architektur hinsichtlich der Laufzeitperformance um einen gewissen Faktor effizienter geworden zu sein.
 
 Ebenfalls ist zu erkennen, dass der Unterschied zwischen IPC und TCP nur minimal ist und keine signifikanten Unterschiede aufweist.
 Innerhalb der 679 Testprädikaten ist IPC in 365 ($53.76\%$) Fällen schneller als TCP und entsprechend TCP in 314 ($46.24\%$) Fällen schneller als IPC.
