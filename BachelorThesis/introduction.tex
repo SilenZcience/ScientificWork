@@ -3,34 +3,113 @@
 
 \section{Einführung}
 
-
+Die digitale Transformation hat unsere Welt grundlegend verändert und macht Software-Systeme zu einem unverzichtbaren Bestandteil des täglichen Lebens.
+Von sicherheitskritischen Anwendungen wie der Steuerung autonomer Fahrzeuge bis hin zu Finanzsystemen und medizinischen Geräten sind wir zunehmend auf Software angewiesen,
+die zuverlässig und fehlerfrei funktioniert.
+Die Gewährleistung von Korrektheit und Stabilität ist jedoch eine anspruchsvolle Aufgabe
+insbesondere angesichts der Komplexität moderner Systeme.
+Ein zentraler Baustein zur Bewältigung dieser Herausforderung ist der Einsatz von Modellierungs- und Verifikationswerkzeugen.
+Diese ermöglichen es, komplexe Systeme systematisch zu analysieren und sicherzustellen
+dass sie den gewünschten Spezifikationen entsprechen.
+Besonders hervorzuheben ist der Einsatz von SMT\footnote{Satisfiability Modulo Theories}-Solvern,
+die sich als leistungsfähige Werkzeuge etabliert haben,
+um schwierige logische Probleme effizient zu lösen.
+SMT-Solver wie Z3 bieten durch ihre Fähigkeit zur präzisen und schnellen Verarbeitung logischer Ausdrücke eine wertvolle Unterstützung bei der Verifikation und Validierung.
+Ein prominentes Beispiel für die Integration eines solchen Solvers ist die Software ProB.
+Der Animator, Constraint-Solver und Model-Checker ProB nutzt den SMT-Solver Z3, um formale Modelle effizient zu analysieren und zu überprüfen.
+Dies macht die Software zu einem wichtigen Werkzeug in der Welt der formalen Methoden,
+insbesondere im Kontext von Modellierungs- und Verifikationsaufgaben.
 
 \subsection{Motivation}
 
-blabla
-
-Jedoch birgt der Einsatz des Z3 Solvers auch Herausforderungen, die die Effizienz und Zuverlässigkeit der Anwendung beeinträchtigen können.
+Innerhalb von ProB birgt der Einsatz des Z3-Solvers jedoch auch Herausforderungen, die die Effizienz und Zuverlässigkeit der Anwendung beeinträchtigen können.
 Ein bekanntes Problem besteht in dem sporadischen Auftreten von Speicherlecks und Segmentation Faults,
-die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3 Interface negativ beeinflussen.
+die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3-Interface negativ beeinflussen.
 Diese technischen Mängel erschweren nicht nur die Durchführung formaler Verifikationen,
-sondern können auch zu einer zeitraubenden Verwendung der Z3 Solver Komponente sowie Unterbrechung von Arbeitsprozessen führen.
+sondern können auch zu einer zeitraubenden Verwendung der Z3-Solver Komponente sowie Unterbrechung von Arbeitsprozessen führen.
 
 Ein weiterer Mangel liegt in der aktuellen sequentiellen Lösung mehrerer Prädikate.
 Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden
 ist in seiner Natur ressourcenintensiv und zeitaufwändig.
 Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequentielle Verarbeitung immer offensichtlicher.
 Eine Parallelisierung der Lösung von Prädikaten könnte hier erhebliche Leistungsverbesserungen bringen,
-indem moderne Mehrkernarchitekturen effizienter ausgenutzt werden.
+indem moderne Mehrkernarchitekturen effizienter ausgenutzt werden,
+um den Anforderungen der Nutzer und der immer komplexer werdenden Modelle gerecht zu werden.
 
 Die Kombination dieser Herausforderungen (sporadische technische Instabilitäten und begrenzte Effizienz durch sequentielle Verarbeitung) macht es notwendig,
-alternative Ansätze oder Verbesserungen für die Integration des Z3 Solvers in ProB zu erforschen.
-Ziel ist es, sowohl die Zuverlässigkeit als auch die Leistung zu steigern,
-um den Anforderungen der Nutzer und der immer komplexer werdenden Modelle gerecht zu werden.
-Diese Problematik bildet die Grundlage und Motivation für die vorliegende Arbeit.
-Sie zielt darauf ab, die Integration des Z3 Solvers in ProB zu verbessern,
-indem die bestehende Vorgehensweise verworfen und durch eine neue Architektur ersetzt wird.
+alternative Ansätze oder Verbesserungen für die Integration des Z3-Solvers in ProB zu erforschen und
+bildet die Grundlage und Motivation für die vorliegende Arbeit.
 
+\subsection{Ziele}
 
-\subsection{Architekturänderung}
+Das Hauptziel dieser Arbeit ist es, die Integration des Z3-Solvers in ProB zu verbessern,
+indem die bestehende Vorgehensweise, die Prädikate direkt im Z3-Interface von ProB zu lösen, verworfen wird.
+Stattdessen wird eine neue Architektur vorgeschlagen und implementiert,
+welche eine vollständige Entkopplung der Z3-Solver-Komponente von ProB vorsieht.
+Hierzu wird also der Z3-Solver in einen eigenenständigen, seperaten Prozess ausgelagert,
+wodurch ein System eingeführt wird, bei dem ProB und der Z3-Solver als zwei unabhängige Prozesse agieren,
+die über eine Kommunikationsschnittstelle miteinander verbunden sind.
+Prädikate werden hierdurch innerhalb des Z3-Interfaces an den Z3-Solver gesendet, wo diese gelöst und zurückgeschickt werden.
+Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture} visualisiert.
+\newline
 
-bild aus expose
+\begin{figure}[!htp]
+    \centering
+    \begin{tikzpicture}[
+            HOT/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=40, align=center},
+            PB/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=40, align=center},
+            COLD/.style={rectangle, draw=black!40, fill=black!3, very thick, minimum size=40, align=center},
+        ]
+        \begin{scope}
+            \node[PB]    (ProB)                             {ProB};
+            \node[HOT]    (C_Interface)       [right=of ProB] {C-Interface\\Z3-Solver};
+            \node[draw=none,fill=none,rectangle,above=0.5cm of ProB,xshift=-0.5cm,anchor=south west]
+            (Arch_A){Bestehende Architektur};
+
+            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above] {\tiny{constraint}} node[below] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+        \end{scope}
+        \node[draw,inner xsep=0.5cm, inner ysep=0.5cm,fit=(Arch_A) (ProB) (C_Interface)] (LeftScope){};
+        \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P0){};
+
+        \begin{scope}[xshift=6.5cm]
+            \node[PB]    (ProB)        {ProB};
+            \node[HOT]    (C_Interface)       [right=of ProB] {C-Interface};
+            \node[HOT]    (Z3_Solver)       [right=of C_Interface] {Z3-Solver};
+            \node[COLD]    (Z3_Solver_G1)       [above=of Z3_Solver] {Z3-Solver};
+            \node[COLD]    (Z3_Solver_G2)       [below=of Z3_Solver] {Z3-Solver};
+            \node[draw=none,fill=none,rectangle,above=1cm of ProB,xshift=1cm,anchor=south west]
+            (Arch_B){Zielarchitektur};
+
+            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above] {\tiny{constraint}} node[below] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+            \draw[<->, very thick] (C_Interface) to node[below] {\tiny{ZMQ}} (Z3_Solver);
+            \draw[<->, dashed, thick] (C_Interface.north east) to node[right] {\tiny{ZMQ}} (Z3_Solver_G1.south west);
+            \draw[<->, dashed, thick] (C_Interface.south east) to node[right] {\tiny{ZMQ}} (Z3_Solver_G2.north west);
+        \end{scope}
+        \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P1){};
+        \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver)] (P2){};
+        \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver_G1)] (P3){};
+        \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver_G2)] (P4){};
+        \node[draw,inner xsep=0.5cm,inner ysep=0.5cm,fit=(ProB) (Z3_Solver_G1) (Z3_Solver_G2)] (RightScope){};
+
+        \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
+
+    \end{tikzpicture}
+    \caption{Die geplante Architekturänderung (Die Komponenten-Entkopplung ist in Rot markiert. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
+    \label{fig:architecture}
+\end{figure}
+\FloatBarrier
+
+Diese Arbeit wird einerseits mit dem Interesse der Erweiterbarkeit vollrichtet, sodass zukünftig die Option besteht,
+gegebenenfalls mehrere Instanzen des Z3-Prozesses zu starten und das Lösen der Prädikate zu parallelisieren.
+Andererseits dient die Entkopplung selbst bereits zur Verbesserung der Stabilität und Zuverlässigkeit von ProB,
+da bei eventuellen Fehlern im Z3-Solver-Prozess dieser unabhängig von ProB neu gestartet werden kann,
+was zu einem robusteren Gesamtsystem führt.
+
+Die genauen Technologien und Konzepte, die hierfür zum Einsatz kommen und Relevanz zeigen,
+sowie ihre Funktionsweise und Vorteile werden im folgenden Kapitel detailliert erläutert.
+Daraufhin wird die Planung und Implementierung der neuen Architektur beschrieben,
+und die Leistungsfähigkeit der vorgenommenen Entkopplung anhand von Benchmarks und Tests hinsichtlich dem Vergleich zur vorherigen Systemstruktur evaluiert.
+Zuletzt wird auf zukünftige Erweiterungen und Verbesserungen eingegangen,
+und eine abschließende Konklusion genannt.

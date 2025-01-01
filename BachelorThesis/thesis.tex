@@ -105,6 +105,11 @@
 %% macht \FloatBarrier verfügbar
 \usepackage{placeins}
 
+%% TikZ und PGFPlots f+r Grafik der Architektur
+\usepackage{tikz, pgfplots}
+\usetikzlibrary{arrows}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,fit}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (Ende) LaTeX Packages in Nutzung                                           %%
@@ -130,12 +135,14 @@
 %% (Ende) Danksagungen                                                        %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \tableofcontents
 
 %% Listings of figures, tables, etc. Delete what is not needed.
 \clearpage
-
+\listoftables\thispagestyle{headings}
+\listoffigures
+\listofalgorithms % Algorithms
+\lstlistoflistings % Code Listings
 
 \mainmatter
 
@@ -149,21 +156,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{introduction.tex}
-
+\clearpage
 \input{background.tex}
-
+\clearpage
 \input{architecture.tex}
-
+\clearpage
 \input{exceptions.tex}
-
+\clearpage
 \input{build.tex}
-
+\clearpage
 \input{additional.tex}
-
+\clearpage
 \input{performance.tex}
-
+\clearpage
 \input{future.tex}
-
+\clearpage
 \input{conclusion.tex}
 % \input{contents.tex}
 
@@ -171,15 +178,6 @@
 %% Der \appendix-Befehl leitet hierbei den Anhang ein.
 %  \appendix
 %  \input{appendix.tex}
-
-
-
-
-
-\listoftables\thispagestyle{headings}
-\listoffigures
-\listofalgorithms % Algorithms
-\lstlistoflistings % Code Listings
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (Ende) Der Inhalt der Arbeit                                               %%
