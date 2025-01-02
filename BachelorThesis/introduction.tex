@@ -9,7 +9,7 @@ die zuverlässig und fehlerfrei funktioniert.
 Die Gewährleistung von Korrektheit und Stabilität ist jedoch eine anspruchsvolle Aufgabe
 insbesondere angesichts der Komplexität moderner Systeme.
 Ein zentraler Baustein zur Bewältigung dieser Herausforderung ist der Einsatz von Modellierungs- und Verifikationswerkzeugen.
-Diese ermöglichen es, komplexe Systeme systematisch zu analysieren und sicherzustellen
+Diese ermöglichen es, komplexe Systeme systematisch zu analysieren und sicherzustellen,
 dass sie den gewünschten Spezifikationen entsprechen.
 Besonders hervorzuheben ist der Einsatz von SMT\footnote{Satisfiability Modulo Theories}-Solvern,
 die sich als leistungsfähige Werkzeuge etabliert haben,
@@ -17,7 +17,7 @@ um schwierige logische Probleme effizient zu lösen.
 SMT-Solver wie Z3 bieten durch ihre Fähigkeit zur präzisen und schnellen Verarbeitung logischer Ausdrücke eine wertvolle Unterstützung bei der Verifikation und Validierung.
 Ein prominentes Beispiel für die Integration eines solchen Solvers ist die Software ProB.
 Der Animator, Constraint-Solver und Model-Checker ProB nutzt den SMT-Solver Z3, um formale Modelle effizient zu analysieren und zu überprüfen.
-Dies macht die Software zu einer wichtigen Intsanz in der Welt der formalen Methoden,
+Dies macht die Software zu einer wichtigen Instanz in der Welt der formalen Methoden,
 insbesondere im Kontext von Modellierungs- und Verifikationsaufgaben.
 
 \subsection{Motivation}
@@ -28,15 +28,15 @@ die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3-Interface nega
 Diese technischen Mängel erschweren nicht nur die Durchführung formaler Verifikationen,
 sondern können auch zu einer zeitraubenden Verwendung der Z3-Solver Komponente sowie Unterbrechung von Arbeitsprozessen führen.
 
-Ein weiterer Mangel liegt in der aktuellen sequentiellen Lösung mehrerer Prädikate.
-Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden
-ist in seiner Natur ressourcenintensiv und zeitaufwändig.
-Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequentielle Verarbeitung immer offensichtlicher.
+Ein weiterer Mangel liegt in der aktuellen sequenziellen Lösung mehrerer Prädikate.
+Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden,
+ist in seiner Natur ressourcenintensiv und zeitaufwendig.
+Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequenzielle Verarbeitung immer offensichtlicher.
 Eine Parallelisierung der Lösung von Prädikaten könnte hier erhebliche Leistungsverbesserungen bringen,
 indem moderne Mehrkernarchitekturen effizienter ausgenutzt werden,
 um den Anforderungen der Nutzer und der immer komplexer werdenden Modelle gerecht zu werden.
 
-Die Kombination dieser Herausforderungen (sporadische technische Instabilitäten und begrenzte Effizienz durch sequentielle Verarbeitung) macht es notwendig,
+Die Kombination dieser Herausforderungen (sporadische technische Instabilitäten und begrenzte Effizienz durch sequenzielle Verarbeitung) macht es notwendig,
 alternative Ansätze oder Verbesserungen für die Integration des Z3-Solvers in ProB zu erforschen und
 bildet die Grundlage und Motivation für die vorliegende Arbeit.
 
@@ -46,7 +46,7 @@ Das Hauptziel dieser Arbeit ist es, die Integration des Z3-Solvers in ProB zu ve
 indem die bestehende Vorgehensweise, die Prädikate direkt im Z3-Interface von ProB zu lösen, verworfen wird.
 Stattdessen wird eine neue Architektur vorgeschlagen und implementiert,
 welche eine vollständige Entkopplung der Z3-Solver-Komponente von ProB vorsieht.
-Hierzu wird also der Z3-Solver in einen eigenenständigen, seperaten Prozess ausgelagert,
+Hierzu wird also der Z3-Solver in einen eigenständigen, separaten Prozess ausgelagert,
 wodurch ein System eingeführt wird, bei dem ProB und der Z3-Solver als zwei unabhängige Prozesse agieren,
 die über eine Kommunikationsschnittstelle miteinander verbunden sind.
 Prädikate werden hierdurch innerhalb des Z3-Interfaces an den Z3-Solver gesendet, wo diese gelöst und zurückgeschickt werden.
@@ -101,7 +101,7 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
 \end{figure}
 \FloatBarrier
 
-Diese Arbeit wird einerseits mit dem Interesse der Erweiterbarkeit vollrichtet, sodass zukünftig die Option besteht,
+Diese Arbeit wird einerseits mit dem Interesse der Erweiterbarkeit verrichtet, sodass zukünftig die Option besteht,
 gegebenenfalls mehrere Instanzen des Z3-Prozesses zu starten und das Lösen der Prädikate zu parallelisieren.
 Andererseits dient die Entkopplung selbst bereits zur Verbesserung der Stabilität und Zuverlässigkeit von ProB,
 da bei eventuellen Fehlern im Z3-Solver-Prozess dieser unabhängig von ProB neu gestartet werden kann,
@@ -109,7 +109,7 @@ was zu einem robusteren Gesamtsystem führt.
 
 Die genauen Technologien und Konzepte, die hierfür zum Einsatz kommen und Relevanz zeigen,
 sowie ihre Funktionsweise und Vorteile werden im folgenden Kapitel detailliert erläutert.
-Daraufhin wird die Planung und Implementierung der neuen Architektur beschrieben,
-und die Leistungsfähigkeit der vorgenommenen Entkopplung anhand von Benchmarks und Tests hinsichtlich dem Vergleich zur vorherigen Systemstruktur evaluiert.
-Zuletzt wird auf zukünftige Erweiterungen und Verbesserungen eingegangen,
+Daraufhin wird die Planung und Implementierung der neuen Architektur beschrieben
+und die Leistungsfähigkeit der vorgenommenen Entkopplung anhand von Benchmarks und Tests hinsichtlich des Vergleichs zur vorherigen Systemstruktur evaluiert.
+Zuletzt wird auf zukünftige Erweiterungen und Verbesserungen eingegangen
 und eine abschließende Konklusion genannt.
