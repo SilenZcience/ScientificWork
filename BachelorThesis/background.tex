@@ -18,6 +18,8 @@ um die Korrektheit des Systems zu garantieren.
 Die an der HHU am Lehrstuhl der Softwaretechnik und Programmiersprachen entwickelte Software ProB \cite{leuschel2003prob} ist ein Validierungstoolset für Modelle der B-Methode.
 Als solcher unterstützt ProB mitunter die Modellierung, Animation und Verifikation von B-Modellen,
 indem Funktionalitäten wie Consistency Checking und Constraint Solving bereitgestellt werden.
+ProB findet bereits in vielen Systemen Verwendung zur Datenvalidierung und Validierung komplexer Eigenschaften für sicherheitskritische Systeme.
+Es wird bereits von mehreren Unternehmen verwendet und ist November 2022 mit dem \enquote{AlainColmerauer Prize} ausgezeichnet worden.
 
 Der Animator in ProB ermöglicht es, formale Spezifikationen zu visualisieren und zu animieren.
 Nutzer können durch die Simulation in Echtzeit einen Einblick in die Zustandsübergänge einer Maschine erhalten und schrittweise die Veränderungen nachvollziehen.
@@ -48,14 +50,66 @@ Ein weiterer Ansatz ist die Integration des SAT-basierten Kodkod,
 einem effizienten Constraint-Solver für die Prädikatenlogik erster Ordnung mit Relationen, transitiven Hüllen, Bit-Vektor-Arithmetik und partiellen Modellen \cite{torlak2007kodkod}.
 Zuletzt wird auch der SMT-Solver Z3 in ProB integriert, um komplexere Prädikate zu lösen, die über simple boolsche und arithmetische Ausdrücke hinausgehen.
 
-ProB ist im Kern in SICStus Prolog \cite{carlsson1988sicstus} implementiert, bietet jedoch verschiedene Programmerweiterungen, welche zumeist in C oder C++ geschrieben sind.
+ProB ist im Kern in SICStus Prolog \cite{carlsson1988sicstus} implementiert, bietet jedoch verschiedene Programmerweiterungen, welche zumeist in C oder C\texttt{++} geschrieben sind.
 Einer dieser Erweiterungen ist das Z3-Interface, welches die Integration des Z3-Solvers in ProB ermöglicht.
 
 \subsection{Z3 Solver}
-\cite{10.1007/978-3-031-65627-9_2} \cite{10.1007/978-3-540-78800-3_24}
+
+Das Satisfiability Modulo Theories (SMT)-Problem lässt sich als eine natürliche Erweiterung des klassischen Boolean Satisfiability (SAT)-Problems verstehen.
+Während SAT sich ausschließlich mit der Erfüllbarkeit von booleschen Formeln beschäftigt,
+umfasst SMT zusätzliche Hintergrundtheorien wie Arithmetik, Bit-Vektoren, Arrays und uninterpretierten Funktionen.
+Diese Erweiterung ermöglicht eine umfassendere Form der logischen Schlussfolgerung.
+
+Der Z3-Solver \cite{10.1007/978-3-540-78800-3_24} wurde von Microsoft Research entwickelt.
+Seit seiner ersten Veröffentlichung hat sich Z3 zu einem der leistungsfähigsten und am weitesten verbreiteten SMT-Solver entwickelt.
+Microsoft hat Z3 als Open-Source-Software frei zugänglich unter der MIT-Lizenz veröffentlicht,
+was seine Verbreitung und Nutzung in verschiedenen Bereichen weiter gefördert hat.
+
+Er wurde in C\texttt{++} implementiert, bietet jedoch eine Vielzahl von externen API Anbindungen, die es ermöglichen, den Solver in verschiedenen Programmiersprachen zu verwenden,
+wie beispielsweise OCaml, Python, Ruby und Rust.
+Er ist ein leistungsfähiger SMT-Solver, der sich speziell auf die Lösung von Problemen im Bereich der Softwareverifikation und -analyse spezialisiert.
+Zum Beispiel wird der Z3-Solver in der Softwareverifikation eingesetzt, um die Korrektheit von Programmen zu überprüfen, indem er formale Spezifikationen testet und beweist.
+Andere Einsatzbereiche sind die automatische Generierung von Testfällen basierend auf formalen Modellen sowie dem Modellieren von Entscheidungsproblemen und dem Abstrahieren von Prädikaten.
+
+Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Logemann-Loveland}(T)-Framework,
+das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
+Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
+Er arbeitet rekursiv und kombiniert folgende Schritte:
+
+\begin{enumerate}
+    \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
+    \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
+    \item Conflict Detection/Backtracking: Zurücksetzen von Entscheidungen, wenn ein Konflikt entdeckt wird.
+\end{enumerate}    
+
+In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
+Weitere Theorien wie lineare und nichtlineare Arithmetik, Bit-Vektoren und Arrays werden durch spezielle Theorie-Solver behandelt,
+welche als spezialisierte Module eng mit dem SAT-Solver integriert sind.
+
+Ein zentrales Merkmal von Z3 ist seine hohe Effizienz und seine Fähigkeit,
+große und komplexe Probleme in akzeptabler Zeit zu lösen.
+Diese Leistungsfähigkeit wird durch verschiedene Optimierungen und Heuristiken erreicht,
+die den Suchraum effizient einschränken und die Lösung von Constraints beschleunigen.
+Zudem ist ein Simplifer in die System Architektur integriert, der gegebene Constraints vereinfacht.
+Z3 hat nur wenige Abhängigkeiten an externe Bibliotheken und ist daher leicht zu integrieren und zu verwenden.
+Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, um die parallele Verarbeitung zu ermöglichen und damit die Leistungsfähigkeit weiter zu steigern. 
 
 
+Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt.
+Dies betrifft insbesondere große oder komplexe Constraints mit nicht-linearen Bedingungen.
+Beispielsweise lässt sich die folgende Formel, welche in \cref{lst:z3-example} gezeigt wird, in Z3 aber nicht in ProB lösen:
 
+\begin{lstlisting}[
+    float, caption={Ein Beispiel zur Verwendung des Z3-Solvers innerhalb der ProB REPL.}, label={lst:z3-example}, language=bash
+  ]
+  >>> :z3 X<Y & Y<X & X:INTEGER
+  PREDICATE is FALSE
+\end{lstlisting}
+\FloatBarrier
+
+
+Insgesamt macht die Leistungsfähigkeit und Flexibilität des Z3-Solvers ihn zu einem wichtigen Bestandteil von ProB,
+um Verifikationsaufgaben zu bewältigen, die über die Fähigkeiten des internen Constraint-Solvers hinausgehen.
 
 
 \subsection{ZeroMQ}
