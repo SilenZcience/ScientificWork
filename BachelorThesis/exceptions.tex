@@ -9,14 +9,8 @@ need to be handled properly.
 need to work with server rep req structure
 what if multiple errors?
 need to notify other process
-
-if function that can have an exception (even if handles eaxception) has an exception, return value will be invalid or empty.
-then the next code segment has exception because of that invalid return value, it is either not cought because not excpected and cant catch, or it is caught and we have 2 exceptions confusingly.
-
-function a calls function b and c with b return.
-if b has exception and handles it itself, then it will, because sicstus keeps running until return of interface function, return invalid value, and keep running in a.
-maybe b does not expect an invalid input value and is uncaught, then segfault. or b now also has exception and then we have 2 in sicstus (confusing).
-additionally now server and prob have to keep req-rep ping-pong system. double exception feed back cannot work, because when ProBreceive exception
+had segfaults
+\todo[]{Big Important!}
 
 
 
