@@ -6,11 +6,50 @@ Zur Förderung eines einheitlichen Verständnisses werden in diesem Abschnitt zu
 Im Folgenden werden die drei zentralen Konzepte behandelt, die für das Verständnis dieser Arbeit von Bedeutung sind: ProB, Z3 und ZeroMQ.
 
 \subsection{ProB}
-\cite{10.1007/978-3-540-45236-2_46}
 
+Die B-Methode, entwickelt von J.-R. Abrial \cite{abrial1996b}, ist eine formale Methode zur Entwicklung von Softwaresystemen,
+die auf der Idee der abstrakten Maschinen basiert.
+Mit abstrakten Maschinen lassen sich Zustände und deren Veränderungen mithilfe mathematischer Konzepte wie Mengen,
+Relationen und Funktionen modellieren \cite{leuschel2003prob}.
+Durch sogenannte Verfeinerungen wird schrittweise von einer abstrakten Beschreibung zu einer konkreten Implementierung übergegangen.
+Dabei stellt die Methode sicher, dass Invarianten stets eingehalten werden
+um die Korrektheit des Systems zu garantieren.
 
+Die an der HHU am Lehrstuhl der Softwaretechnik und Programmiersprachen entwickelte Software ProB \cite{leuschel2003prob} ist ein Validierungs-Toolset für Modelle der B-Methode.
+Als solcher unterstützt ProB mitunter die Modellierung, Animation und Verifikation von B-Modellen,
+indem Funktionalitäten wie Consistency Checking und Constraint Solving bereitgestellt werden.
 
+Der Animator in ProB ermöglicht es formale Spezifikationen zu visualisieren und zu animieren.
+Nutzer können durch die Simulation in Echtzeit einen Einblick in die Zustandsübergänge einer Maschine erhalten und schrittweise die Veränderungen nachvollziehen.
+Der aktuelle Zustand der Maschine wird dabei in einer grafischen Benutzeroberfläche dargestellt.
 
+Ein weiterer Kernbestandteil von ProB ist das Consistency Checking, welches in zwei Ansätzen realisiert wird: Temporal Model Checking und Constraint-Based Checking.
+
+Beim Temporal Model Checking wird versucht, eine Sequenz von Operationen zu finden, die, ausgehend von einem Anfangszustand,
+zu einer Verletzung der Invariante, oder einem anderen Fehler führt.
+Im Gegensatz dazu fokussiert sich das Constraint-based Checking auf die Suche nach einem Zustand des Systems,
+der die Invariante noch erfüllt. Von dort aus wird geprüft, ob es eine einzelne Operation gibt,
+welche die Invariante verletzt oder einen anderen Fehler erzeugt.
+
+Während das Model Checking eine umfassende Exploration aller Zustände ermöglicht, ist das Constraint-based Checking spezifischer,
+da es nur auf Fehler bei einzelnen Operationen fokussiert ist.
+Zusammen lassen sich so vollständige Fehler und problematische Operationen identifizieren.
+
+Beide Ansätze bieten wertvolle Instrumente für die Konsistenzprüfung von B-Modellen, und sind in der Lage die Verletzung von Invarianten und daraus folgenden Bedingungen sowie
+die Abwesenheit von Deadlocks und das Erreichen von spezifizierten Zielprädikaten zu überprüfen \cite{leuschel2008prob}.
+
+Zuletzt bietet ProB auch eine Constraint-Solving-Funktionalität, die es ermöglicht, unter Berücksichtigung von gegebenen Constraints (Einschränkungen) Lösungen für spezifische Prädikate zu finden.
+Derartige Einschränkungen oder Bedingungen können in Form von logischen Ausdrücken oder Gleichungen gegeben sein, die es zu erfüllen gilt.
+Ein Constraint-Solver ist ein Algorithmus oder System, welches darauf abzielt unter Berücksichtigung eben jener Beindungen eine Belegung aller Variablen zu finden, die die gegebenen Prädikate erfüllt,
+und somit ein Problem auf dessen Erfüllbarkeit zu prüfen.
+ProB implementiert hierfür verschiedene Constraint-Solving-Strategien, die auf unterschiedlichen Algorithmen basieren und es ermöglichen, Prädikate effizient zu lösen.
+Einerseits wird CLP(FD)\footnote{Constraint Logic Programming over Finite Domains} verwendet, um auf endlichen Domänen beispielsweise Gleichheits- und Ungleichheitsbedingungen, sowie arithmetische Relationen zu lösen.
+Ein weiterer Ansatz ist die Integration des SAT-basierten Kodkod,
+einem effizienten Constraint-Solver für die Prädikatenlogik erster Ordnung mit Relationen, transitiven Hüllen, Bit-Vektor-Arithmetik und partiellen Modellen \cite{torlak2007kodkod}.
+Zuletzt wird auch der SMT-Solver Z3 in ProB integriert, um komplexere Prädikate zu lösen, die über simple boolsche und arithmetische Ausdrücke hinausgehen.
+
+ProB ist im Kern in SICStus Prolog \cite{carlsson1988sicstus} implementiert, bietet jedoch verschiedene Programmerweiterungen, welche zumeist in C oder C++ geschrieben sind.
+Einer dieser Erweiterungen ist das Z3-Interface, welches die Integration des Z3-Solvers in ProB ermöglicht.
 
 \subsection{Z3 Solver}
 \cite{10.1007/978-3-031-65627-9_2} \cite{10.1007/978-3-540-78800-3_24}
