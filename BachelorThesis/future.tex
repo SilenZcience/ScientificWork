@@ -1,16 +1,44 @@
 
 
 \section{Zukünftige Arbeiten}
-\todo[]{TODO: schreiben... who would have thought...}
+
+Es existieren verschiedene Möglichkeiten, um auf die in dieser Arbeit vorgestellte Implementierung aufzubauen und sie weiter zu verbessern.
+Folgende Abschnitte stellen einige dieser Möglichkeiten vor.
 
 \subsection{Weitere Analyse und Optimierungen}
 
-    analyse performance improvement
+Die in \cref{sec:performance-evaluation} vorgestellte Performance-Evaluation ist eine erste Analyse der Implementierung und der Auswirkungen durch die Entkopplung von ProB und Z3.
+Sie stellt überraschenderweise eine Verbesserung der Performance fest, obwohl die Systemänderung an sich einen Overhead darstellt.
+Um ein tieferes Verständnis über die Laufzeit zu erlangen, ist es sinnvoll, die Analyse zu erweitern und zu vertiefen.
+Eine ausreichend tiefgründige Analyse könnte insofern von Vorteil sein, um ein besseres Verständis über die Performanceverbesserung zu erlangen und somit gegebenenfalls gezielt weitere Optimierungen vorzunehmen.
 
 \subsection{Deinit Hook}
 
- deinit für dangling zocket und prozess (cleaner)
+Nach der erfolgreich abgeschlossenenen Systemarchitekturänderung, die in dieser Arbeit vorgestellt wurde,
+bleibt ein letzter Schritt offen, um die Implementierung vollständig abzurunden.
+Derzeitig wird der Z3-Solver-Prozess nicht sauber beendet, sondern existiert als sogenannter \textit{child process} von ProB und ist somit an die Existenz des ProB-Prozesses gekoppelt.
+Dies stellt insofern grundsätzlich keit großes Problem dar, da der Z3-Solver-Prozess nach Beendigung des ProB-Prozesses automatisch beendet wird.
+Dennoch besteht in der Theorie die Möglichkeit, dass der Z3-Server als sogenannter \textit{dangling process} zurückbleibt.
+Grundsätzlich ist es zudem eine sauberere Lösung, den Z3-Prozess manuell zu beenden.
+
+Des Weiteren bleibt bei Beendigung des Solvers der von ZeroMQ instanziierte Socket geöffnet, und als \textit{dangling socket} im Arbeitsspeicher zurück.
+Dieser Umstand kann zu Speicherlecks führen und sollte daher vermieden werden.
+
+Um diese Probleme zu beheben, ist es sinnvoll, die Implementierung um einen Deinit-Hook zu erweitern.
+Dieser Hook wird aufgerufen, wenn der Z3-Solver beendet, beziehungsweise deinitialisiert, wird, und dient dazu, den Z3-Solver-Prozess und den Z3-Socket sauber zu beenden und zu schließen.
 
 \subsection{Parallelisierung}
 
- threading in ProB (eigentlicher Sinn der Arbeit um zu parallelisieren)
+Die Entkopplung von ProB und Z3 dient elementar als Grundlage für die Parallelisierung des Z3-Solvers,
+beziehungsweise die Parallelisierung der Lösung mehrerer Prädikate.
+Wie in \cref{sec:goals} beschrieben, ist die Entkopplung mit eben jenem Interesse der Erweiterbarkeit vollrichtet worden.
+
+Es bestehen verschiedene Ansätze, um die Parallelisierung zu realisieren.
+Eine Möglichkeit wäre, mehrere Instanzen des Z3-Solvers zu starten und die Prädikate auf diese Instanzen zu verteilen.
+In diesem Fall müsste die Kommunikationsschnittstelle auf der Seite von ProB so erweitert werden, dass sie mehrere Z3-Solver-Prozesse unterstützt.
+Der Z3-Server selbst müsste in diesem Szenario nicht verändert werden.
+
+Eine andere Möglichkeit besteht darin, auch den Z3-Server zu erweitern, sodass dieser mehrere Prädikate gleichzeitig lösen kann.
+Hierbei müsste die Kommunikationsschnittstelle auf der Seite des Z3-Servers so erweitert werden, dass sie mehrere Prädikate gleichzeitig empfangen und lösen kann.
+Es würde sich anbieten, in diesem Fall das Kommunikationsmustern zu wechseln und auf ein asynchrones Modell umzusteigen, wie beispielsweise das Dealer-Router Modell,
+welches in \cref{sec:zeromq} bereits erwähnt wurde.
