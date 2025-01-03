@@ -10,28 +10,28 @@ Folgende Abschnitte stellen einige dieser Möglichkeiten vor.
 Die in \cref{sec:performance-evaluation} vorgestellte Performance-Evaluation ist eine erste Analyse der Implementierung und der Auswirkungen durch die Entkopplung von ProB und Z3.
 Sie stellt überraschenderweise eine Verbesserung der Performance fest, obwohl die Systemänderung an sich einen Overhead darstellt.
 Um ein tieferes Verständnis über die Laufzeit zu erlangen, ist es sinnvoll, die Analyse zu erweitern und zu vertiefen.
-Eine ausreichend tiefgründige Analyse könnte insofern von Vorteil sein, um ein besseres Verständis über die Performanceverbesserung zu erlangen und somit gegebenenfalls gezielt weitere Optimierungen vorzunehmen.
+Eine ausreichend tiefgründige Analyse könnte insofern von Vorteil sein, um ein besseres Verständnis über die Performanceverbesserung zu erlangen und somit gegebenenfalls gezielt weitere Optimierungen vorzunehmen.
 
 \subsection{Deinit Hook}
 
-Nach der erfolgreich abgeschlossenenen Systemarchitekturänderung, die in dieser Arbeit vorgestellt wurde,
+Nach der erfolgreich abgeschlossenen Systemarchitekturänderung, die in dieser Arbeit vorgestellt wurde,
 bleibt ein letzter Schritt offen, um die Implementierung vollständig abzurunden.
 Derzeitig wird der Z3-Solver-Prozess nicht sauber beendet, sondern existiert als sogenannter \textit{child process} von ProB und ist somit an die Existenz des ProB-Prozesses gekoppelt.
-Dies stellt insofern grundsätzlich keit großes Problem dar, da der Z3-Solver-Prozess nach Beendigung des ProB-Prozesses automatisch beendet wird.
+Dies stellt insofern grundsätzlich kein großes Problem dar, da der Z3-Solver-Prozess nach Beendigung des ProB-Prozesses automatisch beendet wird.
 Dennoch besteht in der Theorie die Möglichkeit, dass der Z3-Server als sogenannter \textit{dangling process} zurückbleibt.
 Grundsätzlich ist es zudem eine sauberere Lösung, den Z3-Prozess manuell zu beenden.
 
-Des Weiteren bleibt bei Beendigung des Solvers der von ZeroMQ instanziierte Socket geöffnet, und als \textit{dangling socket} im Arbeitsspeicher zurück.
+Des Weiteren bleibt bei Beendigung des Solvers der von ZeroMQ instanziierte Socket geöffnet und als \textit{dangling socket} im Arbeitsspeicher zurück.
 Dieser Umstand kann zu Speicherlecks führen und sollte daher vermieden werden.
 
 Um diese Probleme zu beheben, ist es sinnvoll, die Implementierung um einen Deinit-Hook zu erweitern.
-Dieser Hook wird aufgerufen, wenn der Z3-Solver beendet, beziehungsweise deinitialisiert, wird, und dient dazu, den Z3-Solver-Prozess und den Z3-Socket sauber zu beenden und zu schließen.
+Dieser Hook wird aufgerufen, wenn der Z3-Solver beendet beziehungsweise deinitialisiert wird, und dient dazu, den Z3-Solver-Prozess und den Z3-Socket sauber zu beenden und zu schließen.
 
 \subsection{Parallelisierung}
 
-Die Entkopplung von ProB und Z3 dient elementar als Grundlage für die Parallelisierung des Z3-Solvers,
+Die Entkopplung von ProB und Z3 dient elementar als Grundlage für die Parallelisierung des Z3-Solvers
 beziehungsweise die Parallelisierung der Lösung mehrerer Prädikate.
-Wie in \cref{sec:goals} beschrieben, ist die Entkopplung mit eben jenem Interesse der Erweiterbarkeit vollrichtet worden.
+Wie in \cref{sec:goals} beschrieben, ist die Entkopplung mit eben jenem Interesse der Erweiterbarkeit verrichtet worden.
 
 Es bestehen verschiedene Ansätze, um die Parallelisierung zu realisieren.
 Eine Möglichkeit wäre, mehrere Instanzen des Z3-Solvers zu starten und die Prädikate auf diese Instanzen zu verteilen.
