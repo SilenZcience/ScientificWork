@@ -73,6 +73,27 @@
   isbn      = {978-3-031-65627-9}
 }
 
+@misc{z3prover-github,
+  author = {Microsoft-Research},
+  title  = {GitHub - Z3Prover/z3: The Z3 Theorem Prover},
+  year = {2015}
+}
+
+@inproceedings{10.1007/978-3-319-33693-0_23,
+  author    = {Krings, Sebastian
+               and Leuschel, Michael},
+  editor    = {{\'A}brah{\'a}m, Erika
+               and Huisman, Marieke},
+  title     = {SMT Solvers for Validation of B and Event-B Models},
+  booktitle = {Integrated Formal Methods},
+  year      = {2016},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {361--375},
+  abstract  = {We present an integration of the constraint solving kernel of the ProB model checker with the SMT solver Z3. We apply the combined solver to B and Event-B predicates, featuring higher-order datatypes and constructs like set comprehensions. To do so we rely on the finite set logic of Z3 and provide a new translation from B to Z3, better suited for constraint solving. Predicates can then be solved by the two solvers working hand in hand: constraints are set up in both solvers simultaneously and (intermediate) results are transferred. We thus combine a constraint logic programming based solver with a DPLL(T) based solver into a single procedure. The improved constraint solver finds application in many validation tasks, from animation of implicit specifications, to test case generation, bounded and symbolic model checking on to disproving of proof obligations. We conclude with an empirical evaluation of our approach focusing on two dimensions: comparing low and high-level encodings of B as well as comparing pure ProB to ProB combined with Z3.},
+  isbn      = {978-3-319-33693-0}
+}
+
 @book{hintjens2013zeromq,
   title     = {ZeroMQ: Messaging for Many Applications},
   author    = {Hintjens, P},
@@ -96,3 +117,4 @@
   year         = {2007},
   organization = {Springer}
 }
+

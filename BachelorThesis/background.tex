@@ -61,7 +61,7 @@ umfasst SMT zusätzliche Hintergrundtheorien wie Arithmetik, Bit-Vektoren, Array
 Diese Erweiterung ermöglicht eine umfassendere Form der logischen Schlussfolgerung.
 
 Der Z3-Solver \cite{10.1007/978-3-540-78800-3_24} wurde von Microsoft Research entwickelt.
-Seit seiner ersten Veröffentlichung hat sich Z3 zu einem der leistungsfähigsten und am weitesten verbreiteten SMT-Solver entwickelt.
+Seit seiner ersten Veröffentlichung hat sich Z3 zu einem der leistungsfähigsten und am weitesten verbreiteten SMT-Solver behauptet.
 Microsoft hat Z3 als Open-Source-Software frei zugänglich unter der MIT-Lizenz veröffentlicht,
 was seine Verbreitung und Nutzung in verschiedenen Bereichen weiter gefördert hat.
 
@@ -83,7 +83,7 @@ Er arbeitet rekursiv und kombiniert folgende Schritte:
 \end{enumerate}    
 
 In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
-Weitere Theorien wie lineare und nichtlineare Arithmetik, Bit-Vektoren und Arrays werden durch spezielle Theorie-Solver behandelt,
+Weitere Theorien wie lineare und nichtlineare Arithmetik, Bit-Vektoren und Arrays werden durch weitere Theorie-Solver behandelt,
 welche als spezialisierte Module eng mit dem SAT-Solver integriert sind.
 
 Ein zentrales Merkmal von Z3 ist seine hohe Effizienz und seine Fähigkeit,
@@ -91,11 +91,10 @@ große und komplexe Probleme in akzeptabler Zeit zu lösen.
 Diese Leistungsfähigkeit wird durch verschiedene Optimierungen und Heuristiken erreicht,
 die den Suchraum effizient einschränken und die Lösung von Constraints beschleunigen.
 Zudem ist ein Simplifer in die System Architektur integriert, der gegebene Constraints vereinfacht.
-Z3 hat nur wenige Abhängigkeiten an externe Bibliotheken und ist daher leicht zu integrieren und zu verwenden.
+Z3 hat nur wenige Abhängigkeiten an externe Bibliotheken und ist daher leicht zu integrieren und zu verwenden \cite{z3prover-github}.
 Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, um die parallele Verarbeitung zu ermöglichen und damit die Leistungsfähigkeit weiter zu steigern. 
 
-
-Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt.
+Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt \cite{10.1007/978-3-319-33693-0_23}.
 Dies betrifft insbesondere große oder komplexe Constraints mit nicht-linearen Bedingungen.
 Beispielsweise lässt sich die folgende Formel, welche in \cref{lst:z3-example} gezeigt wird, in Z3 aber nicht in ProB lösen:
 
@@ -114,4 +113,53 @@ um Verifikationsaufgaben zu bewältigen, die über die Fähigkeiten des internen
 
 \subsection{ZeroMQ}
 \label{sec:zeromq}
-\cite{hintjens2013zeromq} \cite{sustrik2015zeromq}
+
+Innerhalb der geplanten Architektur wird als Technologie zur Kommunikation zwischen den zwei seperaten Prozessen die ZeroMQ-Bibliothek \cite{hintjens2013zeromq} verwendet.
+ZeroMQ\footnote{auch ØMQ, 0MQ oder ZMQ} ist eine hochleistungsfähige, asynchrone Nachrichtenaustauschbibliothek, die speziell für verteilte Systeme entwickelt wurde.
+Da ZeroMQ in der Sprache C implementiert- und ursprünglich für die Börse geschrieben wurde, lag extreme Performanceoptimierung lange Zeit im Fokus \cite{sustrik2015zeromq},
+was es zu einer der schnellsten und effizientesten Bibliotheken für den Nachrichtenaustausch macht.
+
+ZeroMQ bietet eine Vielzahl von Kommunikationsmustern, die es ermöglichen, verschiedene Arten von verteilten Systemen zu realisieren.
+Dazu gehören unter anderem:
+
+\begin{itemize}
+    \item Request-Reply (REQ/REP): Ein einfacher Nachrichtenaustausch, der für synchrone Kommunikation geeignet ist.
+    \item Publish-Subscribe (PUB/SUB): Ermöglicht die Verteilung von Nachrichten an mehrere Empfänger, die sich für bestimmte Themen registrieren.
+    \item Push-Pull (PUSH/PULL): Ein Muster für Lastverteilung, bei dem Nachrichten an Worker-Threads oder Prozesse verteilt werden.
+    \item Dealer-Router (DEALER/ROUTER): Ein erweiterbares und flexibles Muster für komplexere (und asynchrone) Kommunikationsstrukturen.
+\end{itemize}
+
+Im Kern stellt ZeroMQ ein API über traditionelle Sockets bereit, welche die Komplexität des Netzwerkprotokollmanagements abstrahiert.
+Statt sich mit niedrigstufigen Details wie Verbindungen, Paketverwaltung und Fehlerbehebung auseinanderzusetzen, kann so die Implementierung von Anwendungslogik drastisch vereinfacht werden.
+Derartige API Anbindungen sind für viele Programmiersprachen verfügbar, darunter C\texttt{++}, Python, Java, Go und viele mehr.
+
+ZeroMQ ist flexibel und einfach skalierbar, da es ohne einen dedizierten Message Broker auskommt und direkt zwischen den Prozessen kommuniziert.
+Es werden verschiedene Transportprotokolle unterstützt, darunter TCP (Transmission Control Protocol), IPC (Inter-Process Communication), (E)PGM ((Encapsuled) Pragmatic General Multicast) und viele mehr, die es ermöglichen, ZeroMQ in verschiedenen Umgebungen zu verwenden.
+
+Insgesamt bietet ZeroMQ also eine hohe Geschwindigkeit, Flexibilität und Skalierbarkeit sowie ein simples Programmierinterface,
+was es zu einer idealen Wahl für die Kommunikation zwischen ProB und dem Z3-Solver macht.
+Zu Illustrationszwecken ist in \cref{lst:min-client} und \cref{lst:min-server}  beispielhaft ein minimaler Client und Server in C\texttt{++} mit ZeroMQ dargestellt.
+
+\begin{lstlisting}[
+  float, caption={Ein minimales Client Modell mit ZeroMQ.}, label={lst:min-client}, language=C++
+]
+  s = socket(REQ);
+  s.connect("ipc://tmp/zmq");
+  s.send("Hello");
+  reply = s.recv();
+\end{lstlisting}
+
+\begin{lstlisting}[
+  float, caption={Ein minimales Server Modell mit ZeroMQ.}, label={lst:min-server}, language=C++
+]
+  s = socket(REP);
+  s.connect("ipc://tmp/zmq");
+  request = s.recv();
+  s.send("Hello back");
+\end{lstlisting}
+\FloatBarrier
+
+Für die geplante Architekturänderung wird ZeroMQ verwendet, um eine direkte IPC-Protokollverbindung zwischen ProB und dem Z3-Solver herzustellen.
+Da der entkoppelte Solver auf demselben Rechner ausgeführt wird, bietet sich IPC als Kommunikationsprotokoll an, um eine effiziente und schnelle Kommunikation zu gewährleisten.
+Es wurde sich für das Request-Reply Muster entschieden, da es im Kontext die am besten passendste Lösung darstellt,
+ohne dem System unnötige Komplexität hinzuzufügen.
