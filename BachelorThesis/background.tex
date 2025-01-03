@@ -65,7 +65,7 @@ Seit seiner ersten Veröffentlichung hat sich Z3 zu einem der leistungsfähigste
 Microsoft hat Z3 als Open-Source-Software frei zugänglich unter der MIT-Lizenz veröffentlicht,
 was seine Verbreitung und Nutzung in verschiedenen Bereichen weiter gefördert hat.
 
-Er wurde in C\texttt{++} implementiert, bietet jedoch eine Vielzahl von externen API Anbindungen, die es ermöglichen, den Solver in verschiedenen Programmiersprachen zu verwenden,
+Er wurde in C\texttt{++} implementiert, bietet jedoch eine Vielzahl von externen API-Anbindungen, die es ermöglichen, den Solver in verschiedenen Programmiersprachen zu verwenden,
 wie beispielsweise OCaml, Python, Ruby und Rust.
 Er ist ein leistungsfähiger SMT-Solver, der sich speziell auf die Lösung von Problemen im Bereich der Softwareverifikation und -analyse spezialisiert.
 Zum Beispiel wird der Z3-Solver in der Softwareverifikation eingesetzt, um die Korrektheit von Programmen zu überprüfen, indem er formale Spezifikationen testet und beweist.
@@ -83,7 +83,7 @@ Er arbeitet rekursiv und kombiniert folgende Schritte:
 \end{enumerate}    
 
 In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
-Weitere Theorien wie lineare und nichtlineare Arithmetik, Bit-Vektoren und Arrays werden durch weitere Theorie-Solver behandelt,
+Weitere Theorien wie lineare und nicht lineare Arithmetik, Bit-Vektoren und Arrays werden durch weitere Theorie-Solver behandelt,
 welche als spezialisierte Module eng mit dem SAT-Solver integriert sind.
 
 Ein zentrales Merkmal von Z3 ist seine hohe Effizienz und seine Fähigkeit,
@@ -114,7 +114,7 @@ um Verifikationsaufgaben zu bewältigen, die über die Fähigkeiten des internen
 \subsection{ZeroMQ}
 \label{sec:zeromq}
 
-Innerhalb der geplanten Architektur wird als Technologie zur Kommunikation zwischen den zwei seperaten Prozessen die ZeroMQ-Bibliothek \cite{hintjens2013zeromq} verwendet.
+In der geplanten Architektur wird als Technologie zur Kommunikation zwischen den zwei separaten Prozessen die ZeroMQ-Bibliothek \cite{hintjens2013zeromq} verwendet.
 ZeroMQ\footnote{auch ØMQ, 0MQ oder ZMQ} ist eine hochleistungsfähige, asynchrone Nachrichtenaustauschbibliothek, die speziell für verteilte Systeme entwickelt wurde.
 Da ZeroMQ in der Sprache C implementiert- und ursprünglich für die Börse geschrieben wurde, lag extreme Performanceoptimierung lange Zeit im Fokus \cite{sustrik2015zeromq},
 was es zu einer der schnellsten und effizientesten Bibliotheken für den Nachrichtenaustausch macht.
