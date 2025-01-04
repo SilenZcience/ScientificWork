@@ -6,21 +6,73 @@
 
 \subsection{Planung}
 
-
-
+Um eine korrekte Systemrefaktorisierung durchzuführen, ist es notwendig, zuvor grundlegende Kernaspekte
+des neuen Systems vollständig zu planen. Dies beinhaltet insbesondere die Struktur des neuen Server-Prozesses
+und den Aufbau der Nachrichten, die zwischen den Prozessen ausgetauscht werden.
 
 \subsubsection{Prolog Datentypen}
 
-- atoms string
-- integers longs (laut dokumentation bis version blabla)
-- floats doubles
-- typerefs problem, weil kann alles sein
+Innerhalb des bestehenden Z3-Interfaces werden verschiedene Prolog-Datentypen verwendet.
+Da durch die Entkopplung der Prozesse Prolog selbst und die Z3-Komponente nicht länger direkt miteinander kommunizieren können,
+müssen die Prolog-Datentypen in eine Form umgewandelt werden, die über das Netzwerk übertragen werden kann und von Z3 verstanden wird.
+
+Primär werden die folgenden Prolog-Datentypen verwendet: SP\_atom, SP\_integer und SP\_term\_ref.
+Mithilfe der C\texttt{++} Bibliothek SICStus Prolog können diese Datentypen konvertiert werden.
+So stehen bei der Umwandlung von SP\_atom in einen C\texttt{++} String die Funktionen SP\_string\_to\_atom und SP\_atom\_to\_string zur Verfügung.
+Die Dokumentation von SICStus Prolog \cite{sicstusdoc} schlägt unter dem Kapitel \enquote{Conversions between Prolog Arguments and C Types} zudem zur Umwandlung von SP\_integer den Datentyp C long vor.
+Der Typ SP\_term\_ref wird in der Dokumentation wie folgt beschrieben: \enquote{The argument could be any term.}.
+Er lässt sich nur schwer gezielt in einen C\texttt{++} Datentyp umwandeln und muss daher mit besonderer Vorsicht behandelt werden.
 
 \subsubsection{Struktur der Nachrichten}
 
-- function identifier
-- status identifier
-- message
+Innerhalb von ZeroMQ lassen sich verschiedene Datenwerte gemeinsam in einen Nachrichtenblock packen.
+Ein solcher Nachrichtenblock wird über das abstrakte $zmsg$ Objekt repräsentiert, welches es ermöglicht,
+komplexere Daten zusammen in sogenannten Frames zu übermitteln.
+Da sich der konkrete Inhalt der Nachrichten je nach Interfacefunktion unterscheidet,
+bietet es sich an, dieses Konzept zu nutzen und den Inhalt spezifisch für jede Funktion zu definieren und zu interpretieren.
+
+Zusätzlich zu den eigentlichen Daten, die übermittelt werden, ist es jedoch notwendig, Metadaten zu übermitteln,
+die die korrekte Interpretation der Nachrichten auf der Empfängerseite ermöglichen.
+Wenn eine Anfragenachricht von ProB an den Z3-Server gesendet wird, muss der Server wissen, welche Funktion aufgerufen werden soll.
+Dafür wird ein Funktionsidentifikator benötigt, der die Funktion eindeutig identifiziert.
+Diese Identifikatoren werden als ein Enum-Typ definiert, der die verschiedenen Funktionen als Konstanten repräsentiert und in sowohl
+der ProB- als auch der Z3-Komponente eingebunden wird.
+Ein Ausschnitt des Enum-Typs ist in \cref{lst:func-identifiers} gezeigt.
+
+\begin{lstlisting}[
+    float, caption={Ein Ausschnitt des Funktionsidentifikations-Enums.}, label={lst:func-identifiers}, language=C++
+  ]
+  enum SP_Function {
+    INIT = 0,
+    PRETTY_PRINT_SMT = 1,
+    PRETTY_PRINT_SMT_FOR_ID = 2,
+    MK_VAR = 2,
+    // ...
+  }
+\end{lstlisting}
+
+Wenn eine Antwortnachricht vom Z3-Server an ProB gesendet wird, muss die Nachricht ebenfalls Metadaten enthalten,
+die die korrekte Interpretation der Nachricht auf der ProB-Seite ermöglichen.
+Dafür wird ein Statusidentifikator benötigt, der den Status der Anfrage repräsentiert.
+Der hierfür verwendete Enum-Typ ist in \cref{lst:status-identifiers} gezeigt.
+
+\begin{lstlisting}[
+    float, caption={Das Statusidentifikations-Enum.}, label={lst:status-identifiers}, language=C++
+  ]
+  enum Z3Status {
+    NOK,
+    OK,
+    UNFINISHED
+  }
+\end{lstlisting}
+
+Die Statuswerte $OK$ und $NOK$ repräsentieren den Erfolg oder Misserfolg einer Anfrage.
+Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{sec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
+um eine entsprechende Fehlerbehandlung durchzuführen. 
+Der Statuswert $UNFINISHED$ wird verwendet, wenn eine Anfrage noch nicht abgeschlossen ist und der Server auf weitere Informationen wartet (siehe \cref{subsec:helper-functions}).
+
+Insgesamt besteht eine Nachricht also immer aus einem Identifikator (von Typ Integer), der entweder eine Funktion oder einen Status repräsentiert,
+gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eines $zmsg$ Objektes.
 
 \subsubsection{Server Struktur}
 
@@ -40,6 +92,7 @@ porting of all 53 interface function
 
 
 \subsubsection{Hilfsfunktionen}
+\label{subsec:helper-functions}
 
 inbesondere $mk_type$
 statemachines
@@ -49,7 +102,7 @@ statemachines
 
 \subsubsection{Optimierungen}
 \label{subsec:optimizations}
-
+\todo[]{bessere codeschnipsel!}
 Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung aller notwendigen Funktionen
 lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
 
@@ -72,7 +125,7 @@ um anschließend in einer einzigen Nachricht an den Server gesendet zu werden.
   }
   // send request to server
 \end{lstlisting}
-
+\todo[]{anpassen an letzte refaktorisierung!}
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
 Anhand der Variablen $translation\_type\_atom$ wird das Objekt $ctx\_data$ ermittelt, welches an die Funktion $prolog\_type\_list\_to\_sort\_vector$ übergeben wird.
@@ -106,7 +159,7 @@ direkt mit $translation\_type\_atom$ aufgerufen zu werden.
 Zuletzt wurde das DRY\footnote{Don't Repeat Yourself}-Prinzip angewendet, um die Wartbarkeit des Codes zu erhöhen,
 indem gewisse Hilfsfunktionen ausschließlich auf entweder der Prolog- oder der Serverseite implementiert wurden.
 Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung von der in \cref{lst:escape-string} gezeigten Funktion
-in beiden Prozessen. Durch die Anwendung des Programmierprinzips wurde die Funktion ausschließlich an dem Z3-Prozess implementiert.
+in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler Anpassung im Quellcode wurde die Funktion ausschließlich innerhalb des Z3-Prozesses implementiert.
 
 
 \subsubsection{Serveranbindung}
