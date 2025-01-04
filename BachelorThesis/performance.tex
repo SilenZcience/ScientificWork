@@ -47,7 +47,7 @@ Ein kleiner Auszug dieser Messdaten sind in \cref{tab:performance-data} dargeste
         \end{tabular}
     } % End of resizebox
 \end{table}
-\FloatBarrier
+% \FloatBarrier
 
 Die Zeitmessungen sind in Nanosekunden (ns) angegeben und zeigen die Laufzeit der Anfragen in den verschiedenen Konfigurationen.
 Innerhalb der gegebenen Größenordnung sind die Werte ebenfalls in Millisekunden (ms) zu interpretieren und damit ausschlaggebend für die Performance.
@@ -61,7 +61,7 @@ Es wird angenommen, dass die Messfehler normalverteilt sind.
     \caption{Durchschnittliche Laufzeiten der Anfragen in den verschiedenen Architekturen.}
     \label{fig:performance-overview}
 \end{figure}
-\FloatBarrier
+% \FloatBarrier
 
 Um sich zunächst einen Überblick über die Rohdaten zu verschaffen,
 werden in \cref{fig:performance-overview} die durchschnittlichen Laufzeiten in den verschiedenen Konfigurationen dargestellt.
@@ -151,8 +151,8 @@ Zudem sind Messwerte dieser Größenordnung zunehmend ungenau, weshalb sie anneh
     \caption{Induzierter Overhead der neuen Server-Architektur durch das Serialisieren auf den Socket.}
     \label{fig:overhead}
 \end{figure}
-\FloatBarrier
-\clearpage
+% \FloatBarrier
+% \clearpage
 
 Der lineare Fit zeigt augenscheinlich eine gute Übereinstimmung mit den Daten, welche in dem dritten Subgraphen aus \cref{fig:overhead} verifiziert wird.
 Hierbei wird die Differenz des induzierten Overheads und des linearen Fits gegen die Anzahl der Anfragen dargestellt.
@@ -184,7 +184,7 @@ In \cref{tab:broken-datapoint} ist dieser Datenpunkt dargestellt.
         \bottomrule
     \end{tabular}
 \end{table}
-\FloatBarrier
+% \FloatBarrier
 
 Die verschiedenen Messwerte der alten Architektur in Millisekunden zeigen zwei starke Ausreißer bei der zweiten und dritten Messung.
 Diese Varianz ist womöglich auf die in \cref{subsec:softlock} beschriebene Problematik zurückzuführen.

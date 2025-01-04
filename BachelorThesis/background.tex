@@ -145,7 +145,7 @@ Zu Illustrationszwecken ist in \cref{lst:min-client} und \cref{lst:min-server}  
   float, caption={Ein minimales Client Modell mit ZeroMQ.}, label={lst:min-client}, language=C++
 ]
   s = socket(REQ);
-  s.connect("ipc://tmp/zmq");
+  s.connect("ipc:///tmp/zmq");
   s.send("Hello");
   reply = s.recv();
 \end{lstlisting}
@@ -154,7 +154,7 @@ Zu Illustrationszwecken ist in \cref{lst:min-client} und \cref{lst:min-server}  
   float, caption={Ein minimales Server Modell mit ZeroMQ.}, label={lst:min-server}, language=C++
 ]
   s = socket(REP);
-  s.connect("ipc://tmp/zmq");
+  s.connect("ipc:///tmp/zmq");
   request = s.recv();
   s.send("Hello back");
 \end{lstlisting}

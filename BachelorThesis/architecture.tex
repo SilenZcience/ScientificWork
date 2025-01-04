@@ -50,15 +50,63 @@ statemachines
 \subsubsection{Optimierungen}
 \label{subsec:optimizations}
 
-loops 2 von 4
+Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung aller notwendigen Funktionen
+lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
 
-manchmal $ctx_data -> blabla$ unnötige $ctx-data$
+Eine der elementarsten Optimierungsmöglichkeiten ist die Vermeidung von Nachrichtenaustausch beider Prozesse
+innerhalb von Schleifen. Dieses Verhalten tritt insbesondere dann auf, wenn Prolog Datenstrukturen übermittelt werden,
+die iterierbar sind, wie Listen, Vektoren und Records.
+In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Server gesendet,
+um das aktuelle Element zu übermitteln.
+Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden.
+In dem Folgenden \cref{lst:loops-optimization} ist gezeigt, wie eine Prolog Liste zunächst in einem String Vektor akkumuliert wird,
+um anschließend in einer einzigen Nachricht an den Server gesendet zu werden.
 
-osstream to string
+\begin{lstlisting}[
+    float, caption={Ein Ausschnitt einer Interfacefunktion zur Demonstration von Schleifenoptimierung.}, label={lst:loops-optimization}, language=C++
+  ]
+  std::vector<std::string> string_vec = 
+    term_ref_prolog_list_to_string_vector(element_names);
+  for (int i = 0; i < cardinality; i++) {
+      zmsg_addstr(request, string_vec[i].c_str());
+  }
+  // send request to server
+\end{lstlisting}
 
-DRY with e.g. predicate in ||
+Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
+Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
+Anhand der Variablen $translation\_type\_atom$ wird das Objekt $ctx\_data$ ermittelt, welches an die Funktion $prolog\_type\_list\_to\_sort\_vector$ übergeben wird.
+Diese verwendet das Objekt ausschließlich zur Ermittlung der Variablen $translation\_type\_atom$. Das Problem hierbei ist,
+dass $ctx\_data$ in der neuen Architektur auf der Seite des Server-Prozesses liegt und somit einen Nachrichtenaustausch erfordert.
+Das Problem lässt sich umgehen, indem die Funktion $prolog\_type\_list\_to\_sort\_vector$ dahingehen refaktorisiert wird,
+direkt mit $translation\_type\_atom$ aufgerufen zu werden.
 
+\begin{lstlisting}[
+    float, caption={Ein Ausschnitt einer redundanten Objektverwaltung.}, label={lst:unnecessary-ctx-data}, language=C++
+  ]
+  // function: mk_op_comprehension_set_multi
+  ContextData ctx_dta =
+    get_translation_representant_ctx_data(translation_type_atom);
+  prolog_type_list_to_sort_vector(ctx_data, couple_types);
+  // ...
+  
+  // function: prolog_type_list_to_sort_vector
+  mk_sort(ctx_data->get_translation_type_atom());
+  
+\end{lstlisting}
 
+\begin{lstlisting}[
+    float, caption={Die Hilfsfunktion $escape\_string$.}, label={lst:escape-string}, language=C++
+  ]
+  std::string escape_string(const std::string to_escape) {
+    return "|" + to_escape + "|";
+  }
+\end{lstlisting}
+
+Zuletzt wurde das DRY\footnote{Don't Repeat Yourself}-Prinzip angewendet, um die Wartbarkeit des Codes zu erhöhen,
+indem gewisse Hilfsfunktionen ausschließlich auf entweder der Prolog- oder der Serverseite implementiert wurden.
+Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung von der in \cref{lst:escape-string} gezeigten Funktion
+in beiden Prozessen. Durch die Anwendung des Programmierprinzips wurde die Funktion ausschließlich an dem Z3-Prozess implementiert.
 
 
 \subsubsection{Serveranbindung}
