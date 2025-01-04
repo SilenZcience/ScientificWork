@@ -7,6 +7,7 @@ Im Folgenden werden die drei zentralen Konzepte behandelt, die für das Verstän
 \subsection{ProB}
 \todo[]{Relevanz für die Arbeit suchen? Wo ist sie? Man weiß es nicht. Aber irgendwas muss man ja schreiben...}
 \todo[]{Inhaltliche Korrektheit prüfen. Nach A kommt B und was ist das?}
+\todo[]{Korrekte Referenzierung von Quellen überprüfen.}
 Die B-Methode, entwickelt von J.-R. Abrial \cite{abrial1996b}, ist eine formale Methode zur Entwicklung von Softwaresystemen,
 die auf der Idee der abstrakten Maschinen basiert.
 Mit abstrakten Maschinen lassen sich Zustände und deren Veränderungen mithilfe mathematischer Konzepte wie Mengen,
@@ -19,7 +20,7 @@ Die an der HHU am Lehrstuhl der Softwaretechnik und Programmiersprachen entwicke
 Als solcher unterstützt ProB mitunter die Modellierung, Animation und Verifikation von B-Modellen,
 indem Funktionalitäten wie Consistency Checking und Constraint Solving bereitgestellt werden.
 ProB findet bereits in vielen Systemen Verwendung zur Datenvalidierung und Validierung komplexer Eigenschaften für sicherheitskritische Systeme.
-Es wird bereits von mehreren Unternehmen verwendet und ist November 2022 mit dem \enquote{AlainColmerauer Prize} ausgezeichnet worden.
+Es wird bereits von mehreren Unternehmen eingesetzt und ist November 2022 mit dem \enquote{AlainColmerauer Prize} ausgezeichnet worden.
 
 Der Animator in ProB ermöglicht es, formale Spezifikationen zu visualisieren und zu animieren.
 Nutzer können durch die Simulation in Echtzeit einen Einblick in die Zustandsübergänge einer Maschine erhalten und schrittweise die Veränderungen nachvollziehen.
@@ -31,7 +32,7 @@ Beim Temporal Model Checking wird versucht, eine Sequenz von Operationen zu find
 zu einer Verletzung der Invariante oder einem anderen Fehler führt.
 Im Gegensatz dazu fokussiert sich das Constraint-based Checking auf die Suche nach einem Zustand des Systems,
 der die Invariante noch erfüllt. Von dort aus wird geprüft, ob es eine einzelne Operation gibt,
-welche die Invariante verletzt oder einen anderen Fehler erzeugt.
+welche die Invariante verletzt oder anderweitige Fehler erzeugt.
 
 Während das Model Checking eine umfassende Exploration aller Zustände ermöglicht, ist das Constraint-based Checking spezifischer,
 da es nur auf Fehler bei einzelnen Operationen fokussiert ist.
@@ -75,7 +76,7 @@ Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Log
 das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
 Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
 Er arbeitet rekursiv und kombiniert folgende Schritte:
-
+\todo[]{hier mache ich bestimmt noch den eigentlichen algorithmus hin, weil ich prinzipiell einfach ein algorithmenverzeichnis haben möchte xD}
 \begin{enumerate}
     \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
     \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
