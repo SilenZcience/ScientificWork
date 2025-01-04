@@ -3,6 +3,7 @@
 
 \section{Architekturänderung}
 \todo[]{Eigentlicher Kern der Arbeit, mache ich, sobald ich mit Prokrastination fertig bin.}
+Im Folgenden wird die Planung und Implementierung der Architekturänderung zwecks Entkopplung der Z3-Komponente aus ProB beschrieben.
 
 \subsection{Planung}
 
@@ -76,11 +77,50 @@ gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eine
 
 \subsubsection{Server Struktur}
 
-long damn switch case
-threading
+Da sich der Z3-Server mit nur einem einzigen Client beschäftigen muss, ist die Kernlogik des Servermodells simpel gehalten.
+Nach dem Instanziieren des Sockets wird eine Endlosschleife gestartet, die auf eingehende Nachrichten wartet.
+Sobald eine Nachricht empfangen wird, wird zunächst der Funktionsidentifikator extrahiert und die entsprechende Funktion aufgerufen.
+Dies geschieht mittels einem Switch-Case-Block, der alle möglichen Funktionsidentifikatoren abdeckt.
+Nachdem die Funktion, mit den aus dem $zmsg$ Objekt extrahierten Daten als Parameter ausgeführt wurde,
+wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält.
+Das Ergebnis ist in den meisten Fällen der Rückgabewert eben jener Funktion, die aufgerufen wurde.
+Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt.
+
+\begin{lstlisting}[
+  float, caption={Die Kernstruktur des Z3-Servers.}, label={lst:server-structure}, language=C++
+]
+  int f_id;
+  zmsg_t *request = nullptr;
+  zmsg_t *response;
+
+  while (true) {
+    if (!receive_z3_request(&f_id, &request)) {
+      break;
+    } // extrahiere Funktionsidentifikator und Nachricht
+
+    response = zmsg_new();
+    switch (f_id) {
+      case SP_FUNCTION::INIT:
+        init_contexts();
+        break;
+      case SP_FUNCTION::MK_VAR:
+        // extrahiere Daten aus Nachricht
+        t_type = receive_sp_string(request);
+        s_value1 = receive_sp_string(request);
+        // rufe Funktion auf und fuege Ergebnis zur Antwort hinzu
+        zmsg_addstrf(response, "%ld", mk_var(t_type, s_value1));
+        break
+      // ...
+    }
+
+    send_z3_response(Z3Status::OK, &response);
+  }
+\end{lstlisting}
 
 
-
+Weitere Bestandteile, die zur Struktur des Servers gehören, sind die Initialisierung des Servers, die Verbindungsherstellung zum ProB-Prozess,
+das implementierte Logging und die Behandlung von Exceptions.
+Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-connection}, \cref{subsec:logging}, \cref{sec:exceptions}) genauer erläutert.
 
 
 \subsection{Implementierung}
@@ -163,11 +203,13 @@ in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler A
 
 
 \subsubsection{Serveranbindung}
+\label{subsec:server-connection}
 
 server als subprozess
 starting as needed
 
 \subsubsection{Logging}
+\label{subsec:logging}
 
 via sys argv
 stdout not captureable in sicstus prolog
