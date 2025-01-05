@@ -116,7 +116,7 @@ Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt
     send_z3_response(Z3Status::OK, &response);
   }
 \end{lstlisting}
-
+\todo[]{erkläre zusätzlichen nachrichtenverkehr in hilfsfunktionen}
 
 Weitere Bestandteile, die zur Struktur des Servers gehören, sind die Initialisierung des Servers, die Verbindungsherstellung zum ProB-Prozess,
 das implementierte Logging und die Behandlung von Exceptions.
@@ -125,18 +125,129 @@ Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-conn
 
 \subsection{Implementierung}
 
+blabla
+
 \subsubsection{Interfacefunktionen}
 
 porting of all 53 interface function
-
+start with send and end with receive in ProB
+explain necessary structure of request reply (enforced!)
 
 
 \subsubsection{Hilfsfunktionen}
 \label{subsec:helper-functions}
 
-inbesondere $mk_type$
-statemachines
+Hilfsfunktionen werden definiert als diejenigen Funktionen, die nicht direkt über das Z3-Interface von ProB aufgerufen werden können,
+sondern als Unterstützung für die Implementierung der Interfacefunktionen dienen.
+Viele dieser Hilfsfunktionen weisen keine Kopplung zwischen Prolog und Z3 auf und können daher problemlos auf die Z3-Seite portiert werden.
+Andererseits gibt es auch Hilfsfunktionen, die eine minimale bis stark enge Kopplung besitzen.
+In diesen Fällen ist es notwendig, die Funktionen so zu refaktorisieren, dass sie auf der Z3-Seite ohne Prolog-Abhängigkeiten funktionieren.
 
+Hilfsfunktionen, die nur eine minimale Kopplung aufweisen, benötigen nur wenige Kommunikationsnachrichten zwischen den Prozessen.
+Sie lassen sich in den meisten Fällen ähnlich wie die Interfacefunktionen refaktorisieren.
+Wichtig zu beachten ist, dass die Hilfsfunktionen inmitten der Funktionskörper der Interfacefunktionen aufgerufen werden.
+Da eine strikte Reihenfolge der Nachrichtenübermittlung eingehalten werden muss, ist es notwendig, dass die Hilfsfunktionen
+eine invertierte Kommunikationsstruktur verwenden.
+Das bedeutet, jede Hilfsfunktion, welche auf einen Nachrichtenaustausch angewiesen ist, ist auf eine Art und Weise zu implementieren,
+die immer zuerst eine Nachricht von dem Z3-Server an den ProB-Client sendet.
+Gleichermaßen endet jede Hilfsfunktion mit einer Nachricht von ProB an Z3.
+Somit ist eine Modularität gewährleistet, durch die jede Hilfsfunktion innerhalb einer Interfacefunktion verwendet werden kann.
+
+Einige Hilfsfunktionen weisen hingegen eine extrem starke Kopplung auf.
+Insbesondere ist die Funktion $mk\_type$ hervorzuheben, welche die Typen der in einem Prädikat enthaltenen Elemente konstruiert.
+Bei Bedarf dekonstruiert sie den Datentyp von iterierbaren Elementen, wie etwa Listen oder Sets, um an die Typen der wiederum darin enthaltenen Elemente zu gelangen.
+Des Weiteren ist die Funktion indirekt rekursiv, durch den Aufruf anderer Hilfsfunktionen, welche erneut $mk\_type$ selbst aufrufen.
+Die Kopplung zwischen SICStus Prolog und Z3 ist hierbei durch die enthaltenen Bedingungen im Kontrollfluss zusätzlich komplex.
+Sowohl die Verwendung von Funktionalitäten der Prolog Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
+Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die in verschiedenen Szenarien zusätzliche Informationen
+an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
+Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ein zentraler Bestandteil des Z3-Interfaces.
+In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_type$ dargestellt, welches die Komplexität der Funktion verdeutlicht
+und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
+Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
+
+
+\begin{figure}[!htp]
+  \centering
+  \begin{tikzpicture}[scale=3, every node/.style={scale=0.7}]
+    % \node at (1,5.4) {\textbf{Sequenz Diagramm der Hilfsfunktion $mk\_type$}};
+
+    \begin{scope}
+      \clip (-1,1.3) rectangle (3,6);
+
+      \coordinate (a) at (0,0);
+      \coordinate (b) at (0,5);
+      \coordinate (c) at (2,0);
+      \coordinate (d) at (2,5);
+    
+
+      
+      \draw (a) -- (b) node[pos=1.03]{\large \textbf{ProB-Client}};
+      \draw (c) -- (d) node[pos=1.03]{\large \textbf{Z3-Server}};
+
+      \node[left] at ($(a)!0.955!(b)$) {check if type is atom};
+      \node[right] at ($(c)!0.925!(d)$) {check if type exists};
+      \node[left] at ($(a)!0.89!(b)$) {return};
+      \node[right] at ($(c)!0.87!(d)$) {return};
+      \node[left] at ($(a)!0.805!(b)$) {check prolog term};
+      \node[right] at ($(c)!0.775!(d)$) {check if type exists};
+      \node[left] at ($(a)!0.74!(b)$) {return};
+      \node[right] at ($(c)!0.72!(d)$) {return};
+      \node[left] at ($(a)!0.685!(b)$) {check iterable type};
+      \node[left] at ($(a)!0.56!(b)$) {return};
+      \node[right] at ($(c)!0.54!(d)$) {return};
+
+      \draw[stealth-] ($(a)!0.96!(b)$) -- node[above,sloped,midway]{} ($(c)!0.98!(d)$);
+      \draw[-stealth] ($(a)!0.95!(b)$) -- node[above,sloped,midway]{it is} ($(c)!0.93!(d)$);
+      \draw[stealth-] ($(a)!0.90!(b)$) -- node[above,sloped,midway]{it does} ($(c)!0.92!(d)$);
+      \draw[-stealth] ($(a)!0.89!(b)$) -- node[above,sloped,pos=0.4]{} ($(c)!0.87!(d)$);
+      
+      \draw[-stealth] ($(a)!0.95!(b)$) -- node[below,sloped,pos=0.1]{it is not} ($(c)!0.84!(d)$);
+      \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,midway]{} ($(c)!0.83!(d)$);
+      \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,pos=0.2]{it does not} ($(c)!0.92!(d)$);
+
+      \draw[-stealth] ($(a)!0.80!(b)$) -- node[above,sloped,midway]{} ($(c)!0.78!(d)$);
+      \draw[stealth-] ($(a)!0.75!(b)$) -- node[above,sloped,midway]{it does} ($(c)!0.77!(d)$);
+      \draw[-stealth] ($(a)!0.74!(b)$) -- node[above,sloped,midway]{} ($(c)!0.72!(d)$);
+
+      \draw[stealth-] ($(a)!0.69!(b)$) -- node[above,sloped,pos=0.2]{it does not} ($(c)!0.77!(d)$);
+      \draw[-stealth] ($(a)!0.68!(b)$) -- node[above,sloped,midway]{} ($(c)!0.66!(d)$);
+      \draw[stealth-] ($(a)!0.63!(b)$) -- node[above,sloped]{} ($(c)!0.65!(d)$);
+
+      \path[draw,dashed,->] ($(a)!0.68!(b)$) arc[start angle=270, end angle=90, radius=0.75] node[pos=0.4, right]{set};
+      \path[draw,dashed,->] ($(c)!0.65!(d)$) arc[start angle=270, end angle=450, radius=0.85] node[pos=0.3, left]{set};
+
+      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{global atom} ($(c)!0.60!(d)$);
+      \draw[stealth-] ($(a)!0.57!(b)$) -- node[above,sloped,midway]{} ($(c)!0.59!(d)$);
+      \draw[-stealth] ($(a)!0.56!(b)$) -- node[above,sloped,midway]{} ($(c)!0.54!(d)$);
+
+      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,pos=0.65]{couple} ($(c)!0.52!(d)$);
+      \draw[stealth-] ($(a)!0.49!(b)$) -- node[above,sloped]{} ($(c)!0.51!(d)$);
+      \draw[-stealth] ($(a)!0.48!(b)$) -- node[above,sloped]{} ($(c)!0.46!(d)$);
+
+      \path[draw,dashed,->] ($(a)!0.48!(b)$) arc[start angle=270, end angle=90, y radius=1.25, x radius=1] node[pos=0.33, right]{couple elements};
+      \path[draw,dashed,->] ($(c)!0.46!(d)$) arc[start angle=270, end angle=450, y radius=1.325, x radius=1] node[pos=0.35, left]{couple elements};
+
+      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,pos=0.55]{record} ($(c)!0.44!(d)$);
+      \draw[stealth-] ($(a)!0.41!(b)$) -- node[above,sloped]{} ($(c)!0.43!(d)$);
+      \draw[-stealth] ($(a)!0.40!(b)$) -- node[above,sloped]{next list element} ($(c)!0.38!(d)$);
+      \draw[stealth-] ($(a)!0.35!(b)$) -- node[above,sloped]{} ($(c)!0.37!(d)$);
+      \draw[-stealth] ($(a)!0.34!(b)$) -- node[above,sloped]{} ($(c)!0.32!(d)$);
+      \draw[stealth-] ($(a)!0.29!(b)$) -- node[above,sloped]{} ($(c)!0.31!(d)$);
+      \draw[-stealth] ($(a)!0.40!(b)$) -- node[above,sloped,pos=0.55]{list empty} ($(c)!0.27!(d)$);
+
+      \path[draw,dashed,->] ($(a)!0.29!(b)$) arc[start angle=270, end angle=90, y radius=0.285, x radius=0.3] node[midway, left]{};
+      \path[draw,dashed,->] ($(c)!0.31!(d)$) arc[start angle=270, end angle=450, y radius=0.16, x radius=0.3] node[midway, right]{};
+
+      \path[draw,dashed,->] ($(a)!0.40!(b)$) arc[start angle=270, end angle=90, y radius=1.45, x radius=1] node[midway, left]{};
+      \path[draw,dashed,->] ($(c)!0.27!(d)$) arc[start angle=270, end angle=450, y radius=1.8, x radius=1] node[midway, right]{};
+
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Sequenz Diagramm der Hilfsfunktion $mk\_type$}
+  \label{fig:mk-type-sequence}
+\end{figure}
 
 
 
@@ -200,13 +311,15 @@ Zuletzt wurde das DRY\footnote{Don't Repeat Yourself}-Prinzip angewendet, um die
 indem gewisse Hilfsfunktionen ausschließlich auf entweder der Prolog- oder der Serverseite implementiert wurden.
 Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung von der in \cref{lst:escape-string} gezeigten Funktion
 in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler Anpassung im Quellcode wurde die Funktion ausschließlich innerhalb des Z3-Prozesses implementiert.
-
+\todo[]{perhaps we do not need this stupid example}
 
 \subsubsection{Serveranbindung}
 \label{subsec:server-connection}
 
 server als subprozess
 starting as needed
+erweiterbarkeit gewährleistet durch injecting des sockets als erster methoden argument
+
 
 \subsubsection{Logging}
 \label{subsec:logging}

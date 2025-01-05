@@ -51,6 +51,8 @@ Hierzu wird also der Z3-Solver in einen eigenständigen, separaten Prozess ausge
 wodurch ein System eingeführt wird, bei dem ProB und der Z3-Solver als zwei unabhängige Prozesse agieren,
 die über eine Kommunikationsschnittstelle miteinander verbunden sind.
 Prädikate werden hierdurch innerhalb des Z3-Interfaces an den Z3-Solver gesendet, wo diese gelöst und zurückgeschickt werden.
+Es entsteht somit ein simples Client-Server Modell, welches eine chronologische Folge von Anfragen und Antworten implementiert.
+ProB stellt hierbei den Client und der Z3-Solver den Server dar.
 Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture} visualisiert.
 \newline
 
