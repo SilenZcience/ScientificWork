@@ -56,7 +56,7 @@ Es entsteht somit ein simples Client-Server Modell, welches eine chronologische 
 ProB stellt hierbei den Client und der Z3-Solver den Server dar.
 Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture} visualisiert.
 \newline
-\todo[]{formatting issue}
+
 \begin{figure}[!htp]
     \centering
     \begin{tikzpicture}[
@@ -70,8 +70,8 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
             \node[draw=none,fill=none,rectangle,above=0.5cm of ProB,xshift=-0.5cm,anchor=south west]
             (Arch_A){Bestehende Architektur};
 
-            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above] {\tiny{constraint}} node[below] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
-            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above,scale=0.8] {\tiny{constraint}} node[below,scale=0.8] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below,scale=0.9] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
         \end{scope}
         \node[draw,inner xsep=0.5cm, inner ysep=0.5cm,fit=(Arch_A) (ProB) (C_Interface)] (LeftScope){};
         \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P0){};
@@ -85,11 +85,11 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
             \node[draw=none,fill=none,rectangle,above=1cm of ProB,xshift=1cm,anchor=south west]
             (Arch_B){Zielarchitektur};
 
-            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above] {\tiny{constraint}} node[below] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
-            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
-            \draw[<->, very thick] (C_Interface) to node[below] {\tiny{ZMQ}} (Z3_Solver);
-            \draw[<->, dashed, thick] (C_Interface.north east) to node[right] {\tiny{ZMQ}} (Z3_Solver_G1.south west);
-            \draw[<->, dashed, thick] (C_Interface.south east) to node[right] {\tiny{ZMQ}} (Z3_Solver_G2.north west);
+            \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above,scale=0.8] {\tiny{constraint}} node[below,scale=0.8] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+            \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below,scale=0.9] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+            \draw[<->, very thick] (C_Interface) to node[below,scale=0.9] {\tiny{ZMQ}} (Z3_Solver);
+            \draw[<->, dashed, thick] (C_Interface.north east) to node[right,scale=0.9] {\tiny{ZMQ}} (Z3_Solver_G1.south west);
+            \draw[<->, dashed, thick] (C_Interface.south east) to node[right,scale=0.9] {\tiny{ZMQ}} (Z3_Solver_G2.north west);
         \end{scope}
         \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P1){};
         \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver)] (P2){};
@@ -100,7 +100,7 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
         \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
 
     \end{tikzpicture}
-    \caption{Die umgesetzte Architekturänderung (Die Komponenten-Entkopplung ist in Rot markiert. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
+    \caption{Die umgesetzte Architekturänderung (Die Komponenten-Entkopplung ist in den roten Boxen dargestellt. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
     \label{fig:architecture}
 \end{figure}
 \FloatBarrier
