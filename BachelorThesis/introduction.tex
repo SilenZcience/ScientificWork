@@ -14,8 +14,8 @@ dass sie den gewünschten Spezifikationen entsprechen.
 Besonders hervorzuheben ist der Einsatz von SMT\footnote{Satisfiability Modulo Theories}-Solvern,
 die sich als leistungsfähige Werkzeuge etabliert haben,
 um schwierige logische Probleme effizient zu lösen.
-SMT-Solver wie Z3 bieten durch ihre Fähigkeit zur präzisen und schnellen Verarbeitung logischer Ausdrücke eine wertvolle Unterstützung bei der Verifikation und Validierung.
-Ein prominentes Beispiel für die Integration eines solchen Solvers ist die Software ProB.
+SMT-Solver wie Z3 \cite{10.1007/978-3-540-78800-3_24} bieten durch ihre Fähigkeit zur präzisen und schnellen Verarbeitung logischer Ausdrücke eine wertvolle Unterstützung bei der Verifikation und Validierung.
+Ein prominentes Beispiel für die Integration eines solchen Solvers ist die Software ProB \cite{leuschel2003prob}.
 Der Animator, Constraint-Solver und Model-Checker ProB nutzt den SMT-Solver Z3, um formale Modelle effizient zu analysieren und zu überprüfen.
 Dies macht die Software zu einer wichtigen Instanz in der Welt der formalen Methoden,
 insbesondere im Kontext von Modellierungs- und Verifikationsaufgaben.
@@ -27,6 +27,7 @@ Ein bekanntes Problem besteht in dem sporadischen Auftreten von Speicherlecks un
 die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3-Interface negativ beeinflussen.
 Diese technischen Mängel erschweren nicht nur die Durchführung formaler Verifikationen,
 sondern können auch zu einer zeitraubenden Verwendung der Z3-Solver Komponente sowie Unterbrechung von Arbeitsprozessen führen.
+Die Problematik wird in einem Paper, geschrieben von Körner und Leuschel \cite{10.1007/978-3-031-25803-9_5}, genauer erörtert.
 
 Ein weiterer Mangel liegt in der aktuellen sequenziellen Lösung mehrerer Prädikate.
 Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden,
@@ -55,7 +56,7 @@ Es entsteht somit ein simples Client-Server Modell, welches eine chronologische 
 ProB stellt hierbei den Client und der Z3-Solver den Server dar.
 Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture} visualisiert.
 \newline
-
+\todo[]{formatting issue}
 \begin{figure}[!htp]
     \centering
     \begin{tikzpicture}[
@@ -99,7 +100,7 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
         \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
 
     \end{tikzpicture}
-    \caption{Die geplante Architekturänderung (Die Komponenten-Entkopplung ist in Rot markiert. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
+    \caption{Die umgesetzte Architekturänderung (Die Komponenten-Entkopplung ist in Rot markiert. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
     \label{fig:architecture}
 \end{figure}
 \FloatBarrier

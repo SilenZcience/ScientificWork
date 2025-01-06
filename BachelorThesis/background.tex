@@ -5,9 +5,7 @@ Zur Förderung eines einheitlichen Verständnisses werden in diesem Abschnitt zu
 Im Folgenden werden die drei zentralen Konzepte behandelt, die für das Verständnis dieser Arbeit von Bedeutung sind: ProB, Z3 und ZeroMQ.
 
 \subsection{ProB}
-\todo[]{Relevanz für die Arbeit suchen? Wo ist sie? Man weiß es nicht. Aber irgendwas muss man ja schreiben...}
-\todo[]{Inhaltliche Korrektheit prüfen. Nach A kommt B und was ist das?}
-\todo[]{Korrekte Referenzierung von Quellen überprüfen.}
+
 Die B-Methode, entwickelt von J.-R. Abrial \cite{abrial1996b}, ist eine formale Methode zur Entwicklung von Softwaresystemen,
 die auf der Idee der abstrakten Maschinen basiert.
 Mit abstrakten Maschinen lassen sich Zustände und deren Veränderungen mithilfe mathematischer Konzepte wie Mengen,
@@ -22,13 +20,13 @@ indem Funktionalitäten wie Consistency Checking und Constraint Solving bereitge
 ProB findet bereits in vielen Systemen Verwendung zur Datenvalidierung und Validierung komplexer Eigenschaften für sicherheitskritische Systeme.
 Es wird bereits von mehreren Unternehmen eingesetzt und ist November 2022 mit dem \enquote{AlainColmerauer Prize} ausgezeichnet worden.
 
-Der Animator in ProB ermöglicht es, formale Spezifikationen zu visualisieren und zu animieren.
+ProB ermöglicht es, formale Spezifikationen zu visualisieren und zu animieren.
 Nutzer können durch die Simulation in Echtzeit einen Einblick in die Zustandsübergänge einer Maschine erhalten und schrittweise die Veränderungen nachvollziehen.
 Der aktuelle Zustand der Maschine wird dabei in einer grafischen Benutzeroberfläche dargestellt.
 
-Ein weiterer Kernbestandteil von ProB ist das Consistency Checking, welches in zwei Ansätzen realisiert wird: Temporal Model Checking und Constraint-Based Checking.
+Ein weiterer Kernbestandteil von ProB ist das Consistency Checking, welches in zwei Ansätzen realisiert wird: Model Checking und Constraint-Based Checking.
 
-Beim Temporal Model Checking wird versucht, eine Sequenz von Operationen zu finden, die ausgehend von einem Anfangszustand
+Beim Model Checking wird versucht, eine Sequenz von Operationen zu finden, die ausgehend von einem Anfangszustand
 zu einer Verletzung der Invariante oder einem anderen Fehler führt.
 Im Gegensatz dazu fokussiert sich das Constraint-based Checking auf die Suche nach einem Zustand des Systems,
 der die Invariante noch erfüllt. Von dort aus wird geprüft, ob es eine einzelne Operation gibt,
@@ -41,14 +39,15 @@ Zusammen lassen sich so vollständige Fehler und problematische Operationen iden
 Beide Ansätze bieten wertvolle Instrumente für die Konsistenzprüfung von B-Modellen, und sind in der Lage, die Verletzung von Invarianten und daraus folgenden Bedingungen sowie
 die Abwesenheit von Deadlocks und das Erreichen von spezifizierten Zielprädikaten zu überprüfen \cite{leuschel2008prob}.
 
-Zuletzt bietet ProB auch eine Constraint-Solving-Funktionalität, die es ermöglicht, unter Berücksichtigung von gegebenen Constraints (Einschränkungen) Lösungen für spezifische Prädikate zu finden.
+Zuletzt bietet ProB auch eine Constraint-Solving-Funktionalität, die es ermöglicht, unter Berücksichtigung von gegebenen Constraints (Einschränkungen) Lösungen für spezifische Prädikate zu finden,
+was die Grundlage des Animators und Model-Checkers bildet.
 Derartige Einschränkungen oder Bedingungen können in Form von logischen Ausdrücken oder Gleichungen gegeben sein, die es zu erfüllen gilt.
 Ein Constraint-Solver ist ein Algorithmus oder System, welches darauf abzielt, unter Berücksichtigung eben jener Bedingungen eine Belegung aller Variablen zu finden, die die gegebenen Prädikate erfüllt
 und somit ein Problem auf dessen Erfüllbarkeit zu prüfen.
 ProB implementiert hierfür verschiedene Constraint-Solving-Strategien, die auf unterschiedlichen Algorithmen basieren und es ermöglichen, Prädikate effizient zu lösen.
-Einerseits wird CLP(FD)\footnote{Constraint Logic Programming over Finite Domains} verwendet, um auf endlichen Domänen beispielsweise Gleichheits- und Ungleichheitsbedingungen sowie arithmetische Relationen zu lösen.
-Ein weiterer Ansatz ist die Integration des SAT-basierten Kodkod,
-einem effizienten Constraint-Solver für die Prädikatenlogik erster Ordnung mit Relationen, transitiven Hüllen, Bit-Vektor-Arithmetik und partiellen Modellen \cite{torlak2007kodkod}.
+Einerseits wird CLP(FD)\footnote{Constraint Logic Programming over Finite Domains} \cite{codognet1996compiling} verwendet, um auf endlichen Domänen beispielsweise Gleichheits- und Ungleichheitsbedingungen sowie arithmetische Relationen zu lösen.
+Ein weiterer Ansatz ist die Integration des SAT-basierten Kodkod \cite{torlak2007kodkod},
+einem effizienten Constraint-Solver für die Prädikatenlogik erster Ordnung mit Relationen, transitiven Hüllen, Bit-Vektor-Arithmetik und partiellen Modellen.
 Zuletzt wird auch der SMT-Solver Z3 in ProB integriert, um komplexere Prädikate zu lösen, die über simple boolsche und arithmetische Ausdrücke hinausgehen.
 
 ProB ist im Kern in SICStus Prolog \cite{carlsson1988sicstus} implementiert, bietet jedoch verschiedene Programmerweiterungen, welche zumeist in C oder C\texttt{++} geschrieben sind.
@@ -66,7 +65,7 @@ Seit seiner ersten Veröffentlichung hat sich Z3 zu einem der leistungsfähigste
 Microsoft hat Z3 als Open-Source-Software frei zugänglich unter der MIT-Lizenz veröffentlicht,
 was seine Verbreitung und Nutzung in verschiedenen Bereichen weiter gefördert hat.
 
-Er wurde in C\texttt{++} implementiert, bietet jedoch eine Vielzahl von externen API-Anbindungen, die es ermöglichen, den Solver in verschiedenen Programmiersprachen zu verwenden,
+Der Solver wurde in C\texttt{++} implementiert, bietet jedoch eine Vielzahl von externen API-Anbindungen, die es ermöglichen, den Solver in verschiedenen Programmiersprachen zu verwenden,
 wie beispielsweise OCaml, Python, Ruby und Rust.
 Er ist ein leistungsfähiger SMT-Solver, der sich speziell auf die Lösung von Problemen im Bereich der Softwareverifikation und -analyse spezialisiert.
 Zum Beispiel wird der Z3-Solver in der Softwareverifikation eingesetzt, um die Korrektheit von Programmen zu überprüfen, indem er formale Spezifikationen testet und beweist.
@@ -76,7 +75,7 @@ Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Log
 das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
 Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
 Er arbeitet rekursiv und kombiniert folgende Schritte:
-\todo[]{hier mache ich bestimmt noch den eigentlichen algorithmus hin, weil ich prinzipiell einfach ein algorithmenverzeichnis haben möchte xD}
+\todo[]{too much detail}
 \begin{enumerate}
     \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
     \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
@@ -117,7 +116,7 @@ um Verifikationsaufgaben zu bewältigen, die über die Fähigkeiten des internen
 
 In der geplanten Architektur wird als Technologie zur Kommunikation zwischen den zwei separaten Prozessen die ZeroMQ-Bibliothek \cite{hintjens2013zeromq} verwendet.
 ZeroMQ\footnote{auch ØMQ, 0MQ oder ZMQ} ist eine hochleistungsfähige, asynchrone Nachrichtenaustauschbibliothek, die speziell für verteilte Systeme entwickelt wurde.
-Da ZeroMQ in der Sprache C implementiert- und ursprünglich für die Börse geschrieben wurde, lag extreme Performanceoptimierung lange Zeit im Fokus \cite{sustrik2015zeromq},
+Da ZeroMQ in der Sprache C implementiert und ursprünglich für die Börse geschrieben wurde, lag extreme Performanceoptimierung lange Zeit im Fokus \cite{sustrik2015zeromq},
 was es zu einer der schnellsten und effizientesten Bibliotheken für den Nachrichtenaustausch macht.
 
 ZeroMQ bietet eine Vielzahl von Kommunikationsmustern, die es ermöglichen, verschiedene Arten von verteilten Systemen zu realisieren.

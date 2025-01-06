@@ -156,7 +156,7 @@ Somit ist eine Modularität gewährleistet, durch die jede Hilfsfunktion innerha
 Einige Hilfsfunktionen weisen hingegen eine extrem starke Kopplung auf.
 Insbesondere ist die Funktion $mk\_type$ hervorzuheben, welche die Typen der in einem Prädikat enthaltenen Elemente konstruiert.
 Bei Bedarf dekonstruiert sie den Datentyp von iterierbaren Elementen, wie etwa Listen oder Sets, um an die Typen der wiederum darin enthaltenen Elemente zu gelangen.
-Des Weiteren ist die Funktion indirekt rekursiv, durch den Aufruf anderer Hilfsfunktionen, welche erneut $mk\_type$ selbst aufrufen.
+Des Weiteren ist die Funktion indirekt rekursiv durch den Aufruf anderer Hilfsfunktionen, welche erneut $mk\_type$ selbst aufrufen.
 Die Kopplung zwischen SICStus Prolog und Z3 ist hierbei durch die enthaltenen Bedingungen im Kontrollfluss zusätzlich komplex.
 Sowohl die Verwendung von Funktionalitäten der Prolog Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
 Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die in verschiedenen Szenarien zusätzliche Informationen

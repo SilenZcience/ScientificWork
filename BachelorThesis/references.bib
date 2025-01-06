@@ -25,11 +25,11 @@
 }
 
 @misc{sicstusdoc,
-  author = {Mats Carlsson et al.},
+  author       = {Mats Carlsson et al.},
   howpublished = {RISE Research Institutes of Sweden AB},
-  title = {SICStus Prolog User’s Manual},
-  year = {2023},
-  month = {December},
+  title        = {SICStus Prolog User’s Manual},
+  year         = {2023},
+  month        = {December}
 }
 
 @article{leuschel2008prob,
@@ -84,7 +84,7 @@
 @misc{z3prover-github,
   author = {Microsoft-Research},
   title  = {GitHub - Z3Prover/z3: The Z3 Theorem Prover},
-  year = {2015}
+  year   = {2015}
 }
 
 @inproceedings{10.1007/978-3-319-33693-0_23,
@@ -109,12 +109,13 @@
   publisher = {O'Reilly Media}
 }
 
-@article{sustrik2015zeromq,
-  title   = {ZeroMQ},
-  author  = {S{\'u}strik, Martin and others},
-  journal = {Introduction Amy Brown and Greg Wilson},
-  pages   = {16},
-  year    = {2015}
+@book{sustrik2015zeromq,
+  title     = {The Architecture of Open Source Applications (Volume 2) ZeroMQ},
+  author    = {S{\'u}strik, Martin and others},
+  editor    = {Brown, Amy and Wilson, Greg},
+  booktitle = {The Architecture of Open Source Applications, Volume II},
+  pages     = {359--372},
+  year      = {2012}
 }
 
 @inproceedings{torlak2007kodkod,
@@ -126,3 +127,29 @@
   organization = {Springer}
 }
 
+@article{codognet1996compiling,
+  title     = {Compiling constraints in clp (FD)},
+  author    = {Codognet, Philippe and Diaz, Daniel},
+  journal   = {The Journal of Logic Programming},
+  volume    = {27},
+  number    = {3},
+  pages     = {185--226},
+  year      = {1996},
+  publisher = {Elsevier}
+}
+
+@inproceedings{10.1007/978-3-031-25803-9_5,
+  author    = {K{\"o}rner, Philipp
+               and Leuschel, Michael},
+  editor    = {Lal, Akash
+               and Tonetta, Stefano},
+  title     = {Towards Practical Partial Order Reduction for High-Level Formalisms},
+  booktitle = {Verified Software. Theories, Tools and Experiments.},
+  year      = {2023},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {72--91},
+  chapter   = {5},
+  abstract  = {Partial order reduction (POR) has considerable potential to reduce the state space during model checking by exploiting independence between transitions. This potential remains, however, largely unfulfilled for high-level formalisms such as B or TLA{\$}{\$}^{\{}+{\}}{\$}{\$}. In this article, we report on our experiments regarding POR: We empirically assess that our current implementation of POR in ProB does not have any impact for a vast majority of B machines. We then analyse why POR fails to achieve reductions and identify minimal examples without reduction that make use of high-level constructs in B, and provide several new ideas to make POR pay off for more complex formal models. A proof-of-concept implementation then yields two orders of magnitude reduction in the state space for a particularly challenging case study, a railway interlocking model that escaped our POR techniques thus far.},
+  isbn      = {978-3-031-25803-9}
+}
