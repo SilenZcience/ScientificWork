@@ -321,8 +321,8 @@ in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler A
 Der Z3-Prozess wird nicht manuell gestartet, sondern,
 um eine angenehme Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
 Insbesondere bedeutet das, dass der Z3-Server ausschließlich auf Anfrage von ProB gestartet wird, wenn das entsprechende Interface verwendet wird.
-der Z3-Solver exisitert somit als Subprozess von ProB und wird mit dessen Beendigung ebenfalls terminiert.
-Dieses Verhalten ist in der Prolog Seite des Z3-Interfaces implementiert und wird durch das Prädikat $init\_z3interface$ realisiert, welches dahingehend erweitert wurde.
+Der Z3-Solver existiert somit als Subprozess von ProB und wird mit dessen Beendigung ebenfalls terminiert.
+Dieses Verhalten ist innerhalb der Prolog-Seite des Z3-Interfaces implementiert und wird durch das Prädikat $init\_z3interface$ realisiert, welches dahingehend erweitert wurde.
 Die Implementierung des Prädikats ist in \cref{lst:init-z3interface} gezeigt.
 
 \begin{lstlisting}[
@@ -341,14 +341,13 @@ init_z3interface :-
     assertz(is_initialised(Zocket)).
 \end{lstlisting}
 \todo[]{verify tmp file lib name}
-In den entsprechenden Zeilen 8 bis 10 wird der Endpoint zur ZeroMQ Kommunikation generiert,
+In den entsprechenden Zeilen 8 bis 10 wird der Endpoint zur ZeroMQ Kommunikation generiert
 und als Funktionsargument an die $init$ Funktion übergeben, welche die Verbindung zum Z3-Server herstellt.
 Die Funktion $process\_create$ wird eingesetzt, um den Z3-Server als Subprozess zu starten,
 welcher durch die Verwendung der Systemargumente ebenfalls über den generierten Endpoint informiert wird.
-So sind beide Prozesse in Kenntnis des selben Endpoints und können miteinander kommunizieren.
+So sind beide Prozesse in Kenntnis desselben Endpoints und können miteinander kommunizieren.
 Der Endpoint selbst ist hierbei effektiv ein Pfad zu einer temporären Datei, die als Kommunikationskanal zwischen den Prozessen dient.
 Er wird innerhalb von $get\_path\_to\_fresh\_z3\_endpoint$ mit Hilfe der Prolog Bibliothek $tmp\_file$ generiert.
-
 
 \subsubsection{Logging}
 \label{subsec:logging}
