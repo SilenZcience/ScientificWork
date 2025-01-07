@@ -50,10 +50,11 @@ Ein kleiner Auszug dieser Messdaten sind in \cref{tab:performance-data} dargeste
 % \FloatBarrier
 
 Die Zeitmessungen sind in Nanosekunden (ns) angegeben und zeigen die Laufzeit der Anfragen in den verschiedenen Konfigurationen.
-Innerhalb der gegebenen Größenordnung sind die Werte ebenfalls in Millisekunden (ms) zu interpretieren und damit ausschlaggebend für die Performance.
+Alle Messwerte liegen in einer Größenordnung von mindestens Millisekunden.
+Damit sind die zu erwartenden Messfehler in Bereich von Nanosekunden gering genug, um die Daten adäquat analysieren zu können.
 Innerhalb der eigentlichen Daten wurden die Messungen mehrfach unabhängig voneinander wiederholt, um eine statistische Aussagekraft zu gewährleisten.
-Da dennoch von Messfehlern und Schwankungen auszugehen ist, werden die Daten in einem statistischen Kontext betrachtet.
-Es wird angenommen, dass die Messfehler normalverteilt sind.
+Da dennoch von Messunsicherheiten und Schwankungen auszugehen ist, werden die Daten in einem statistischen Kontext betrachtet.
+Es wird angenommen, dass sowohl die tatsächlichen Laufzeiten innerhalb eines Tests als auch deren Messunsicherheiten normalverteilt sind.
 
 \begin{figure}[!htp]
     \centering
@@ -105,11 +106,12 @@ In der weiteren Analyse wird daher nur das IPC-Protokoll betrachtet.
 \clearpage
 
 Um den Overhead der neuen Architektur zu quantifizieren,
-wird die Differenz der durchschnittlichen Laufzeiten der neuen und alten Architektur berechnet
+wird die Differenz der durchschnittlichen Laufzeiten der neuen ($\overline{t_\text{IPC}}$) und alten ($\overline{t_\text{Old}}$) Architektur berechnet
 und gegen die Anzahl der ZeroMQ-Anfragen analysiert.
-Der induzierte Overhead wird also wie folgt definiert:
+Der induzierte Overhead $t_\text{induced}$ wird also wie folgt definiert:
+
 \begin{equation}
-    InduzierterOverhead = \overline{IPC Laufzeit} - \overline{Alte Laufzeit}
+    t_\text{induced} = \overline{t_\text{IPC}} - \overline{t_\text{Old}}
 \end{equation}
 
 Der oberste Subgraph in \cref{fig:overhead} zeigt den induzierten Overhead der neuen Architektur in Abhängigkeit der Anzahl der ZeroMQ-Anfragen auf einer logarithmischen Skala.
@@ -117,8 +119,9 @@ Im groben Verlauf ist zu erkennen, dass der Overhead mit steigender Anzahl der A
 Zusätzlich scheint jedoch eine ausgeprägte Systematik vorzuliegen, welche sich inhaltlich durch die horizontale Verzerrung der Daten ausprägt.
 Einige wenige Datenpunkte weichen stark von jeglicher Systematik ab und sind als Ausreißer zu klassifizieren.
 
-Im zweiten Subgraphen wird die lineare Abhängigkeit des Overheads von der Anzahl der Anfragen untersucht, indem der Zusammenhang linear gefittet wird.
-Dies geschieht unter Berücksichtigung des kombinierten Standardfehlers der Mittelwerte der alten und neuen IPC-Architektur
+Im zweiten Subgraphen wird die lineare Abhängigkeit des Overheads von der Anzahl der Anfragen untersucht, indem der Zusammenhang linear gefittet\footnote{Der lineare Fit wurde mit dem von scipi.optimize bereitgestellten curve\_fit berechnet.} wird.
+Dies geschieht unter Berücksichtigung des kombinierten Standardfehlers der Mittelwerte der alten und neuen IPC-Architektur.
+Die Unsicherheitsberechnung wird berechnet mit der gaußschen Fehlerfortpflanzung
 
 \begin{equation}
     \sigma_{\overline{comb}} = \sqrt{\sigma_{\overline{IPC}}^2 + \sigma_{\overline{Old}}^2} \hspace{0.3cm},
@@ -140,7 +143,7 @@ Eine separate Messreihe wurde durchgeführt, um die durchschnittliche Laufzeit e
 Hierbei wurde die durchschnittliche Laufzeit von $0.0054 ms$ bestimmt.
 Da für jede Anfrage zwei Nachrichten (Anfrage und Antwort) über den Socket gesendet werden, ergibt sich eine Laufzeit von $0.0216 ms$ pro Anfrage
 unter der Annahme, dass das Erhalten einer ZeroMQ-Nachricht die gleiche Laufzeit aufweist wie das Senden einer Nachricht.
-Die Differenz von $0.0084 ms$ zur ermittelten Steigung des linearen Fits ist beispielsweise auf die Größe der Nachrichten zurückzuführen, welche
+Die Differenz von $0.0084 ms$ zur ermittelten Steigung des linearen Fits könnte beispielsweise auf die Größe der Nachrichten zurückzuführen, welche
 in der kontrollierten Messreihe einer einzelnen Anfrage kleiner ausfällt als in den 52 Testszenarien.
 Zudem sind Messwerte dieser Größenordnung zunehmend ungenau, weshalb sie annehmbar plausibel bezüglich der Steigung des linearen Fits sind.
 
@@ -169,7 +172,7 @@ Somit ist gezeigt, dass der Overhead der neuen Architektur durch das Serialisier
 und keine weiteren relevanten Systematiken besitzt. Eine Voraussage des Overheads ist mithilfe des linearen Fits möglich.
 Es ist zu beachten, dass die absoluten Werte des Overheads nur in der gegebenen Testumgebung gültig sind und nicht auf andere Umgebungen übertragen werden können.
 
-Ein einzelner Datenpunkt scheint eine unwahrscheinlich hohe Laufzeitverbesserung von durchschnittlich $2$ Sekunden aufzuweisen, zeichnet jedoch einen hohen Fehlerbalken auf.
+Ein einzelner Datenpunkt scheint eine unwahrscheinlich hohe Laufzeitverbesserung von durchschnittlich $2$ Sekunden aufzuweisen, weist jedoch hohe Messunsicherheiten auf.
 In \cref{tab:broken-datapoint} ist dieser Datenpunkt dargestellt.
 
 \begin{table}[!htp]
