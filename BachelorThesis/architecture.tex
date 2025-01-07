@@ -16,7 +16,7 @@ und den Aufbau der Nachrichten, die zwischen den Prozessen ausgetauscht werden.
 Innerhalb des bestehenden Z3-Interfaces werden verschiedene Prolog-Datentypen verwendet.
 Da durch die Entkopplung der Prozesse Prolog selbst und die Z3-Komponente nicht länger direkt miteinander kommunizieren können,
 müssen die Prolog-Datentypen in eine Form umgewandelt werden, die über das Netzwerk übertragen werden kann und von Z3 verstanden wird.
-
+\todo[]{zitate zu deutsch oder so}
 Primär werden die folgenden Prolog-Datentypen verwendet: SP\_atom, SP\_integer und SP\_term\_ref.
 Mithilfe der C\texttt{++} Bibliothek SICStus Prolog können diese Datentypen konvertiert werden.
 So stehen bei der Umwandlung von SP\_atom in einen C\texttt{++} String die Funktionen SP\_string\_to\_atom und SP\_atom\_to\_string zur Verfügung.
@@ -168,7 +168,7 @@ In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_ty
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
 Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
 
-
+\todo[]{kurz erklären, was passiert}
 \begin{figure}[!htp]
   \centering
   \begin{tikzpicture}[scale=3, every node/.style={scale=0.7}]
@@ -285,7 +285,7 @@ Anhand der Variablen $translation\_type\_atom$ wird das Objekt $ctx\_data$ ermit
 Diese verwendet das Objekt ausschließlich zur Ermittlung der Variablen $translation\_type\_atom$. Das Problem hierbei ist,
 dass $ctx\_data$ in der neuen Architektur auf der Seite des Server-Prozesses liegt und somit einen Nachrichtenaustausch erfordert.
 Das Problem lässt sich umgehen, indem die Funktion $prolog\_type\_list\_to\_sort\_vector$ dahingehen refaktorisiert wird,
-direkt mit $translation\_type\_atom$ aufgerufen zu werden.
+direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich darauf zu verzichten.
 
 \begin{lstlisting}[
     float, caption={Ein Ausschnitt einer redundanten Objektverwaltung.}, label={lst:unnecessary-ctx-data}, language=C++
