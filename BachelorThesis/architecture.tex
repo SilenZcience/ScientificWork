@@ -321,7 +321,7 @@ in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler A
 Der Z3-Prozess wird nicht manuell gestartet, sondern,
 um eine angenehme Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
 Insbesondere bedeutet das, dass der Z3-Server ausschließlich auf Anfrage von ProB gestartet wird, wenn das entsprechende Interface verwendet wird.
-Der Z3-Solver existiert somit als Subprozess von ProB und wird mit dessen Beendigung ebenfalls terminiert.
+Als Subprozess wird der Z3-Solver mit der Beendigung von ProB ebenfalls terminiert.
 Dieses Verhalten ist innerhalb der Prolog-Seite des Z3-Interfaces implementiert und wird durch das Prädikat $init\_z3interface$ realisiert, welches dahingehend erweitert wurde.
 Die Implementierung des Prädikats ist in \cref{lst:init-z3interface} gezeigt.
 
@@ -352,8 +352,23 @@ Er wird innerhalb von $get\_path\_to\_fresh\_z3\_endpoint$ mit Hilfe der Prolog 
 \subsubsection{Logging}
 \label{subsec:logging}
 
-via sys argv
-stdout not captureable in sicstus prolog
+Der Z3-Server wurde mit einem Logging-System ausgestattet, um die potentielle Fehlersuche und -behebung zu erleichtern.
+Insbesondere hilft das Logging-System dabei, eine klare Übersicht über den Verlauf des Servers zu erhalten und damit die Nachvollziehbarkeit zu erhöhen.
+Durch das protokollieren von Ereignissen, wie etwa dem Empfangen und Senden von Nachrichten, der aktuellen Funktion, die ausgeführt wird, sowie dem Auftreten von Fehlern,
+wird eine umfassende Dokumentation des Serververhaltens gewährleistet.
+Derartige Informationen erleichtern auch die zukünftige Wartung und Erweiterung des Systems.
+Innerhalb des Prolog Prädikates $process\_create$ lässt sich die Ausgabe des Z3-Servers allerdings nur schwer kontrollieren und verlangt die Verwendung der standard shell (sh).
+Aus diesem Grund wurde das Logging-System auf der Seite des Z3-Servers selbst implementiert, um gegebenfalls die Ausgabe in einer Datei zu speichern.
+Die Implementierung funktioniert durch das Umleiten des Standardausgabestreams in einen eigenen Dateideskriptor.
+Dieser Dateideskriptor zeigt bei Verwendung des Logging-Systems in eine valide Datei im aktuellen Dateiverzeichnis.
+Sollte das Logging-System nicht verwendet werden, wird der Standardausgabestream auf \enquote{/dev/null} umgeleitet, um die Ausgabe zu unterdrücken.
+Somit lässt sich über die Systemargumente beim Start des Servers entscheiden, ob das Logging-System aktiviert werden soll oder nicht.
+Zur Aktivierung muss lediglich die Zeile 9 in \cref{lst:init-z3interface} so angepasst werden, dass neben dem Endpoint zusätzlich das Argument \enquote{\texttt{-}\texttt{-}log} an den Server übergeben wird.
+
+Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet werden, dass der Z3-Server in eine Datei schreibt, die einzigartig zu seinem Prozess ist.
+Sollten in Zukunft mehrere Z3-Prozesse existieren, würden diese andernfalls in dieselbe Datei schreiben und die Logausgabe dadurch unübersichtlich machen.
+Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig auf die Datei schreiben, sodass Informationen vollständig verloren gehen, oder nur ein einziger Z3-Solver die Datei beschreiben kann.
+Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
 
 
 
