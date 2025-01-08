@@ -354,11 +354,11 @@ Er wird innerhalb von $get\_path\_to\_fresh\_z3\_endpoint$ mit Hilfe der Prolog 
 
 Der Z3-Server wurde mit einem Logging-System ausgestattet, um die potentielle Fehlersuche und -behebung zu erleichtern.
 Insbesondere hilft das Logging-System dabei, eine klare Übersicht über den Verlauf des Servers zu erhalten und damit die Nachvollziehbarkeit zu erhöhen.
-Durch das protokollieren von Ereignissen, wie etwa dem Empfangen und Senden von Nachrichten, der aktuellen Funktion, die ausgeführt wird, sowie dem Auftreten von Fehlern,
+Durch das Protokollieren von Ereignissen, wie etwa dem Empfangen und Senden von Nachrichten, der aktuellen Funktion, die ausgeführt wird, sowie dem Auftreten von Fehlern,
 wird eine umfassende Dokumentation des Serververhaltens gewährleistet.
 Derartige Informationen erleichtern auch die zukünftige Wartung und Erweiterung des Systems.
 Innerhalb des Prolog Prädikates $process\_create$ lässt sich die Ausgabe des Z3-Servers allerdings nur schwer kontrollieren und verlangt die Verwendung der standard shell (sh).
-Aus diesem Grund wurde das Logging-System auf der Seite des Z3-Servers selbst implementiert, um gegebenfalls die Ausgabe in einer Datei zu speichern.
+Aus diesem Grund wurde das Logging-System auf der Seite des Z3-Servers selbst implementiert, um gegebenenfalls die Ausgabe in einer Datei zu speichern.
 Die Implementierung funktioniert durch das Umleiten des Standardausgabestreams in einen eigenen Dateideskriptor.
 Dieser Dateideskriptor zeigt bei Verwendung des Logging-Systems in eine valide Datei im aktuellen Dateiverzeichnis.
 Sollte das Logging-System nicht verwendet werden, wird der Standardausgabestream auf \enquote{/dev/null} umgeleitet, um die Ausgabe zu unterdrücken.
@@ -367,7 +367,7 @@ Zur Aktivierung muss lediglich die Zeile 9 in \cref{lst:init-z3interface} so ang
 
 Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet werden, dass der Z3-Server in eine Datei schreibt, die einzigartig zu seinem Prozess ist.
 Sollten in Zukunft mehrere Z3-Prozesse existieren, würden diese andernfalls in dieselbe Datei schreiben und die Logausgabe dadurch unübersichtlich machen.
-Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig auf die Datei schreiben, sodass Informationen vollständig verloren gehen, oder nur ein einziger Z3-Solver die Datei beschreiben kann.
+Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig auf die Datei schreiben, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver die Datei beschreiben kann.
 Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
 
 
