@@ -15,11 +15,11 @@ Innerhalb des bestehenden Z3-Interfaces werden verschiedene Prolog-Datentypen ve
 Da durch die Entkopplung der Prozesse Prolog selbst und die Z3-Komponente nicht länger direkt miteinander kommunizieren können,
 müssen die Prolog-Datentypen in eine Form umgewandelt werden, die über das Netzwerk übertragen werden kann und von Z3 verstanden wird.
 \todo[]{zitate zu deutsch oder so}
-Primär werden die folgenden Prolog-Datentypen verwendet: SP\_atom, SP\_integer und SP\_term\_ref.
+Primär werden die folgenden Prolog-Datentypen verwendet: $SP\_atom$, $SP\_integer$ und $SP\_term\_ref$.
 Mithilfe der C\texttt{++} Bibliothek SICStus Prolog können diese Datentypen konvertiert werden.
-So stehen bei der Umwandlung von SP\_atom in einen C\texttt{++} String die Funktionen SP\_string\_to\_atom und SP\_atom\_to\_string zur Verfügung.
-Die Dokumentation von SICStus Prolog \cite{sicstusdoc} schlägt unter dem Kapitel \enquote{Conversions between Prolog Arguments and C Types} zudem zur Umwandlung von SP\_integer den Datentyp C long vor.
-Der Typ SP\_term\_ref wird in der Dokumentation wie folgt beschrieben: \enquote{The argument could be any term.}.
+So stehen bei der Umwandlung von $SP\_atom$ in einen C\texttt{++} String die Funktionen $SP\_string\_to\_atom$ und $SP\_atom\_to\_string$ zur Verfügung.
+Die Dokumentation von SICStus Prolog \cite{sicstusdoc} schlägt unter dem Kapitel \enquote{Conversions between Prolog Arguments and C Types} zudem zur Umwandlung von $SP\_integer$ den Datentyp C long vor.
+Der Typ $SP\_term\_ref$ wird in der Dokumentation wie folgt beschrieben: \enquote{The argument could be any term.}.
 Er lässt sich nur schwer gezielt in einen C\texttt{++} Datentyp umwandeln und muss daher mit besonderer Vorsicht behandelt werden.
 
 \subsubsection{Struktur der Nachrichten}
@@ -263,7 +263,7 @@ Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ei
 In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_type$ dargestellt, welches die Komplexität der Funktion verdeutlicht
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
 Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
-Zunächst wird überprüft, ob der Typ ein Atom ist, wie \enquote{integer}, \enquote{real} oder \enquote{boolean}.
+Zunächst wird überprüft, ob der Typ ein Atom ist, wie $integer$, $real$ oder $boolean$.
 Wenn dies nicht der Fall ist, wird überprüft, ob der Typ bereits zuvor konstruiert wurde.
 Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unterscheidet zwischen den Typen $set$, $global$, $couple$ und $record$.
 
@@ -465,7 +465,7 @@ Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet wer
 Sollten in Zukunft mehrere Z3-Prozesse existieren, würden diese andernfalls in dieselbe Datei schreiben und die Logausgabe dadurch unübersichtlich machen.
 Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig in dieselbe Datei schreiben, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver die Datei beschreiben kann.
 Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
-Beispielsweise schreibt der Z3-Solver bei einem Endpoint \enquote{$ipc:///tmp/z3rver96485092.probz$} in die Datei \enquote{$z3rver96485092.probz.log$}.
+Beispielsweise schreibt der Z3-Solver bei einem Endpoint $ipc:///tmp/z3rver96485092.probz$ in die Datei $z3rver96485092.probz.log$.
 
 \subsubsection{Exceptions}
 \label{subsec:exceptions}
