@@ -2,7 +2,7 @@
 
 
 \section{Architekturänderung}
-\todo[]{Eigentlicher Kern der Arbeit, mache ich, sobald ich mit Prokrastination fertig bin.}
+
 Im Folgenden wird die Planung und Implementierung der Architekturänderung zwecks Entkopplung der Z3-Komponente aus ProB beschrieben.
 
 \subsection{Planung}
@@ -125,16 +125,110 @@ Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-conn
 
 \subsection{Implementierung}
 
-blabla
+In den folgenden Abschnitten wird die Implementierung detailliert beschrieben.
+Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im Code erläutert.
 
 \subsubsection{Interfacefunktionen}
 
-porting of all 53 interface function
-start with send and end with receive in ProB
-explain necessary structure of request reply (enforced!)
-erweiterbarkeit gewährleistet durch injecting des sockets als erster methoden argument
+Es existieren 56 Funkionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
+Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
+Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
+
+\begin{enumerate}
+  \item Konvertieren der Funktionsparameter in einen C\texttt{++} Datentyp
+  \item Erstellen einer Anfragenachricht mit Funktionsidentifikator und Daten
+  \item Senden der Anfragenachricht an den Z3-Server
+  \item Gegebenenfalls das Abarbeiten aller nötigen Hilfsfunktionen
+  \item Empfangen der Antwortnachricht
+  \item Extrahieren des Status und der Daten aus der Antwortnachricht
+  \item Konvertieren der Daten in einen Prolog-Datentyp
+  \item Rückgabe der Daten
+\end{enumerate}
+
+Die Kernlogik der ursprünglichen Interfacefunktionen bleibt dabei erhalten, da sie effektiv nur auf die Seite des Z3-Prozesses ausgelagert wird,
+wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
+
+\begin{lstlisting}[
+  float, caption={Die Interfacefunktion $mk\_var$ in der alten Architektur.}, label={lst:mk-var-old}, language=C++
+]
+SP_integer mk_var(const SP_atom translation_type_atom,
+  const SP_term_ref type, const char *varname) {
+  std::shared_ptr<ContextData> ctx_data = 
+   get_translation_representant_ctx_data(translation_type_atom);
+  z3::sort t = mk_type(translation_type_atom, type);
+  std::shared_ptr<z3::context> ctx = ctx_data->get_context();
+  try {
+    return insert_id(ctx_data, ctx->constant(varname, t));
+  } catch(z3::exception& e) {
+    raise_Z3_exception(e, "mk_var");
+    return -1;
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[
+  float, caption={Die Interfacefunktion $mk\_var$ in der neuen Architektur (ProB Seite).}, label={lst:mk-var-prob}, language=C++
+]
+SP_integer mk_var(zsock_t *zocket,
+ const SP_atom translation_type_atom, const SP_term_ref type,
+ const char *varname) {
+  zmsg_t *request = zmsg_new();
+  zmsg_addstr(request,
+   SP_string_from_atom(translation_type_atom));
+  zmsg_addstr(request, varname);
+  if (!send_z3_request(zocket, SP_FUNCTION::MK_VAR, &request)) {
+    return -1;
+  }
+  if (!mk_type(zocket, type)) {
+    return -1;
+  }
+
+  zmsg_t *response = nullptr;
+  if (!receive_z3_response(zocket, &response)) {
+    return -1;
+  }
+  if (response) {
+    char *response_str = zmsg_popstr(response);
+    SP_integer result = std::stol(response_str);
+    free(response_str);
+    return result;
+  }
+  zmsg_destroy(&response);
+  return -1;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[
+  float, caption={Die Interfacefunktion $mk\_var$ in der neuen Architektur (Z3 Seite).}, label={lst:mk-var-z3}, language=C++
+]
+long mk_var(const std::string translation_type_atom,
+ const std::string varname) {
+  try {
+    std::shared_ptr<ContextData> ctx_data = 
+     get_translation_representant_ctx_data(translation_type_atom);
+    z3::sort t = mk_type(translation_type_atom);
+    std::shared_ptr<z3::context> ctx = ctx_data->get_context();
+    return insert_id(ctx_data, ctx->constant(varname.c_str(), t));
+  } catch(z3::exception& e) {
+    raise_Z3_exception(e, "mk_var");
+    return -1;
+  }
+}
+\end{lstlisting}
 
 
+Als Beispiel einer dartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion $mk\_var$ gezeigt.
+In den \cref{lst:mk-var-prob,lst:mk-var-z3} ist die neue Implementierung der Funktion in dem ProB- und Z3-Prozess dargestellt.
+Es ist zu erkennen, dass der ursprüngliche Funktionskörper der Funktion nahezu identisch zu der Implementierung innerhalb des Z3-Prozesses ist.
+Die ProB-Seite der Funktion hingegen wurde hinsichtlich der beschriebenen Vorgehensweise umstrukturiert.
+So werden in den Zeilen 5 bis 7 (\cref{lst:mk-var-prob}) die Funktionsparameter in einen $zmsg$ Block eingefügt und dabei in entsprechende Datentypen umgewandelt.
+In der Zeile 8 wird die Anfragenachricht mit dem Funktionsidentifikator an den Z3-Server gesendet.
+Die Zeilen 11 bis 13 zeigen die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall $mk\_var$).
+Zuletzt wird ab Zeile 15 die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesm Fall $SP\_Integer$) umgewandelt und schließlich zurückgegeben.
+
+Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion gegeben.
+Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
+Dadurch wird die Erweiterbarkeit des Codes gewährleistet, da es die Möglichkeit bietet, zukünftig mehrere Sockets zu verwalten und somit mehrere Z3-Server zu bedienen.
 
 \subsubsection{Hilfsfunktionen}
 \label{subsec:helper-functions}
@@ -163,6 +257,7 @@ Die Kopplung zwischen SICStus Prolog und Z3 ist hierbei durch die enthaltenen Be
 Sowohl die Verwendung von Funktionalitäten der Prolog Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
 Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die in verschiedenen Szenarien zusätzliche Informationen
 an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
+Die Kommunikation macht sich dabei den Statusidentifikator $UNFINISHED$ zu Nutze, um den Prozess über den aktuellen Zustand zu informieren.
 Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ein zentraler Bestandteil des Z3-Interfaces.
 In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_type$ dargestellt, welches die Komplexität der Funktion verdeutlicht
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
@@ -284,7 +379,7 @@ Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexit
 Anhand der Variablen $translation\_type\_atom$ wird das Objekt $ctx\_data$ ermittelt, welches an die Funktion $prolog\_type\_list\_to\_sort\_vector$ übergeben wird.
 Diese verwendet das Objekt ausschließlich zur Ermittlung der Variablen $translation\_type\_atom$. Das Problem hierbei ist,
 dass $ctx\_data$ in der neuen Architektur auf der Seite des Server-Prozesses liegt und somit einen Nachrichtenaustausch erfordert.
-Das Problem lässt sich umgehen, indem die Funktion $prolog\_type\_list\_to\_sort\_vector$ dahingehen refaktorisiert wird,
+Die Problematik lässt sich umgehen, indem die Funktion $prolog\_type\_list\_to\_sort\_vector$ dahingehen refaktorisiert wird,
 direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich darauf zu verzichten.
 
 \begin{lstlisting}[
@@ -340,14 +435,14 @@ init_z3interface :-
     init(Endpoint, Zocket),
     assertz(is_initialised(Zocket)).
 \end{lstlisting}
-\todo[]{verify tmp file lib name}
+
 In den entsprechenden Zeilen 8 bis 10 wird der Endpoint zur ZeroMQ Kommunikation generiert
 und als Funktionsargument an die $init$ Funktion übergeben, welche die Verbindung zum Z3-Server herstellt.
 Die Funktion $process\_create$ wird eingesetzt, um den Z3-Server als Subprozess zu starten,
 welcher durch die Verwendung der Systemargumente ebenfalls über den generierten Endpoint informiert wird.
 So sind beide Prozesse in Kenntnis desselben Endpoints und können miteinander kommunizieren.
 Der Endpoint selbst ist hierbei effektiv ein Pfad zu einer temporären Datei, die als Kommunikationskanal zwischen den Prozessen dient.
-Er wird innerhalb von $get\_path\_to\_fresh\_z3\_endpoint$ mit Hilfe der Prolog Bibliothek $tmp\_file$ generiert.
+Er wird als einzigartiger Dateiname innerhalb von $get\_path\_to\_fresh\_z3\_endpoint$ generiert.
 
 \subsubsection{Logging}
 \label{subsec:logging}
@@ -367,8 +462,9 @@ Zur Aktivierung muss lediglich die Zeile 9 in \cref{lst:init-z3interface} so ang
 
 Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet werden, dass der Z3-Server in eine Datei schreibt, die einzigartig zu seinem Prozess ist.
 Sollten in Zukunft mehrere Z3-Prozesse existieren, würden diese andernfalls in dieselbe Datei schreiben und die Logausgabe dadurch unübersichtlich machen.
-Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig auf die Datei schreiben, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver die Datei beschreiben kann.
+Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig in dieselbe Datei schreiben, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver die Datei beschreiben kann.
 Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
+Beispielsweise schreibt der Z3-Solver bei einem Endpoint \enquote{$ipc:///tmp/z3rver96485092.probz$} in die Datei \enquote{$z3rver96485092.probz.log$}.
 
 
 
