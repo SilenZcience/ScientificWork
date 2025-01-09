@@ -130,7 +130,7 @@ Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im 
 
 \subsubsection{Interfacefunktionen}
 
-Es existieren 56 Funkionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
+Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
 Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
 Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
 
@@ -217,14 +217,14 @@ long mk_var(const std::string translation_type_atom,
 \end{lstlisting}
 
 
-Als Beispiel einer dartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion $mk\_var$ gezeigt.
+Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion $mk\_var$ gezeigt.
 In den \cref{lst:mk-var-prob,lst:mk-var-z3} ist die neue Implementierung der Funktion in dem ProB- und Z3-Prozess dargestellt.
 Es ist zu erkennen, dass der ursprüngliche Funktionskörper der Funktion nahezu identisch zu der Implementierung innerhalb des Z3-Prozesses ist.
 Die ProB-Seite der Funktion hingegen wurde hinsichtlich der beschriebenen Vorgehensweise umstrukturiert.
 So werden in den Zeilen 5 bis 7 (\cref{lst:mk-var-prob}) die Funktionsparameter in einen $zmsg$ Block eingefügt und dabei in entsprechende Datentypen umgewandelt.
 In der Zeile 8 wird die Anfragenachricht mit dem Funktionsidentifikator an den Z3-Server gesendet.
 Die Zeilen 11 bis 13 zeigen die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall $mk\_var$).
-Zuletzt wird ab Zeile 15 die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesm Fall $SP\_Integer$) umgewandelt und schließlich zurückgegeben.
+Zuletzt wird ab Zeile 15 die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall $SP\_Integer$) umgewandelt und schließlich zurückgegeben.
 
 Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion gegeben.
 Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
