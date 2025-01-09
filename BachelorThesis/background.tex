@@ -74,14 +74,13 @@ Andere Einsatzbereiche sind die automatische Generierung von Testfällen basiere
 Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Logemann-Loveland}(T)-Framework,
 das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
 Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
-Er arbeitet rekursiv und kombiniert folgende Schritte:
-\todo[]{too much detail}
-\begin{enumerate}
-    \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
-    \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
-    \item Conflict Detection/Backtracking: Zurücksetzen von Entscheidungen, wenn ein Konflikt entdeckt wird.
-\end{enumerate}    
-
+% Er arbeitet rekursiv und kombiniert folgende Schritte:
+% \todo[]{too much detail}
+% \begin{enumerate}
+%     \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
+%     \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
+%     \item Conflict Detection/Backtracking: Zurücksetzen von Entscheidungen, wenn ein Konflikt entdeckt wird.
+% \end{enumerate}    
 In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
 Weitere Theorien wie lineare und nicht lineare Arithmetik, Bit-Vektoren und Arrays werden durch weitere Theorie-Solver behandelt,
 welche als spezialisierte Module eng mit dem SAT-Solver integriert sind.
@@ -163,3 +162,6 @@ Für die geplante Architekturänderung wird ZeroMQ verwendet, um eine direkte IP
 Da der entkoppelte Solver auf demselben Rechner ausgeführt wird, bietet sich IPC als Kommunikationsprotokoll an, um eine effiziente und schnelle Kommunikation zu gewährleisten.
 Es wurde sich für das Request-Reply Muster entschieden, da es im Kontext die am besten passendste Lösung darstellt,
 ohne dem System unnötige Komplexität hinzuzufügen.
+Bei dem gewählten Muster ist zu beachten, dass die Kommunikation synchron erfolgt, was bedeutet, dass eine strikte Reihenfolge der Nachrichten eingehalten werden muss.
+Angefangen bei der ersten Request Nachricht ausgehend von ProB müssen sich die Nachrichten abwechseln, um eine korrekte Kommunikation zu gewährleisten.
+Dies ist im Kontrollfluss der Anwendungen zu berücksichtigen, um Deadlocks oder anderweitige Probleme zu vermeiden.
