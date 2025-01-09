@@ -1,12 +1,10 @@
 
-
-
 \section{Architekturänderung}
 
 Im Folgenden wird die Planung und Implementierung der Architekturänderung zwecks Entkopplung der Z3-Komponente aus ProB beschrieben.
 
 \subsection{Planung}
-
+\todo{maybe every \$\$ zu \\textbf}
 Um eine korrekte Systemrefaktorisierung durchzuführen, ist es notwendig, zuvor grundlegende Kernaspekte
 des neuen Systems vollständig zu planen. Dies beinhaltet insbesondere die Struktur des neuen Server-Prozesses
 und den Aufbau der Nachrichten, die zwischen den Prozessen ausgetauscht werden.
@@ -68,7 +66,7 @@ Der hierfür verwendete Enum-Typ ist in \cref{lst:status-identifiers} gezeigt.
 \end{lstlisting}
 
 Die Statuswerte $OK$ und $NOK$ repräsentieren den Erfolg oder Misserfolg einer Anfrage.
-Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{sec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
+Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{subsec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
 um eine entsprechende Fehlerbehandlung durchzuführen. 
 Der Statuswert $UNFINISHED$ wird verwendet, wenn eine Anfrage noch nicht abgeschlossen ist und der Server auf weitere Informationen wartet (siehe \cref{subsec:helper-functions}).
 
@@ -112,15 +110,18 @@ Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt
         break
       // ...
     }
-
-    send_z3_response(Z3Status::OK, &response);
+    if (!z3exc_occured) {
+      send_z3_response(Z3Status::OK, &response);
+    }
   }
 \end{lstlisting}
-\todo[]{erkläre zusätzlichen nachrichtenverkehr in hilfsfunktionen}
 
+Zusätzlich besitzen manche Hilfsfunktionen ihre eigene Logik zum Empfangen und Senden von Nachrichten,
+da sie in der Lage sein müssen, auf weitere Informationen zu warten, bevor sie ihre Berechnung abschließen können.
+Hierauf wird in \cref{subsec:helper-functions} genauer eingegangen.
 Weitere Bestandteile, die zur Struktur des Servers gehören, sind die Initialisierung des Servers, die Verbindungsherstellung zum ProB-Prozess,
 das implementierte Logging und die Behandlung von Exceptions.
-Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-connection}, \cref{subsec:logging}, \cref{sec:exceptions}) genauer erläutert.
+Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-connection}, \cref{subsec:logging}, \cref{subsec:exceptions}) genauer erläutert.
 
 
 \subsection{Implementierung}
@@ -262,8 +263,10 @@ Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ei
 In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_type$ dargestellt, welches die Komplexität der Funktion verdeutlicht
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
 Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
+Zunächst wird überprüft, ob der Typ ein Atom ist, wie \enquote{integer}, \enquote{real} oder \enquote{boolean}.
+Wenn dies nicht der Fall ist, wird überprüft, ob der Typ bereits zuvor konstruiert wurde.
+Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unterscheidet zwischen den Typen $set$, $global$, $couple$ und $record$.
 
-\todo[]{kurz erklären, was passiert}
 \begin{figure}[!htp]
   \centering
   \begin{tikzpicture}[scale=3, every node/.style={scale=0.7}]
@@ -345,8 +348,6 @@ Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die s
   \caption{Sequenz Diagramm der Hilfsfunktion $mk\_type$}
   \label{fig:mk-type-sequence}
 \end{figure}
-
-
 
 \subsubsection{Optimierungen}
 \label{subsec:optimizations}
@@ -466,20 +467,59 @@ Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleich
 Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
 Beispielsweise schreibt der Z3-Solver bei einem Endpoint \enquote{$ipc:///tmp/z3rver96485092.probz$} in die Datei \enquote{$z3rver96485092.probz.log$}.
 
-
-
-
-
-
 \subsubsection{Exceptions}
-\label{sec:exceptions}
+\label{subsec:exceptions}
 
-very important.
-need to be handled properly.
-need to work with server rep req structure
-what if multiple errors?
-need to notify other process
-had segfaults
-\todo[]{Big Important!}
+Die korrekte Behandlung von Exceptions ist ein wichtiger Bestandteil der Implementierung, um die Stabilität des Systems zu gewährleisten.
+Sie ist jedoch grundlegend fehleranfällig und kann zu unerwarteten Abstürzen führen, wenn sie nicht ordnungsgemäß behandelt wird.
+Die Struktur der neuen Architektur fügt dem Behandlungsprozess von Exceptions eine zusätzliche Komplexität hinzu, da die ProB- und Z3-Prozesse unabhängig voneinander auf Fehler stoßen können.
+Beim Auftreten einer Exception in einem der Prozesse muss der andere Prozess über den Fehler informiert werden, um eine entsprechende Fehlerbehandlung durchzuführen.
+Hierbei ist zu beachten, dass das Kommunikationsmuster der beiden Prozesse eingehalten werden muss, wenn eine Exception auftritt.
+Dies ist nicht trivial, da Exceptions den natürlichen Kontrollfluss fundamental verändern.
 
+Wenn eine Exception geworfen wird, verlässt der Kontrollfluss einer Anwendung grundsätzlich den aktuellen Codeblock und propagiert aufwärts im Funktionsaufruf-Stack (engl. \enquote{Call Stack}),
+bis ein passender Exception-Handler gefunden wird, der den Fehler behandelt oder das Programm terminiert. 
+Zusätzliche Komplexität entsteht durch das Z3-Interface von SICStus Prolog auf der Seite des ProB-Prozesses,
+da die Schnittstelle einen durch $SP\_raise\_exception$ geworfenen Fehler als ausstehend (engl. \enquote{pending}) behandelt und den Kontrollfluss nicht wie gewöhnlich unterbricht.
+Stattdessen wird der Fehler also zwischengespeichert und erst bei der Rückkehr aus der Interfacefunktion nach Prolog behandelt.
 
+In der originalen Architektur des Z3-Interfaces existiert keine klare Struktur zur Behandlung von Exceptions.
+Beispielsweise haben manche Hilfsfunktionen ihre eigenen Exception-Handler, die im Falle eines Fehlers einen nicht-validen Wert (wie etwa $nullptr$) zurückgeben.
+Dieser Wert wird in gewissen Interfacefunktionen nicht überprüft, was zu unerwarteten Abstürzen führen kann, wenn die entsprechende Exception auftritt.
+Manche Funktionen implementieren einen Exception-Handler für den gesamten Funktionskörper, andere hingegen nur für einzelne Codeblöcke, die teilweise nicht alle Fehlerfälle abdecken.
+Ebenfalls existieren Interfacefunktionen (wie etwa $mk\_sort$ oder $mk\_record\_field$), die keine Fehlerbehandlung implementieren und somit bei einem Fehler unerwartet (mit einem Segmentation Fault) terminieren.
+
+Aus diesen Gründen wurde das Exception-Handling in der neuen Architektur des Z3-Interfaces grundlegend überarbeitet.
+Die Exception-Handler wurden konsistent in allen Interfacefunktionen implementiert, sodass der gesamte Funktionskörper abgedeckt ist.
+Auch wenn große Codeblöcke innerhalb eines Try-Catch-Blocks einen unschönen Codestyle darstellen,
+ist so gewährleistet, dass nicht nur alle Fehler, sondern auch daraus resultierende Folgefehler abgefangen werden.
+Entsprechend wurden die Hilfsfunktionen so refaktorisiert, dass sie selbst keine Exceptions mehr abfangen, sondern diese an die aufrufende Funktion weiterreichen.
+Die aufrufende Funktion ist nach einer endlichen Propagierung zwangsläufig eine Interfacefunktion, welche den Fehler somit abfängt und entsprechend behandelt.
+
+\begin{lstlisting}[
+  float, caption={Der Exception-Handler des Z3-Prozesses.}, label={lst:z3-exception-handler}, language=C++
+]
+void raise_Z3_exception(const z3::exception& e, std::string name) {
+  fprintf(logFile, "[ERROR] z3_exception in %s : %s\n",
+   name.c_str(), e.msg());
+  if (z3exc_occured) {
+      return;
+  }
+  z3exc_occured = true;
+  zmsg_t *response = zmsg_new();
+  zmsg_addstr(response, e.msg());
+  zmsg_addstr(response, name.c_str());
+  send_z3_response(Z3Status::NOK, &response);
+}
+\end{lstlisting}
+
+Um die Einhaltung des Request-Reply-Modells zu garantieren, wurde ein spezieller Exception-Handler in dem Z3-Prozess implementiert.
+Dieser wird immer aufgerufen, wenn eine Exception in einer der Interfacefunktionen auftritt und leitet den Fehler gegebenenfalls an den ProB-Prozess weiter.
+Die Implementierung des Exception-Handlers ist in \cref{lst:z3-exception-handler} gezeigt.
+Insbesondere ist auf die Variable $z3exc\_occured$ zu achten, die verhindert, dass mehrere Exceptions an den ProB-Prozess gesendet werden, bevor der erste Fehler behandelt wurde.
+Entsprechend wird auch in der Zeile 25 von \cref{lst:server-structure} die schlussendliche Antwort einer Anfrage nur dann gesendet, wenn keine Exception aufgetreten ist.
+Es ist nämlich davon auszugehen, dass der Fehler innerhalb des ProB-Prozesses in diesem Fall bereits behandelt wurde und die Interfacefunktion dort verlassen worden ist.
+Somit würde eine weitere Nachricht gegen das Kommunikationsmuster verstoßen und zu unerwarteten Fehlern führen.
+
+Als grundlegende Konvention sollte der Z3-Server nach dem Senden einer Antwort und vor dem Erhalten der nächsten Anfrage keinen Code ausführen, der Fehler verursachen könnte.
+Andernfalls könnte der ProB-Prozess nicht über die Exception in Kenntnis gesetzt werden, da der Z3-Server in diesem Fall nicht mehr in der Lage wäre, eine Nachricht zu senden.

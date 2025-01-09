@@ -15,7 +15,7 @@ Eine ausreichend tiefgründige Analyse könnte insofern von Vorteil sein, um ein
 \subsection{Deinit Hook}
 
 Nach der erfolgreich abgeschlossenen Systemarchitekturänderung, die in dieser Arbeit vorgestellt wurde,
-bleibt ein letzter Schritt offen, um die Implementierung vollständig abzurunden.
+bleibt ein letzter Schritt offen, um die Implementierung vollständig auszubauen.
 Derzeitig wird der Z3-Solver-Prozess nicht sauber beendet, sondern existiert als sogenannter \textit{child process} von ProB und ist somit an die Existenz des ProB-Prozesses gekoppelt.
 Dies stellt insofern grundsätzlich kein großes Problem dar, da der Z3-Solver-Prozess nach Beendigung des ProB-Prozesses automatisch beendet wird.
 Dennoch besteht in der Theorie die Möglichkeit, dass der Z3-Server als sogenannter \textit{dangling process} zurückbleibt.
