@@ -51,7 +51,7 @@ Ein Ausschnitt des Enum-Typs ist in \cref{lst:func-identifiers} gezeigt.
 \end{lstlisting}
 
 Wenn eine Antwortnachricht vom Z3-Server an ProB gesendet wird, muss die Nachricht ebenfalls Metadaten enthalten,
-die die korrekte Interpretation der Nachricht auf der ProB-Seite ermöglichen.
+die die korrekte Interpretation der Nachricht auf der ProB-Seite ermöglicht.
 Dafür wird ein Statusidentifikator benötigt, der den Status der Anfrage repräsentiert.
 Der hierfür verwendete Enum-Typ ist in \cref{lst:status-identifiers} gezeigt.
 
@@ -224,7 +224,7 @@ Es ist zu erkennen, dass der ursprüngliche Funktionskörper der Funktion nahezu
 Die ProB-Seite der Funktion hingegen wurde hinsichtlich der beschriebenen Vorgehensweise umstrukturiert.
 So werden in den Zeilen 5 bis 7 (\cref{lst:mk-var-prob}) die Funktionsparameter in einen $zmsg$ Block eingefügt und dabei in entsprechende Datentypen umgewandelt.
 In der Zeile 8 wird die Anfragenachricht mit dem Funktionsidentifikator an den Z3-Server gesendet.
-Die Zeilen 11 bis 13 zeigen die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall $mk\_var$).
+Die Zeilen 11 bis 13 zeigen die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall $mk\_type$).
 Zuletzt wird ab Zeile 15 die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall $SP\_Integer$) umgewandelt und schließlich zurückgegeben.
 
 Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion gegeben.
