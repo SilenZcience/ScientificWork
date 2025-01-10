@@ -123,7 +123,6 @@ Weitere Bestandteile, die zur Struktur des Servers gehören, sind die Initialisi
 das implementierte Logging und die Behandlung von Exceptions.
 Diese Aspekte werden in den entsprechenden Abschnitten (\cref{subsec:server-connection}, \cref{subsec:logging}, \cref{subsec:exceptions}) genauer erläutert.
 
-
 \subsection{Implementierung}
 
 In den folgenden Abschnitten wird die Implementierung detailliert beschrieben.
@@ -217,7 +216,6 @@ long mk_var(const std::string translation_type_atom,
 }
 \end{lstlisting}
 
-
 Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion $mk\_var$ gezeigt.
 In den \cref{lst:mk-var-prob,lst:mk-var-z3} ist die neue Implementierung der Funktion in dem ProB- und Z3-Prozess dargestellt.
 Es ist zu erkennen, dass der ursprüngliche Funktionskörper der Funktion nahezu identisch zu der Implementierung innerhalb des Z3-Prozesses ist.
@@ -260,6 +258,7 @@ Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die
 an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
 Die Kommunikation macht sich dabei den Statusidentifikator $UNFINISHED$ zu Nutze, um den Prozess über den aktuellen Zustand zu informieren.
 Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ein zentraler Bestandteil des Z3-Interfaces.
+
 In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion $mk\_type$ dargestellt, welches die Komplexität der Funktion verdeutlicht
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
 Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
@@ -273,7 +272,7 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
     % \node at (1,5.4) {\textbf{Sequenz Diagramm der Hilfsfunktion $mk\_type$}};
 
     \begin{scope}
-      \clip (-1,1.3) rectangle (3,6);
+      \clip (-1,1.3) rectangle (3,5.5);
 
       \coordinate (a) at (0,0);
       \coordinate (b) at (0,5);
@@ -281,7 +280,6 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
       \coordinate (d) at (2,5);
     
 
-      
       \draw (a) -- (b) node[pos=1.03]{\large \textbf{ProB-Client}};
       \draw (c) -- (d) node[pos=1.03]{\large \textbf{Z3-Server}};
 
@@ -361,19 +359,19 @@ die iterierbar sind, wie Listen, Vektoren und Records.
 In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Server gesendet,
 um das aktuelle Element zu übermitteln.
 Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden.
-In dem Folgenden \cref{lst:loops-optimization} ist gezeigt, wie eine Prolog Liste zunächst in einem String Vektor akkumuliert wird,
+Beispielsweise lässt sich eine Prolog Liste zunächst in einem String Vektor akkumulieren,
 um anschließend in einer einzigen Nachricht an den Server gesendet zu werden.
 
-\begin{lstlisting}[
-    float, caption={Ein Ausschnitt einer Interfacefunktion zur Demonstration von Schleifenoptimierung.}, label={lst:loops-optimization}, language=C++
-  ]
-  std::vector<std::string> string_vec = 
-    term_ref_prolog_list_to_string_vector(element_names);
-  for (int i = 0; i < cardinality; i++) {
-      zmsg_addstr(request, string_vec[i].c_str());
-  }
-  // send request to server
-\end{lstlisting}
+% \begin{lstlisting}[
+%     float, caption={Ein Ausschnitt einer Interfacefunktion zur Demonstration von Schleifenoptimierung.}, label={lst:loops-optimization}, language=C++
+%   ]
+%   std::vector<std::string> string_vec = 
+%     term_ref_prolog_list_to_string_vector(element_names);
+%   for (int i = 0; i < cardinality; i++) {
+%       zmsg_addstr(request, string_vec[i].c_str());
+%   }
+%   // send request to server
+% \end{lstlisting}
 \todo[]{anpassen an letzte refaktorisierung!}
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
@@ -394,22 +392,21 @@ direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich d
   
   // function: prolog_type_list_to_sort_vector
   mk_sort(ctx_data->get_translation_type_atom());
-  
 \end{lstlisting}
 
-\begin{lstlisting}[
-    float, caption={Die Hilfsfunktion $escape\_string$.}, label={lst:escape-string}, language=C++
-  ]
-  std::string escape_string(const std::string to_escape) {
-    return "|" + to_escape + "|";
-  }
-\end{lstlisting}
+% \begin{lstlisting}[
+%     float, caption={Die Hilfsfunktion $escape\_string$.}, label={lst:escape-string}, language=C++
+%   ]
+%   std::string escape_string(const std::string to_escape) {
+%     return "|" + to_escape + "|";
+%   }
+% \end{lstlisting}
 
 Zuletzt wurde das DRY\footnote{Don't Repeat Yourself}-Prinzip angewendet, um die Wartbarkeit des Codes zu erhöhen,
 indem gewisse Hilfsfunktionen ausschließlich auf entweder der Prolog- oder der Serverseite implementiert wurden.
-Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung von der in \cref{lst:escape-string} gezeigten Funktion
-in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler Anpassung im Quellcode wurde die Funktion ausschließlich innerhalb des Z3-Prozesses implementiert.
-\todo[]{perhaps we do not need this stupid example}
+Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung einzelner Hilfsfunktionen
+in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler Anpassung im Quellcode wurden diese Funktionen ausschließlich innerhalb eines Prozesses implementiert.
+% \todo[]{perhaps we do not need this stupid example}
 
 \subsubsection{Serveranbindung}
 \label{subsec:server-connection}
@@ -523,3 +520,51 @@ Somit würde eine weitere Nachricht gegen das Kommunikationsmuster verstoßen un
 
 Als grundlegende Konvention sollte der Z3-Server nach dem Senden einer Antwort und vor dem Erhalten der nächsten Anfrage keinen Code ausführen, der Fehler verursachen könnte.
 Andernfalls könnte der ProB-Prozess nicht über die Exception in Kenntnis gesetzt werden, da der Z3-Server in diesem Fall nicht mehr in der Lage wäre, eine Nachricht zu senden.
+
+\subsection{Kompilierung}
+
+Nach der vollständigen Umsetzung der neuen Systemarchitektur muss sowohl das Z3-Interface als auch der Z3-Solver kompiliert werden.
+Hierzu werden Änderungen im Makefile der Programmerweiterung von ProB vorgenommen.
+
+\subsubsection{Makefile}
+
+Das eigentliche Z3-Interface wird als Bibliothek in Form einer dynamischen Shared Library kompiliert.
+Dieses Verhalten ändert sich nicht, es müssen lediglich minimale Anpassungen vorgenommen werden, wie das Entfernen der Z3- und das Hinzufügen der ZMQ-Bibliothek.
+Durch das Importieren der $shared\_libs.mk$ Datei in das Makefile wird die Kompilierung der Interface-Bibliothek mithilfe der $install$ Regel automatisiert. 
+
+Es wird eine weitere Regel definiert, welche die Kompilierung des Z3-Solvers durchführt, und die resultierende Binärdatei in das Zielverzeichnis kopiert.
+Diese Regel wird als Abhängigkeit von $install$ hinzugefügt.
+Die Implementierung der Regel ist in \cref{lst:makefile} gezeigt.
+Es ist zu beachten, dass die Abhängigkeiten $\$(LIBCZMQ\_PATH)$ und $\$(target\_dir)/\$(LIBZ3)$ sicherstellen,
+dass sowohl die ZeroMQ-, als auch die Z3-Bibliothek vor der Kompilierung des Z3-Solvers vorhanden sind und entsprechend korrekt eingebunden werden können.
+Der resultierende Befehl, welcher durch das Makefile ausgeführt wird, ist in \cref{lst:command} gezeigt.
+
+\begin{lstlisting}[
+  float, caption={Ausschnitt des Makefiles zur Kompilierung des Z3-Solvers.}, label={lst:makefile}, language=sh
+]
+include ../shared_libs.mk
+
+$(target_dir)/z3rver: z3rver
+  cp -f z3rver $@
+
+z3rver: $(LIBCZMQ_PATH) $(target_dir)/$(LIBZ3)
+        $(z3solver_files) $(z3solver_header)
+  $(CXX) $(Z3CXXFLAGS) $(Z3LDFLAGS) $(z3solver_files)
+   $(Z3LDLIBS) -o z3rver
+
+install: $(target_dir)/z3rver
+\end{lstlisting}
+
+\begin{lstlisting}[
+  float, caption={Der Kompilierungsbefehl.}, label={lst:command}, language=sh
+]
+g++ -std=gnu++11  -Wall -O2 -g -I../zmq_lib/prefix/include
+ -I./shared -I./prefix/include -DZ3VERS="4.13.2"
+ -L../zmq_lib/prefix/lib -L./prefix/bin -Wl,-rpath,'$ORIGIN'
+ z3server/context_data.cpp z3server/z3rver.cpp -lczmq -pthread -lz3
+ -o z3rver
+cp -f z3rver ../../lib/z3rver
+\end{lstlisting}
+
+Nach Abschluss der Implementierung und Kompilierung konnten alle vorhandenen Tests zur Überprüfung der Funktionalität des Z3-Interfaces erfolgreich durchgeführt werden.
+Dies bestätigt, dass die Architekturänderung erfolgreich umgesetzt wurde.
