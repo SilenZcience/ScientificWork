@@ -532,11 +532,11 @@ Das eigentliche Z3-Interface wird als Bibliothek in Form einer dynamischen Share
 Dieses Verhalten ändert sich nicht, es müssen lediglich minimale Anpassungen vorgenommen werden, wie das Entfernen der Z3- und das Hinzufügen der ZMQ-Bibliothek.
 Durch das Importieren der $shared\_libs.mk$ Datei in das Makefile wird die Kompilierung der Interface-Bibliothek mithilfe der $install$ Regel automatisiert. 
 
-Es wird eine weitere Regel definiert, welche die Kompilierung des Z3-Solvers durchführt, und die resultierende Binärdatei in das Zielverzeichnis kopiert.
+Es wird eine weitere Regel definiert, welche die Kompilierung des Z3-Solvers durchführt und die resultierende Binärdatei in das Zielverzeichnis kopiert.
 Diese Regel wird als Abhängigkeit von $install$ hinzugefügt.
 Die Implementierung der Regel ist in \cref{lst:makefile} gezeigt.
 Es ist zu beachten, dass die Abhängigkeiten $\$(LIBCZMQ\_PATH)$ und $\$(target\_dir)/\$(LIBZ3)$ sicherstellen,
-dass sowohl die ZeroMQ-, als auch die Z3-Bibliothek vor der Kompilierung des Z3-Solvers vorhanden sind und entsprechend korrekt eingebunden werden können.
+dass sowohl die ZeroMQ- als auch die Z3-Bibliothek vor der Kompilierung des Z3-Solvers vorhanden sind und entsprechend korrekt eingebunden werden können.
 Der resultierende Befehl, welcher durch das Makefile ausgeführt wird, ist in \cref{lst:command} gezeigt.
 
 \begin{lstlisting}[
