@@ -1,5 +1,4 @@
 
-
 \section{Zusätzliche Komplikationen}
 
 Im Verlauf der Arbeit traten einige Probleme auf, die nicht direkt mit der Entkopplung der Z3-Komponente zusammenhängen. Diese werden im Folgenden kurz erläutert.
@@ -17,7 +16,8 @@ Die Schleife wartet auf das Beenden aller Threads, die zur Lösung eines Prädik
 \begin{lstlisting}[
     float, caption={Problematische Endlosschleife.}, label={lst:softlock}, language=C++
   ]
-// send_solver_interrupts("all"); // workaround
+send_solver_interrupts("all"); // implemented workaround
+
 while (true) {
  { // wait for threads to finish
   std::lock_guard<std::mutex> threads_guard(running_threads_mutex);
@@ -37,9 +37,9 @@ Durch den in Zeile 1 als Kommentar dargestellten Aufruf zur Methode $send\_solve
 Da zum Zeitpunkt der Ausführung der $reset$ Funktion mindestens ein Thread bereits ein Ergebnis berechnet hat, stellt das Unterbrechen der anderen Threads kein Problem dar.
 
 \subsection{Versionsinkompatibilität}
-
+\todo[]{finde xyz version, evtl finde fehlermeldung}
 Ein weiteres Problem, das während der Entwicklung auftrat, war die Inkompatibilität der Z3-Bibliothek ($z3lib.so$) mit dem Betriebssystem.
-Diese Problematik trat auf der automatischen Testumgebung auf, welche die Darwin plattform xyz innerhalb von Docker nutzt.
-Anhand der Fehlermeldungen konnte festegestellt werden, dass sich die Inkompatibilität auf die glibc-Version zurückführen lässt.
+Diese Problematik trat auf der automatischen Testumgebung auf, welche die Darwin Plattform xyz innerhalb von Docker nutzt.
+Anhand der Fehlermeldungen konnte festgestellt werden, dass sich die Inkompatibilität auf die glibc-Version zurückführen lässt.
 Die Darwin-Plattform verwendete eine ältere Version von glibc, sodass die Z3-Bibiliothek auf inkorrekte oder nicht vorhandene Funktionen zugriff.
 Das Problem wurde gelöst, indem die Testumgebung auf die neuere Systemversion Darwin $12$ aktualisiert wurde, welche mit der Z3-Bibliothek kompatibel ist.

@@ -74,13 +74,7 @@ Andere Einsatzbereiche sind die automatische Generierung von Testfällen basiere
 Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Logemann-Loveland}(T)-Framework,
 das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
 Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
-% Er arbeitet rekursiv und kombiniert folgende Schritte:
-% \todo[]{too much detail}
-% \begin{enumerate}
-%     \item Unit Propagation: Ableitung neuer Wahrheitswerte aus Klauseln mit nur einem Literal (Einheitsklausel).
-%     \item Decision Making: Entscheidung für ein Literal, um die Suchrichtung voranzutreiben.
-%     \item Conflict Detection/Backtracking: Zurücksetzen von Entscheidungen, wenn ein Konflikt entdeckt wird.
-% \end{enumerate}    
+
 In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
 Weitere Theorien wie lineare und nicht lineare Arithmetik, Bit-Vektoren und Arrays werden durch weitere Theorie-Solver behandelt,
 welche als spezialisierte Module eng mit dem SAT-Solver integriert sind.
@@ -91,7 +85,7 @@ Diese Leistungsfähigkeit wird durch verschiedene Optimierungen und Heuristiken 
 die den Suchraum effizient einschränken und die Lösung von Constraints beschleunigen.
 Zudem ist ein Simplifer in die System Architektur integriert, der gegebene Constraints vereinfacht.
 Z3 hat nur wenige Abhängigkeiten an externe Bibliotheken und ist daher leicht zu integrieren und zu verwenden \cite{z3prover-github}.
-Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, um die parallele Verarbeitung zu ermöglichen und damit die Leistungsfähigkeit weiter zu steigern. 
+Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, um die parallele Verarbeitung zu ermöglichen und damit die Leistungsfähigkeit weiter zu steigern.
 
 Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt \cite{10.1007/978-3-319-33693-0_23}.
 Dies betrifft insbesondere große oder komplexe Constraints mit nicht-linearen Bedingungen.
@@ -103,12 +97,10 @@ Beispielsweise lässt sich die Formel, welche in \cref{lst:z3-example} gezeigt w
   >>> :z3 X<Y & Y<X & X:INTEGER
   PREDICATE is FALSE
 \end{lstlisting}
-\FloatBarrier
-
+% \FloatBarrier
 
 Insgesamt macht die Leistungsfähigkeit und Flexibilität des Z3-Solvers ihn zu einem wichtigen Bestandteil von ProB,
 um Verifikationsaufgaben zu bewältigen, die über die Fähigkeiten des internen Constraint-Solvers hinausgehen.
-
 
 \subsection{ZeroMQ}
 \label{sec:zeromq}
@@ -156,7 +148,7 @@ Zu Illustrationszwecken ist in \cref{lst:min-client} und \cref{lst:min-server}  
   request = s.recv();
   s.send("Hello back");
 \end{lstlisting}
-\FloatBarrier
+% \FloatBarrier
 
 Für die geplante Architekturänderung wird ZeroMQ verwendet, um eine direkte IPC-Protokollverbindung zwischen ProB und dem Z3-Solver herzustellen.
 Da der entkoppelte Solver auf demselben Rechner ausgeführt wird, bietet sich IPC als Kommunikationsprotokoll an, um eine effiziente und schnelle Kommunikation zu gewährleisten.
