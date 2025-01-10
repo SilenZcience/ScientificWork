@@ -343,13 +343,13 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
     \end{scope}
 
   \end{tikzpicture}
-  \caption{Sequenz Diagramm der Hilfsfunktion $mk\_type$}
+  \caption{Das Sequenzdiagramm der Hilfsfunktion $mk\_type$. Der Übersicht halber sind nicht alle Nachrichten beschriftet. Derartige Nachrichten übermitteln zumeist ausschließlich Statusindikatoren.}
   \label{fig:mk-type-sequence}
 \end{figure}
 
 \subsubsection{Optimierungen}
 \label{subsec:optimizations}
-\todo[]{bessere codeschnipsel!}
+
 Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung aller notwendigen Funktionen
 lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
 
@@ -360,19 +360,8 @@ In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Ser
 um das aktuelle Element zu übermitteln.
 Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden.
 Beispielsweise lässt sich eine Prolog Liste zunächst in einem String Vektor akkumulieren,
-um anschließend in einer einzigen Nachricht an den Server gesendet zu werden.
+um anschließend in einer einelnen Nachricht an den Server gesendet zu werden.
 
-% \begin{lstlisting}[
-%     float, caption={Ein Ausschnitt einer Interfacefunktion zur Demonstration von Schleifenoptimierung.}, label={lst:loops-optimization}, language=C++
-%   ]
-%   std::vector<std::string> string_vec = 
-%     term_ref_prolog_list_to_string_vector(element_names);
-%   for (int i = 0; i < cardinality; i++) {
-%       zmsg_addstr(request, string_vec[i].c_str());
-%   }
-%   // send request to server
-% \end{lstlisting}
-\todo[]{anpassen an letzte refaktorisierung!}
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
 Anhand der Variablen $translation\_type\_atom$ wird das Objekt $ctx\_data$ ermittelt, welches an die Funktion $prolog\_type\_list\_to\_sort\_vector$ übergeben wird.
@@ -382,7 +371,7 @@ Die Problematik lässt sich umgehen, indem die Funktion $prolog\_type\_list\_to\
 direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich darauf zu verzichten.
 
 \begin{lstlisting}[
-    float, caption={Ein Ausschnitt einer redundanten Objektverwaltung.}, label={lst:unnecessary-ctx-data}, language=C++
+    float, caption={Illustrationsbeispiel zur Optimierung von vermeidbarer Objektkomplexität.}, label={lst:unnecessary-ctx-data}, language=C++
   ]
   // function: mk_op_comprehension_set_multi
   ContextData ctx_dta =
@@ -394,19 +383,10 @@ direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich d
   mk_sort(ctx_data->get_translation_type_atom());
 \end{lstlisting}
 
-% \begin{lstlisting}[
-%     float, caption={Die Hilfsfunktion $escape\_string$.}, label={lst:escape-string}, language=C++
-%   ]
-%   std::string escape_string(const std::string to_escape) {
-%     return "|" + to_escape + "|";
-%   }
-% \end{lstlisting}
-
 Zuletzt wurde das DRY\footnote{Don't Repeat Yourself}-Prinzip angewendet, um die Wartbarkeit des Codes zu erhöhen,
 indem gewisse Hilfsfunktionen ausschließlich auf entweder der Prolog- oder der Serverseite implementiert wurden.
 Der ursprüngliche Kontrollfluss verlangte zum Beispiel die Implementierung einzelner Hilfsfunktionen
 in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler Anpassung im Quellcode wurden diese Funktionen ausschließlich innerhalb eines Prozesses implementiert.
-% \todo[]{perhaps we do not need this stupid example}
 
 \subsubsection{Serveranbindung}
 \label{subsec:server-connection}
