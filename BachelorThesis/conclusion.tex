@@ -2,5 +2,22 @@
 
 \section{Konklusion}
 
-\todo[]{hier wird konkludiert. alles supi mit rundem ende oder so...}
-stuff
+Zusammenfassend lässt sich festhalten, dass die Restrukturierung des bestehenden Systems erfolgreich umgesetzt werden konnte.
+Die Z3-Komponente wurde gänzlich von der Hauptanwendung ProB entkoppelt und in einen seperaten Prozess ausgelagert.
+Durch die Einführung einer Kommunikationsstruktur ist die Interaktion zwischen den Komponenten gewährleistet.
+Die durchgeführten Tests bestätigen die vollständige Funktionalität des Systems nach der durchgeführten Architekturänderung,
+da alle Tests der relevanten Testkategorien fehlerfrei bestanden worden sind.
+
+Durch die Entkopplung der Komponenten konnte die Wartbarkeit und Erweiterbarkeit des Systems verbessert werden.
+Insbesondere behebt die neue Architektur bereits eine Vielzahl von potenziellen Problemen,
+wobei speziell die Überarbeitung des Exception-Handlings bei der Verwendung des Z3-Solvers hervorzuheben ist.
+
+Während der gesamten Implementierung wurde Rücksicht genommen auf zukünftige Erweiterungen und Verbesserungen des Gesamtsystems,
+sodass zukünftig die Option besteht, das Z3-Interface dahingehend zu erweitern, dass gegebenenfalls mehrere Instanzen des Z3-Prozesses gestartet werden und das Lösen der Prädikate parallelisiert wird.
+
+Eine überraschende Erkenntnis war die erkennbare Laufzeitverbesserung durch die neue Architektur.
+Die Entkopplung und Optimierung der Komponenten führte
+zu einer messbaren Effizienzsteigerung bei dem Lösen von Prädikaten.
+
+Aufgrund der gelungenen Umsetzung der Architekturänderung und der positiven Ergebnisse aller durchgeführten Tests
+sowie der erzielten Erweiterbarkeit hat die Arbeit ihre angestrebten Ziele erreicht und alle gesetzten Anforderungen erfüllt.

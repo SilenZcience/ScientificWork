@@ -67,7 +67,7 @@ Der hierfür verwendete Enum-Typ ist in \cref{lst:status-identifiers} gezeigt.
 
 Die Statuswerte $OK$ und $NOK$ repräsentieren den Erfolg oder Misserfolg einer Anfrage.
 Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{subsec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
-um eine entsprechende Fehlerbehandlung durchzuführen. 
+um eine entsprechende Fehlerbehandlung durchzuführen.
 Der Statuswert $UNFINISHED$ wird verwendet, wenn eine Anfrage noch nicht abgeschlossen ist und der Server auf weitere Informationen wartet (siehe \cref{subsec:helper-functions}).
 
 Insgesamt besteht eine Nachricht also immer aus einem Identifikator (von Typ Integer), der entweder eine Funktion oder einen Status repräsentiert,
@@ -153,7 +153,7 @@ wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
 ]
 SP_integer mk_var(const SP_atom translation_type_atom,
   const SP_term_ref type, const char *varname) {
-  std::shared_ptr<ContextData> ctx_data = 
+  std::shared_ptr<ContextData> ctx_data =
    get_translation_representant_ctx_data(translation_type_atom);
   z3::sort t = mk_type(translation_type_atom, type);
   std::shared_ptr<z3::context> ctx = ctx_data->get_context();
@@ -204,7 +204,7 @@ SP_integer mk_var(zsock_t *zocket,
 long mk_var(const std::string translation_type_atom,
  const std::string varname) {
   try {
-    std::shared_ptr<ContextData> ctx_data = 
+    std::shared_ptr<ContextData> ctx_data =
      get_translation_representant_ctx_data(translation_type_atom);
     z3::sort t = mk_type(translation_type_atom);
     std::shared_ptr<z3::context> ctx = ctx_data->get_context();
@@ -278,7 +278,7 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
       \coordinate (b) at (0,5);
       \coordinate (c) at (2,0);
       \coordinate (d) at (2,5);
-    
+
 
       \draw (a) -- (b) node[pos=1.03]{\large \textbf{ProB-Client}};
       \draw (c) -- (d) node[pos=1.03]{\large \textbf{Z3-Server}};
@@ -299,7 +299,7 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
       \draw[-stealth] ($(a)!0.95!(b)$) -- node[above,sloped,midway]{it is} ($(c)!0.93!(d)$);
       \draw[stealth-] ($(a)!0.90!(b)$) -- node[above,sloped,midway]{it does} ($(c)!0.92!(d)$);
       \draw[-stealth] ($(a)!0.89!(b)$) -- node[above,sloped,pos=0.4]{} ($(c)!0.87!(d)$);
-      
+
       \draw[-stealth] ($(a)!0.95!(b)$) -- node[below,sloped,pos=0.1]{it is not} ($(c)!0.84!(d)$);
       \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,midway]{} ($(c)!0.83!(d)$);
       \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,pos=0.2]{it does not} ($(c)!0.92!(d)$);
@@ -378,7 +378,7 @@ direkt mit $translation\_type\_atom$ aufgerufen zu werden oder sogar gänzlich d
     get_translation_representant_ctx_data(translation_type_atom);
   prolog_type_list_to_sort_vector(ctx_data, couple_types);
   // ...
-  
+
   // function: prolog_type_list_to_sort_vector
   mk_sort(ctx_data->get_translation_type_atom());
 \end{lstlisting}
@@ -455,7 +455,7 @@ Hierbei ist zu beachten, dass das Kommunikationsmuster der beiden Prozesse einge
 Dies ist nicht trivial, da Exceptions den natürlichen Kontrollfluss fundamental verändern.
 
 Wenn eine Exception geworfen wird, verlässt der Kontrollfluss einer Anwendung grundsätzlich den aktuellen Codeblock und propagiert aufwärts im Funktionsaufruf-Stack (engl. \enquote{Call Stack}),
-bis ein passender Exception-Handler gefunden wird, der den Fehler behandelt oder das Programm terminiert. 
+bis ein passender Exception-Handler gefunden wird, der den Fehler behandelt oder das Programm terminiert.
 Zusätzliche Komplexität entsteht durch das Z3-Interface von SICStus Prolog auf der Seite des ProB-Prozesses,
 da die Schnittstelle einen durch $SP\_raise\_exception$ geworfenen Fehler als ausstehend (engl. \enquote{pending}) behandelt und den Kontrollfluss nicht wie gewöhnlich unterbricht.
 Stattdessen wird der Fehler also zwischengespeichert und erst bei der Rückkehr aus der Interfacefunktion nach Prolog behandelt.
@@ -504,13 +504,13 @@ Andernfalls könnte der ProB-Prozess nicht über die Exception in Kenntnis geset
 \subsection{Kompilierung}
 
 Nach der vollständigen Umsetzung der neuen Systemarchitektur muss sowohl das Z3-Interface als auch der Z3-Solver kompiliert werden.
-Hierzu werden Änderungen im Makefile der Programmerweiterung von ProB vorgenommen.
+Hierzu wurden Änderungen im Makefile der Programmerweiterung von ProB vorgenommen.
 
 \subsubsection{Makefile}
 
 Das eigentliche Z3-Interface wird als Bibliothek in Form einer dynamischen Shared Library kompiliert.
 Dieses Verhalten ändert sich nicht, es müssen lediglich minimale Anpassungen vorgenommen werden, wie das Entfernen der Z3- und das Hinzufügen der ZMQ-Bibliothek.
-Durch das Importieren der $shared\_libs.mk$ Datei in das Makefile wird die Kompilierung der Interface-Bibliothek mithilfe der $install$ Regel automatisiert. 
+Durch das Importieren der $shared\_libs.mk$ Datei in das Makefile wird die Kompilierung der Interface-Bibliothek mithilfe der $install$ Regel automatisiert.
 
 Es wird eine weitere Regel definiert, welche die Kompilierung des Z3-Solvers durchführt und die resultierende Binärdatei in das Zielverzeichnis kopiert.
 Diese Regel wird als Abhängigkeit von $install$ hinzugefügt.

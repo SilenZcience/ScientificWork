@@ -48,7 +48,7 @@ ProB implementiert hierfür verschiedene Constraint-Solving-Strategien, die auf 
 Einerseits wird CLP(FD)\footnote{Constraint Logic Programming over Finite Domains} \cite{codognet1996compiling} verwendet, um auf endlichen Domänen beispielsweise Gleichheits- und Ungleichheitsbedingungen sowie arithmetische Relationen zu lösen.
 Ein weiterer Ansatz ist die Integration des SAT-basierten Kodkod \cite{torlak2007kodkod},
 einem effizienten Constraint-Solver für die Prädikatenlogik erster Ordnung mit Relationen, transitiven Hüllen, Bit-Vektor-Arithmetik und partiellen Modellen.
-Zuletzt wird auch der SMT-Solver Z3 in ProB integriert, um komplexere Prädikate zu lösen, die über simple boolsche und arithmetische Ausdrücke hinausgehen.
+Zuletzt wird auch der SMT-Solver Z3 in ProB integriert, um komplexere Prädikate zu lösen, die über simple boolesche und arithmetische Ausdrücke hinausgehen.
 
 ProB ist im Kern in SICStus Prolog \cite{carlsson1988sicstus} implementiert, bietet jedoch verschiedene Programmerweiterungen, welche zumeist in C oder C\texttt{++} geschrieben sind.
 Einer dieser Erweiterungen ist das Z3-Interface, welches die Integration des Z3-Solvers in ProB ermöglicht.
