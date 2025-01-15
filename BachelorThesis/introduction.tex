@@ -99,8 +99,16 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
 
         \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
 
+        \node at (0,-1.8) {\small Legende:};
+        \node[PB, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.2) {};
+        \node[right] at (0,-2.2) {\small ProB};
+        \node[HOT, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.7) {};
+        \node[right] at (0,-2.7) {\small Komponenten-Entkopplung};
+        \node[draw,dashed, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-3.2) {};
+        \node[right] at (0,-3.2) {\small Individuelle Prozesse};
+
     \end{tikzpicture}
-    \caption{Die umgesetzte Architekturänderung (Die Komponenten-Entkopplung ist in den roten Boxen dargestellt. Die gestrichelten Boxen zeigen die verschiedenen Prozesse an.)}
+    \caption{Die umgesetzte Architekturänderung.}
     \label{fig:architecture}
 \end{figure}
 % \FloatBarrier
