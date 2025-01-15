@@ -4,9 +4,9 @@ um beispielsweise die Korrektheit von sicherheitskritischen Systemen zu gewährl
 Zur Lösung von logischen Problemen verwenden diese Werkzeuge oftmals SMT-Solver, die eine umfassende Form der logischen Schlussfolgerung ermöglichen.
 So auch der Constraint-Solver und Model-Checker ProB, welcher mitunter den SMT-Solver Z3 verwendet.
 Dieser wies jedoch in seiner ursprünglichen Implementierung innerhalb von ProB Instabilitäten auf.
-Um diese und weitere Problematiken zu beheben, wurde in dieser Arbeit eine neue Implementierung des Z3-Solvers in ProB entwickelt, welche
+Um diese und weitere Problematiken zu beheben, wurde in dieser Arbeit eine neue Implementierung des Interfaces zum Z3-Solver in ProB entwickelt, welche
 die vollständige Entkopplung der Z3-Komponente in einen seperaten Prozess vorsah.
-Durch eine präzise Planung und Implementierung konnte die Architekturänderung erfolgreich in ProB integriert werden, was somit bereits viele der bestehenden Probleme löste.
-Durch die stets beachtete Erweiterbarkeit der neuen Systemarchitektur wurde ein fundamentaler Grundstein für zukünftige Optimierungen und Erweiterungen gelegt.
-Anhand einer folgenden Leistungsanalyse konnte zudem gezeigt werden, dass die neue Implementierung des Z3-Solvers
+Die Architekturänderung konnte erfolgreich in ProB integriert werden, was somit bereits viele der bestehenden Probleme löste.
+Ein wichtiges Kriterium für die neue Implementierung war es, einen Grundstein für zukünftige Erweiterungen zu legen, insbesondere der Parallelisierung des Lösens mehrerer Prädikate.
+Anhand einer folgenden Leistungsanalyse konnte zudem gezeigt werden, dass die neue Implementierung des Z3-Interfaces
 in ProB bereits eine ersichtlich verbesserte Performance aufweist und somit nicht nur die Stabilität, sondern auch Effizienz des Systems erhöht hat.
