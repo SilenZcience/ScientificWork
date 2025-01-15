@@ -448,15 +448,14 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
 
 Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung aller notwendigen Funktionen
 lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
-\todo{string vektor dafuq}
+
 Eine der elementarsten Optimierungsmöglichkeiten ist die Vermeidung von Nachrichtenaustausch beider Prozesse
 innerhalb von Schleifen. Dieses Verhalten tritt insbesondere dann auf, wenn Prolog Datenstrukturen übermittelt werden,
 die iterierbar sind, wie Listen, Vektoren und Records.
 In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Server gesendet,
 um das aktuelle Element zu übermitteln.
-Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden.
-Beispielsweise lässt sich eine Prolog Liste zunächst in einem String Vektor akkumulieren,
-um anschließend in einer einelnen Nachricht an den Server gesendet zu werden.
+Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden,
+indem die vollständige Prolog Liste innerhalb eines \texttt{zmsg\_t} Objektes akkumuliert wird.
 \todo{verständlichere erklärung}
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
