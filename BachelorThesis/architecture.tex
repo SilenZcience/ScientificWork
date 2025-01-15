@@ -172,26 +172,6 @@ das implementierte Logging (\cref{subsec:logging}) und die Behandlung von Except
 
 In den folgenden Abschnitten wird die Implementierung detailliert beschrieben.
 Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im Code erläutert.
-\clearpage
-\subsubsection{Interfacefunktionen}
-\todo{interfacefunktion protierung besser visualisieren ...}
-Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
-Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
-Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
-
-\begin{enumerate}
-  \item Konvertieren der Funktionsparameter in einen C\texttt{++} Datentyp
-  \item Erstellen einer Anfragenachricht mit Funktionsidentifikator und Daten
-  \item Senden der Anfragenachricht an den Z3-Server
-  \item Gegebenenfalls das Abarbeiten aller nötigen Hilfsfunktionen
-  \item Empfangen der Antwortnachricht
-  \item Extrahieren des Status und der Daten aus der Antwortnachricht
-  \item Konvertieren der Daten in einen Prolog-Datentyp
-  \item Rückgabe der Daten
-\end{enumerate}
-
-Die Kernlogik der ursprünglichen Interfacefunktionen bleibt dabei erhalten, da sie effektiv nur auf die Seite des Z3-Prozesses ausgelagert wird,
-wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
 
 \begin{lstlisting}[
   float, caption={Die Interfacefunktion \texttt{mk\_var} in der alten Architektur.}, label={lst:mk-var-old}, language=C++
@@ -243,34 +223,55 @@ SP_integer mk_var(zsock_t *zocket,
 }
 \end{lstlisting}
 
-\begin{lstlisting}[
-  float, caption={Die Interfacefunktion \texttt{mk\_var} in der neuen Architektur (Z3 Seite).}, label={lst:mk-var-z3}, language=C++
-]
-long mk_var(const std::string translation_type_atom,
- const std::string varname) {
-  try {
-    std::shared_ptr<ContextData> ctx_data =
-     get_translation_representant_ctx_data(translation_type_atom);
-    z3::sort t = mk_type(translation_type_atom);
-    std::shared_ptr<z3::context> ctx = ctx_data->get_context();
-    return insert_id(ctx_data, ctx->constant(varname.c_str(), t));
-  } catch(z3::exception& e) {
-    raise_Z3_exception(e, "mk_var");
-    return -1;
-  }
-}
-\end{lstlisting}
+
+\subsubsection{Interfacefunktionen}
+
+Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
+Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
+Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
+
+\begin{enumerate}
+  \item Konvertieren der Funktionsparameter in einen C\texttt{++} Datentyp
+  \item Erstellen einer Anfragenachricht mit Funktionsidentifikator und Daten
+  \item Senden der Anfragenachricht an den Z3-Server
+  \item Gegebenenfalls das Abarbeiten aller nötigen Hilfsfunktionen
+  \item Empfangen der Antwortnachricht
+  \item Extrahieren des Status und der Daten aus der Antwortnachricht
+  \item Konvertieren der Daten in einen Prolog-Datentyp
+  \item Rückgabe der Daten
+\end{enumerate}
+
+Die Kernlogik der ursprünglichen Interfacefunktionen bleibt dabei erhalten, da sie effektiv nur auf die Seite des Z3-Prozesses ausgelagert wird,
+wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
+
+
+% \begin{lstlisting}[
+%   float, caption={Die Interfacefunktion \texttt{mk\_var} in der neuen Architektur (Z3 Seite).}, label={lst:mk-var-z3}, language=C++
+% ]
+% long mk_var(const std::string translation_type_atom,
+%  const std::string varname) {
+%   try {
+%     std::shared_ptr<ContextData> ctx_data =
+%      get_translation_representant_ctx_data(translation_type_atom);
+%     z3::sort t = mk_type(translation_type_atom);
+%     std::shared_ptr<z3::context> ctx = ctx_data->get_context();
+%     return insert_id(ctx_data, ctx->constant(varname.c_str(), t));
+%   } catch(z3::exception& e) {
+%     raise_Z3_exception(e, "mk_var");
+%     return -1;
+%   }
+% }
+% \end{lstlisting}
 
 Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion \texttt{mk\_var} gezeigt.
-In den \cref{lst:mk-var-prob,lst:mk-var-z3} ist die neue Implementierung der Funktion in dem ProB- und Z3-Prozess dargestellt.
-Es ist zu erkennen, dass der ursprüngliche Funktionskörper der Funktion nahezu identisch zu der Implementierung innerhalb des Z3-Prozesses ist.
-Die ProB-Seite der Funktion hingegen wurde hinsichtlich der beschriebenen Vorgehensweise umstrukturiert.
-So werden in \cref{lst:mk-var-prob} die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5\texttt{-}7).
+In \cref{lst:mk-var-prob} ist die neue Implementierung der Funktion in dem ProB-Prozess dargestellt.
+Es ist zu erkennen, dass die Funktion hinsichtlich der beschriebenen Vorgehensweise umstrukturiert wurde.
+So werden die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5\texttt{-}7).
 Die Anfragenachricht wird mit dem Funktionsidentifikator zusammen an den Z3-Server gesendet (Z. 8), woraufhin
 die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall \texttt{mk\_type}) erfolgt (Z. 11\texttt{-}13).
 Zuletzt wird die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall \texttt{SP\_Integer}) umgewandelt und schließlich zurückgegeben (Z. 15ff.).
 
-Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion gegeben.
+Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion übergegeben.
 Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
 Hierdurch wird die Möglichkeit geboten, zukünftig mehrere Sockets zu verwalten und somit mehrere Z3-Server zu bedienen, ohne einen globalen Zustand zu verwenden.
 
