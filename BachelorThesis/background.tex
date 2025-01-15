@@ -35,7 +35,6 @@ welche die Invariante verletzt oder anderweitige Fehler erzeugt.
 Während das Model Checking eine umfassende Exploration aller Zustände ermöglicht, ist das Constraint-based Checking spezifischer,
 da es nur auf Fehler bei einzelnen Operationen fokussiert ist.
 Zusammen lassen sich so vollständige Fehler und problematische Operationen identifizieren.
-
 Beide Ansätze bieten wertvolle Instrumente für die Konsistenzprüfung von B-Modellen, und sind in der Lage, die Verletzung von Invarianten und daraus folgenden Bedingungen sowie
 die Abwesenheit von Deadlocks und das Erreichen von spezifizierten Zielprädikaten zu überprüfen \cite{leuschel2008prob}.
 
@@ -86,7 +85,7 @@ die den Suchraum effizient einschränken und die Lösung von Constraints beschle
 Zudem ist ein Simplifer in die System Architektur integriert, der gegebene Constraints vereinfacht.
 Z3 hat nur wenige Abhängigkeiten an externe Bibliotheken und ist daher leicht zu integrieren und zu verwenden \cite{z3prover-github}.
 Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, um die parallele Verarbeitung zu ermöglichen und damit die Leistungsfähigkeit weiter zu steigern.
-
+\clearpage
 Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt \cite{10.1007/978-3-319-33693-0_23}.
 Dies betrifft insbesondere große oder komplexe Constraints mit nicht-linearen Bedingungen.
 Beispielsweise lässt sich die Formel, welche in \cref{lst:z3-example} gezeigt wird, in Z3 aber nicht in ProB lösen.

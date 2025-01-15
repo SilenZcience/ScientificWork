@@ -27,90 +27,83 @@ Dies geschieht durch die Verwendung von speziellen (Hilfs-)Funktionen, welche di
 Zusätzlich existiert keine klare Struktur zur Behandlung dieser Prolog-Datentypen im Code,
 da die Funktionen zur Datenextraktion verstreut vorliegen und nicht zentralisiert sind.
 Es wird also global davon ausgegangen, dass der SICStus-Kontext verfügbar ist, was zu einer impliziten Kopplung führt, da keine Isolation der Prolog-Logik stattfindet.
-
+\clearpage
 \subsubsection{Struktur der Nachrichten}
-\todo{Einbinden der grapfik, formale definitionen, besserer text}
-Innerhalb von ZeroMQ lassen sich verschiedene Datenwerte gemeinsam in einen Nachrichtenblock packen.
+
+\begin{figure}[!htp]
+  \centering
+  \begin{tikzpicture}[scale=1, every node/.style={scale=1}]
+      % Request box
+      \node[above] at (2, 2.5) {\textbf{Request}};
+      \draw[thick] (0, 2.5) rectangle (4, 0);
+      \node[below] at (2, 2.5) {$F_\text{id}$};
+      \draw[thick] (0, 2) -- (4, 2);
+      \node[below] at (2, 2) {$F_\text{argument}(1)$};
+      \draw[dashed] (0, 1.35) -- (4, 1.35);
+      \node[below] at (2, 1.53) {$\vdots$};
+      \draw[dashed] (0, 0.7) -- (4, 0.7);
+      \node[below] at (2, 0.7) {$F_\text{argument}(n)$};
+      \draw[decorate, decoration={brace, amplitude=10pt}] (4.1, 2) -- (4.1, 0)
+          node[midway, right=10pt] {\text{zmsg\_t}};
+      \draw[decorate, decoration={brace, amplitude=3pt}] (4.1, 2.5) -- (4.1, 2)
+          node[midway, right=12pt] {\text{Integer}};
+      % Response box
+      \node[above] at (8.5, 2.5) {\textbf{Response}};
+      \draw[thick] (6.5, 2.5) rectangle (10.5, 0);
+      \node[below] at (8.5, 2.5) {$Status_\text{id}$};
+      \draw[thick] (6.5, 2) -- (10.5, 2);
+      \node[below] at (8.5, 2) {$F_\text{return\_value}(1)$};
+      \draw[dashed] (6.5, 1.35) -- (10.5, 1.35);
+      \node[below] at (8.5, 1.53) {$\vdots$};
+      \draw[dashed] (6.5, 0.7) -- (10.5, 0.7);
+      \node[below] at (8.5, 0.7) {$F_\text{return\_value}(n)$};
+      \draw[decorate, decoration={brace, amplitude=10pt}] (6.4, 0) -- (6.4, 2);
+      \draw[decorate, decoration={brace, amplitude=3pt}] (6.4, 2) -- (6.4, 2.5);
+
+  \end{tikzpicture}
+  \caption{Das Kommunikationsprotokoll zwischen Client und Server.}
+  \label{fig:protocol}
+\end{figure}
+
+\begin{lstlisting}[
+  float, caption={Ein Ausschnitt des Funktionsidentifikations-Enums.}, label={lst:func-identifiers}, language=C++
+]
+enum SP_Function {
+  INIT = 0,
+  PRETTY_PRINT_SMT = 1,
+  PRETTY_PRINT_SMT_FOR_ID = 2,
+  MK_VAR = 3,
+  // ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}[
+  float, caption={Das Statusidentifikations-Enum.}, label={lst:status-identifiers}, language=C++
+]
+enum Z3Status {
+  NOK,
+  OK,
+  UNFINISHED
+}
+\end{lstlisting}
+
+Innerhalb von ZeroMQ lassen sich verschiedene Datenwerte gemeinsam in einen Nachrichtenblock zusammenfassen.
 Ein solcher Nachrichtenblock wird über das abstrakte \texttt{zmsg\_t} Objekt repräsentiert, welches es ermöglicht,
 komplexere Daten zusammen in sogenannten Frames zu übermitteln.
 Da sich der konkrete Inhalt der Nachrichten je nach Interfacefunktion unterscheidet,
 bietet es sich an, dieses Konzept zu nutzen und den Inhalt spezifisch für jede Funktion zu definieren und zu interpretieren.
 
-Zusätzlich zu den eigentlichen Daten, die übermittelt werden, ist es jedoch notwendig, Metadaten zu übermitteln,
-die die korrekte Interpretation der Nachrichten auf der Empfängerseite ermöglichen.
-Wenn eine Anfragenachricht von ProB an den Z3-Server gesendet wird, muss der Server wissen, welche Funktion aufgerufen werden soll.
-Dafür wird ein Funktionsidentifikator benötigt, der die Funktion eindeutig identifiziert.
-Diese Identifikatoren werden als ein Enum-Typ definiert, der die verschiedenen Funktionen als Konstanten repräsentiert und in sowohl
-der ProB- als auch der Z3-Komponente eingebunden wird.
-Ein Ausschnitt des Enum-Typs ist in \cref{lst:func-identifiers} gezeigt.
+\cref{fig:protocol} zeigt formal das definierte Kommunikationsprotokoll zwischen Client und Server.
+Eine Anfragenachricht besteht aus einem Funktionsidentifikator $F_\text{id}$, welcher Element der in \cref{lst:func-identifiers} definierten Konstanten ist.
+Dieser ist notwendig, um eindeutig zu identifizieren, welche Funktion auf der Z3-Seite aufgerufen werden soll.
+Zusätzlich können beliebig viele Funktionsargumente $F_\text{argument}(1), \ldots, F_\text{argument}(n)$ übermittelt werden.
 
-\begin{lstlisting}[
-    float, caption={Ein Ausschnitt des Funktionsidentifikations-Enums.}, label={lst:func-identifiers}, language=C++
-  ]
-  enum SP_Function {
-    INIT = 0,
-    PRETTY_PRINT_SMT = 1,
-    PRETTY_PRINT_SMT_FOR_ID = 2,
-    MK_VAR = 3,
-    // ...
-  }
-\end{lstlisting}
-
-Wenn eine Antwortnachricht vom Z3-Server an ProB gesendet wird, muss die Nachricht ebenfalls Metadaten enthalten,
-die die korrekte Interpretation der Nachricht auf der ProB-Seite ermöglicht.
-Dafür wird ein Statusidentifikator benötigt, der den Status der Anfrage repräsentiert.
-Der hierfür verwendete Enum-Typ ist in \cref{lst:status-identifiers} gezeigt.
-
-\begin{lstlisting}[
-    float, caption={Das Statusidentifikations-Enum.}, label={lst:status-identifiers}, language=C++
-  ]
-  enum Z3Status {
-    NOK,
-    OK,
-    UNFINISHED
-  }
-\end{lstlisting}
-
-\begin{figure}[!htp]
-    \centering
-    \begin{tikzpicture}[scale=1, every node/.style={scale=1}]
-        % Request box
-        \node[above] at (2, 2.5) {\textbf{Request}};
-        \draw[thick] (0, 2.5) rectangle (4, 0);
-        \node[below] at (2, 2.5) {$F_\text{id}$};
-        \draw[thick] (0, 2) -- (4, 2);
-        \node[below] at (2, 2) {$F_\text{argument}(1)$};
-        \draw[dashed] (0, 1.35) -- (4, 1.35);
-        \node[below] at (2, 1.53) {$\vdots$};
-        \draw[dashed] (0, 0.7) -- (4, 0.7);
-        \node[below] at (2, 0.7) {$F_\text{argument}(n)$};
-        \draw[decorate, decoration={brace, amplitude=10pt}] (4.1, 2) -- (4.1, 0)
-            node[midway, right=10pt] {\text{zmsg\_t}};
-        \draw[decorate, decoration={brace, amplitude=3pt}] (4.1, 2.5) -- (4.1, 2)
-            node[midway, right=12pt] {\text{Integer}};
-        % Response box
-        \node[above] at (8.5, 2.5) {\textbf{Response}};
-        \draw[thick] (6.5, 2.5) rectangle (10.5, 0);
-        \node[below] at (8.5, 2.5) {$Status_\text{id}$};
-        \draw[thick] (6.5, 2) -- (10.5, 2);
-        \node[below] at (8.5, 2) {$F_\text{return\_value}(1)$};
-        \draw[dashed] (6.5, 1.35) -- (10.5, 1.35);
-        \node[below] at (8.5, 1.53) {$\vdots$};
-        \draw[dashed] (6.5, 0.7) -- (10.5, 0.7);
-        \node[below] at (8.5, 0.7) {$F_\text{return\_value}(n)$};
-        \draw[decorate, decoration={brace, amplitude=10pt}] (6.4, 0) -- (6.4, 2);
-        \draw[decorate, decoration={brace, amplitude=3pt}] (6.4, 2) -- (6.4, 2.5);
-
-    \end{tikzpicture}
-    \caption{Das Kommunikationsprotokoll zwischen Client und Server.}
-    \label{fig:protocol}
-\end{figure}
-
+Wenn eine Antwortnachricht vom Z3-Server an ProB gesendet wird, besteht diese einerseits aus einem Statusidentifikator $Status_\text{id}$ definiert in \cref{lst:status-identifiers}.
 Die Statuswerte \texttt{OK} und \texttt{NOK} repräsentieren den Erfolg oder Misserfolg einer Anfrage.
 Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{subsec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
 um eine entsprechende Fehlerbehandlung durchzuführen.
 Der Statuswert \texttt{UNFINISHED} wird verwendet, wenn eine Anfrage noch nicht abgeschlossen ist und der Server auf weitere Informationen wartet (siehe \cref{subsec:helper-functions}).
-
+Andererseits enthält die Antwortnachricht die entsprechenden Rückgabewerte des Funktionsaufrufes $F_\text{return\_value}(1), \ldots, F_\text{return\_value}(n)$.
 Insgesamt besteht eine Nachricht also immer aus einem Identifikator (von Typ Integer), der entweder eine Funktion oder einen Status repräsentiert,
 gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eines \texttt{zmsg\_t} Objektes.
 
@@ -136,7 +129,7 @@ Nachdem die Funktion, mit den aus dem \texttt{zmsg\_t} Objekt extrahierten Daten
 wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält.
 Das Ergebnis ist in den meisten Fällen der Rückgabewert eben jener Funktion, die aufgerufen wurde.
 Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt.
-
+\clearpage
 \begin{lstlisting}[
   float, caption={Die Kernstruktur des Z3-Servers.}, label={lst:server-structure}, language=C++
 ]
@@ -179,7 +172,7 @@ das implementierte Logging (\cref{subsec:logging}) und die Behandlung von Except
 
 In den folgenden Abschnitten wird die Implementierung detailliert beschrieben.
 Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im Code erläutert.
-
+\clearpage
 \subsubsection{Interfacefunktionen}
 \todo{interfacefunktion protierung besser visualisieren ...}
 Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
