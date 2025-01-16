@@ -277,7 +277,7 @@ Hierdurch wird die Möglichkeit geboten, zukünftig mehrere Sockets zu verwalten
 
 \subsubsection{Hilfsfunktionen}
 \label{subsec:helper-functions}
-\todo{modularität diagramm einbinden, besserer text}
+
 Hilfsfunktionen werden definiert als diejenigen Funktionen, die nicht direkt über das Z3-Interface von ProB aufgerufen werden können,
 sondern als Unterstützung für die Implementierung der Interfacefunktionen dienen.
 Viele dieser Hilfsfunktionen weisen keine Kopplung zwischen Prolog und Z3 auf und können daher problemlos auf die Z3-Seite portiert werden.
@@ -293,29 +293,33 @@ Das bedeutet, jede Hilfsfunktion, welche auf einen Nachrichtenaustausch angewies
 die immer zuerst eine Nachricht von dem Z3-Server an den ProB-Client sendet.
 Gleichermaßen endet jede Hilfsfunktion mit einer Nachricht von ProB an Z3.
 Somit ist eine Modularität gewährleistet, durch die jede Hilfsfunktion innerhalb einer Interfacefunktion verwendet werden kann.
+Dieses Prinzip ist in \cref{fig:help_modular} dargestellt.
 
 \begin{figure}[!htp]
     \centering
     \begin{tikzpicture}[scale=1, every node/.style={scale=1}]
         % Interfacefunktion
         \draw[thick] (0, 6.5) rectangle (5, 0);
-        \node[above] at (1.6, 6.5) {\small \textbf{Interfacefunction}};
+        \draw[thick] (5, 6.5) -- node[below,sloped,pos=0.6]{\small \textbf{Interfacefunction}} (9, 6.5);
+        % \node[above] at (1.6, 6.5) {\small \textbf{Interfacefunction}};
         \draw[thick,->] (0.1, 6) -- (4.9, 6) node[above,midway,yshift=-2]{\tiny \textbf{Initial Request}};
         \node[below] at (2.5, 2) {\tiny $\vdots$};
         \draw[thick,<-] (0.1, 0.8) -- (4.9, 0.8) node[below,midway,yshift=-2]{\tiny \textbf{Final Response}};
 
         \draw[dashed] (0.1, 5.5) rectangle (4.9, 3.3);
-        \node[above] at (1.1, 5.4) {\tiny \textbf{Helperfunction}};
-        \draw[thick,<-] (0.5, 5.2) -- (4.5, 5.2);
+        \draw[dashed] (4.9, 5.5) -- node[below,sloped,pos=0.63]{\tiny \textbf{Helperfunction}} (8, 5.5);
+        % \node[above] at (1.1, 5.4) {\tiny \textbf{Helperfunction}};
+        \draw[thick,<-] (0.5, 5.2) -- node[above,sloped,pos=0.3,yshift=-2.5]{\tiny \text{Reply}} (4.5, 5.2);
         \draw[dashed,->] (0.5, 4.8) -- (4.5, 4.8);
         \draw[dashed,<-] (0.5, 4.5) -- (4.5, 4.5);
         \draw[thick] (0.6, 4.9) -- (0.4, 4.9) -- (0.4, 4.4) -- (0.6, 4.4);
         \draw[thick] (4.4, 4.9) -- (4.6, 4.9) -- (4.6, 4.4) -- (4.4, 4.4);
         \node[below] at (2.5, 4.5) {\tiny $\vdots$};
-        \draw[thick,->] (0.5, 3.6) -- (4.5, 3.6);
+        \draw[thick,->] (0.5, 3.6) -- node[above,sloped,pos=0.7,yshift=-2.5]{\tiny \text{Request}} (4.5, 3.6);
 
 
         \draw[dashed] (0.1, 3) rectangle (4.9, 2);
+        \draw[dashed] (4.9, 3) -- node[below,sloped,pos=0.63]{\tiny \textbf{Helperfunction}} (8, 3);
         \node[below] at (2.5, 3) {\tiny $\vdots$};
 
 
@@ -349,20 +353,20 @@ an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
 Die Kommunikation macht sich dabei den Statusidentifikator \texttt{UNFINISHED} zu Nutze, um den Prozess über den aktuellen Zustand zu informieren.
 Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ein zentraler Bestandteil des Z3-Interfaces.
 
-In \cref{fig:mk-type-sequence} ist das Sequenzdiagramm der Hilfsfunktion \texttt{mk\_type} dargestellt, welches die Komplexität der Funktion verdeutlicht
+In \cref{fig:mk-type-sequence} ist ein Ausschnitt des Sequenzdiagramms von der Hilfsfunktion \texttt{mk\_type} dargestellt, welches die Komplexität der Funktion verdeutlicht
 und veranschaulicht, wie die Entkopplung der Funktion durchgeführt wurde.
 Auf beiden Seiten des Diagramms sind die ProB- und Z3-Prozesse abgebildet, die schrittweise ihren Zustand ändern, welchen sie durch die Nachrichtenübermittlung synchron halten.
 Zunächst wird überprüft, ob der Typ ein Atom ist, wie \texttt{integer}, \texttt{real} oder \texttt{boolean}.
 Wenn dies nicht der Fall ist, wird überprüft, ob der Typ bereits zuvor konstruiert wurde.
 Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unterscheidet zwischen den Typen \texttt{set}, \texttt{global}, \texttt{couple} und \texttt{record}.
-\todo{state machine farblich oder so}
+
 \begin{figure}[!htp]
   \centering
   \begin{tikzpicture}[scale=3, every node/.style={scale=0.7}]
     % \node at (1,5.4) {\textbf{Sequenz Diagramm der Hilfsfunktion $mk\_type$}};
-
+    \tikzfading[name=line fade, left color=transparent!100, right color=transparent!0, middle color=transparent!100]
     \begin{scope}
-      \clip (-1,1.3) rectangle (3,5.5);
+      \clip (-1.5,1) rectangle (4,5.5);
 
       \coordinate (a) at (0,0);
       \coordinate (b) at (0,5);
@@ -370,70 +374,119 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
       \coordinate (d) at (2,5);
 
 
-      \draw (a) -- (b) node[pos=1.03]{\large \textbf{ProB-Client}};
-      \draw (c) -- (d) node[pos=1.03]{\large \textbf{Z3-Server}};
+      \draw[thick] (a) -- (b) node[pos=1.03]{\large \textbf{ProB-Client}};
+      \draw[thick] (c) -- (d) node[pos=1.03]{\large \textbf{Z3-Server}};
 
       \node[left] at ($(a)!0.955!(b)$) {check if type is atom};
       \node[right] at ($(c)!0.925!(d)$) {check if type exists};
-      \node[left] at ($(a)!0.89!(b)$) {return};
-      \node[right] at ($(c)!0.87!(d)$) {return};
+      \node[left] at ($(a)!0.89!(b)$) {exit};
+      \node[right] at ($(c)!0.87!(d)$) {exit};
       \node[left] at ($(a)!0.805!(b)$) {check prolog term};
       \node[right] at ($(c)!0.775!(d)$) {check if type exists};
-      \node[left] at ($(a)!0.74!(b)$) {return};
-      \node[right] at ($(c)!0.72!(d)$) {return};
+      \node[left] at ($(a)!0.74!(b)$) {exit};
+      \node[right] at ($(c)!0.72!(d)$) {exit};
       \node[left] at ($(a)!0.685!(b)$) {check iterable type};
-      \node[left] at ($(a)!0.56!(b)$) {return};
-      \node[right] at ($(c)!0.54!(d)$) {return};
+      % \node[left] at ($(a)!0.56!(b)$) {exit};
+      % \node[right] at ($(c)!0.54!(d)$) {exit};
+      % \node[left] at ($(a)!0.48!(b)$) {exit};
+      % \node[right] at ($(c)!0.46!(d)$) {exit};
+      % \node[left] at ($(a)!0.23!(b)$) {exit};
+      % \node[right] at ($(c)!0.21!(d)$) {exit};
 
-      \draw[stealth-] ($(a)!0.96!(b)$) -- node[above,sloped,midway]{} ($(c)!0.98!(d)$);
-      \draw[-stealth] ($(a)!0.95!(b)$) -- node[above,sloped,midway]{it is} ($(c)!0.93!(d)$);
-      \draw[stealth-] ($(a)!0.90!(b)$) -- node[above,sloped,midway]{it does} ($(c)!0.92!(d)$);
+      \node[above] at (1, 2.2) {\vdots};
+      \node[above] at (1, 1.8) {\vdots};
+      \node[above] at (1, 1.4) {\vdots};
+      \node[above] at (1, 1.0) {\vdots};
+
+      \draw[decorate, decoration={brace, amplitude=10pt}] (2.8, 4.85) -- (2.8, 4.1)
+          node[midway, right=25pt, rotate=90, anchor=south] {\text{type is atom}};
+      \draw[decorate, decoration={brace, amplitude=10pt}] (2.8, 4.05) -- (2.8, 3.5)
+          node[midway, right=25pt, rotate=90, anchor=south] {\text{type is cached}};
+      \draw[decorate, decoration={brace, amplitude=10pt}] (2.8, 3.45) -- (2.8, 1)
+          node[midway, right=25pt, rotate=90, anchor=south] {\text{deconstruct type}};
+
+
+      \draw[stealth-,dashed] ($(a)!0.96!(b)$) -- node[above,sloped,midway]{} ($(c)!0.98!(d)$);
+      \draw[thick,-stealth,green!50!black] ($(a)!0.95!(b)$) -- node[above,sloped,midway]{} ($(c)!0.93!(d)$);
+      \draw[thick,stealth-,green!50!black] ($(a)!0.90!(b)$) -- node[above,sloped,midway]{} ($(c)!0.92!(d)$);
       \draw[-stealth] ($(a)!0.89!(b)$) -- node[above,sloped,pos=0.4]{} ($(c)!0.87!(d)$);
 
-      \draw[-stealth] ($(a)!0.95!(b)$) -- node[below,sloped,pos=0.1]{it is not} ($(c)!0.84!(d)$);
-      \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,midway]{} ($(c)!0.83!(d)$);
-      \draw[stealth-] ($(a)!0.81!(b)$) -- node[above,sloped,pos=0.2]{it does not} ($(c)!0.92!(d)$);
+      \draw[thick,-stealth,red] ($(a)!0.95!(b)$) -- node[below,sloped,pos=0.1]{} ($(c)!0.84!(d)$);
+      \draw[thick,stealth-,red] ($(a)!0.81!(b)$) -- node[above,sloped,midway]{} ($(c)!0.83!(d)$);
+      \draw[thick,stealth-,red] ($(a)!0.81!(b)$) -- node[above,sloped,pos=0.2]{} ($(c)!0.92!(d)$);
 
-      \draw[-stealth] ($(a)!0.80!(b)$) -- node[above,sloped,midway]{} ($(c)!0.78!(d)$);
-      \draw[stealth-] ($(a)!0.75!(b)$) -- node[above,sloped,midway]{it does} ($(c)!0.77!(d)$);
+      \draw[-stealth] ($(a)!0.80!(b)$) -- node[above,sloped,midway]{\tiny prolog term} ($(c)!0.78!(d)$);
+      \draw[thick,stealth-,green!50!black] ($(a)!0.75!(b)$) -- node[above,sloped,midway]{} ($(c)!0.77!(d)$);
       \draw[-stealth] ($(a)!0.74!(b)$) -- node[above,sloped,midway]{} ($(c)!0.72!(d)$);
 
-      \draw[stealth-] ($(a)!0.69!(b)$) -- node[above,sloped,pos=0.2]{it does not} ($(c)!0.77!(d)$);
+      \draw[thick,stealth-,red] ($(a)!0.69!(b)$) -- node[above,sloped,pos=0.2]{} ($(c)!0.77!(d)$);
       \draw[-stealth] ($(a)!0.68!(b)$) -- node[above,sloped,midway]{} ($(c)!0.66!(d)$);
       \draw[stealth-] ($(a)!0.63!(b)$) -- node[above,sloped]{} ($(c)!0.65!(d)$);
 
-      \path[draw,dashed,->] ($(a)!0.68!(b)$) arc[start angle=270, end angle=90, radius=0.75] node[pos=0.4, right]{set};
-      \path[draw,dashed,->] ($(c)!0.65!(d)$) arc[start angle=270, end angle=450, radius=0.85] node[pos=0.3, left]{set};
+      % \path[draw,dashed,->,blue] ($(a)!0.68!(b)$) arc[start angle=270, end angle=90, radius=0.75] node[pos=0.4, right]{set};
+      % \path[draw,dashed,->,blue] ($(c)!0.65!(d)$) arc[start angle=270, end angle=450, radius=0.85] node[pos=0.3, left]{set};
+      % \draw[thick,magenta!85!black] ($(a)!0.68!(b)$) circle[radius=0.5mm];
+      % \draw[thick,magenta!85!black] ($(c)!0.65!(d)$) circle[radius=0.5mm];
 
-      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{global atom} ($(c)!0.60!(d)$);
-      \draw[stealth-] ($(a)!0.57!(b)$) -- node[above,sloped,midway]{} ($(c)!0.59!(d)$);
-      \draw[-stealth] ($(a)!0.56!(b)$) -- node[above,sloped,midway]{} ($(c)!0.54!(d)$);
+      \draw[thick,-stealth,blue] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{\tiny set} ($(c)!0.60!(d)$);
+      % \draw[thick,stealth-] ($(a)!0.57!(b)$) -- node[above,sloped,midway]{} ($(c)!0.59!(d)$);
+      % \draw[thick,-stealth] ($(a)!0.56!(b)$) -- node[above,sloped,midway]{} ($(c)!0.54!(d)$);
 
-      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,pos=0.65]{couple} ($(c)!0.52!(d)$);
-      \draw[stealth-] ($(a)!0.49!(b)$) -- node[above,sloped]{} ($(c)!0.51!(d)$);
-      \draw[-stealth] ($(a)!0.48!(b)$) -- node[above,sloped]{} ($(c)!0.46!(d)$);
+      \draw[thick,-stealth,blue] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{\tiny global atom} ($(c)!0.52!(d)$);
+      % \draw[thick,stealth-] ($(a)!0.49!(b)$) -- node[above,sloped]{} ($(c)!0.51!(d)$);
+      % \draw[thick,-stealth] ($(a)!0.48!(b)$) -- node[above,sloped]{} ($(c)!0.46!(d)$);
 
-      \path[draw,dashed,->] ($(a)!0.48!(b)$) arc[start angle=270, end angle=90, y radius=1.25, x radius=1] node[pos=0.33, right]{couple elements};
-      \path[draw,dashed,->] ($(c)!0.46!(d)$) arc[start angle=270, end angle=450, y radius=1.325, x radius=1] node[pos=0.35, left]{couple elements};
+      % \path[draw,dashed,->,blue] ($(a)!0.48!(b)$) arc[start angle=270, end angle=90, y radius=1.25, x radius=1] node[pos=0.33, right]{couple elements};
+      % \path[draw,dashed,->,blue] ($(c)!0.46!(d)$) arc[start angle=270, end angle=450, y radius=1.325, x radius=1] node[pos=0.35, left]{couple elements};
+      % \draw[thick,magenta!85!black] ($(a)!0.48!(b)$) circle[radius=0.5mm];
+      % \draw[thick,magenta!85!black] ($(c)!0.46!(d)$) circle[radius=0.5mm];
 
-      \draw[-stealth] ($(a)!0.62!(b)$) -- node[above,sloped,pos=0.55]{record} ($(c)!0.44!(d)$);
-      \draw[stealth-] ($(a)!0.41!(b)$) -- node[above,sloped]{} ($(c)!0.43!(d)$);
-      \draw[-stealth] ($(a)!0.40!(b)$) -- node[above,sloped]{next list element} ($(c)!0.38!(d)$);
-      \draw[stealth-] ($(a)!0.35!(b)$) -- node[above,sloped]{} ($(c)!0.37!(d)$);
-      \draw[-stealth] ($(a)!0.34!(b)$) -- node[above,sloped]{} ($(c)!0.32!(d)$);
-      \draw[stealth-] ($(a)!0.29!(b)$) -- node[above,sloped]{} ($(c)!0.31!(d)$);
-      \draw[-stealth] ($(a)!0.40!(b)$) -- node[above,sloped,pos=0.55]{list empty} ($(c)!0.27!(d)$);
 
-      \path[draw,dashed,->] ($(a)!0.29!(b)$) arc[start angle=270, end angle=90, y radius=0.285, x radius=0.3] node[midway, left]{};
-      \path[draw,dashed,->] ($(c)!0.31!(d)$) arc[start angle=270, end angle=450, y radius=0.16, x radius=0.3] node[midway, right]{};
+      \draw[thick,-stealth,blue] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{\tiny couple} ($(c)!0.44!(d)$);
+      % \draw[thick,stealth-] ($(a)!0.41!(b)$) -- node[above,sloped]{} ($(c)!0.43!(d)$);
+      % \draw[thick,-stealth,green!50!black] ($(a)!0.40!(b)$) -- node[above,sloped]{\tiny next list element} ($(c)!0.38!(d)$);
+      % \draw[thick,stealth-] ($(a)!0.35!(b)$) -- node[above,sloped]{} ($(c)!0.37!(d)$);
+      % \draw[thick,-stealth] ($(a)!0.34!(b)$) -- node[above,sloped]{} ($(c)!0.32!(d)$);
+      % \draw[thick,stealth-] ($(a)!0.29!(b)$) -- node[above,sloped]{} ($(c)!0.31!(d)$);
+      % \draw[thick,-stealth,red] ($(a)!0.40!(b)$) -- node[above,sloped,pos=0.55]{\tiny list empty} ($(c)!0.27!(d)$);
 
-      \path[draw,dashed,->] ($(a)!0.40!(b)$) arc[start angle=270, end angle=90, y radius=1.45, x radius=1] node[midway, left]{};
-      \path[draw,dashed,->] ($(c)!0.27!(d)$) arc[start angle=270, end angle=450, y radius=1.8, x radius=1] node[midway, right]{};
+      \draw[thick,-stealth,blue] ($(a)!0.62!(b)$) -- node[above,sloped,midway]{\tiny record} ($(c)!0.36!(d)$);
 
+      \draw[dashed, path fading=line fade] ($(a)!0.34!(b)$) -- node[above,sloped,midway]{} ($(c)!0.59!(d)$);
+      \draw[dashed, path fading=line fade] ($(a)!0.26!(b)$) -- node[above,sloped,midway]{} ($(c)!0.51!(d)$);
+      \draw[dashed, path fading=line fade] ($(a)!0.18!(b)$) -- node[above,sloped,midway]{} ($(c)!0.43!(d)$);
+      \draw[dashed, path fading=line fade] ($(a)!0.10!(b)$) -- node[above,sloped,midway]{} ($(c)!0.35!(d)$);
+
+      % \path[draw,->] ($(a)!0.29!(b)$) arc[start angle=270, end angle=90, y radius=0.285, x radius=0.3] node[midway, left]{};
+      % \path[draw,->] ($(c)!0.31!(d)$) arc[start angle=270, end angle=450, y radius=0.16, x radius=0.3] node[midway, right]{};
+
+      % \path[draw,dashed,->,blue] ($(a)!0.40!(b)$) arc[start angle=270, end angle=90, y radius=1.45, x radius=1] node[pos=0.2, right]{list element};
+      % \path[draw,dashed,->,blue] ($(c)!0.38!(d)$) arc[start angle=270, end angle=450, y radius=1.525, x radius=1] node[pos=0.2, left]{list element};
+      % \draw[thick,magenta!85!black] ($(a)!0.40!(b)$) circle[radius=0.5mm];
+      % \draw[thick,magenta!85!black] ($(c)!0.38!(d)$) circle[radius=0.5mm];
+
+      % \draw[thick,stealth-,red] ($(a)!0.24!(b)$) -- node[below,sloped,pos=0.1]{} ($(c)!0.26!(d)$);
+      % \draw[thick,-stealth] ($(a)!0.23!(b)$) -- node[below,sloped,pos=0.1]{} ($(c)!0.21!(d)$);
+
+
+      \node at (-1,2.55) {\small legend:};
+      % \draw[thick,magenta!85!black] (-1.1,2.4) circle[radius=0.5mm];
+      % \node[right] at (-1,2.4) {\small recursion};
+      \draw[thick,stealth-,green!50!black] (-1.15,2.4) -- (-1.05,2.4);
+      \node[right] at (-1,2.4) {\small truthy response};
+      \draw[thick,stealth-,red] (-1.15,2.25) -- (-1.05,2.25);
+      \node[right] at (-1,2.25) {\small falsy response};
+      \draw[thick,stealth-,blue] (-1.15,2.1) -- (-1.05,2.1);
+      \node[right] at (-1,2.1) {\small deconstruction type};
+      % \node[PB, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.2) {};
+      % \node[HOT, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.7) {};
+      % \node[right] at (0,-2.7) {\small Komponenten-Entkopplung};
+      % \node[draw,dashed, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-3.2) {};
+      % \node[right] at (0,-3.2) {\small Individuelle Prozesse};
     \end{scope}
 
   \end{tikzpicture}
-  \caption{Das Sequenzdiagramm der Hilfsfunktion \texttt{mk\_type}. Der Übersicht halber sind nicht alle Nachrichten beschriftet. Derartige Nachrichten übermitteln zumeist ausschließlich Statusindikatoren.}
+  \caption{Ein Ausschnitt des Sequenzdiagramms von der Hilfsfunktion \texttt{mk\_type}.}
   \label{fig:mk-type-sequence}
 \end{figure}
 
@@ -450,6 +503,7 @@ In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Ser
 um das aktuelle Element zu übermitteln.
 Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden,
 indem die vollständige Prolog Liste innerhalb eines \texttt{zmsg\_t} Objektes akkumuliert wird.
+
 \todo{verständlichere erklärung}
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise illustriert \cref{lst:unnecessary-ctx-data} vermeidbare Komplexität durch die Verwendung unnötiger Datenobjekte.
