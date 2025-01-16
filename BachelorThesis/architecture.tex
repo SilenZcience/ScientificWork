@@ -1,8 +1,8 @@
-
+\clearpage
 \section{Architekturänderung}
 
 Im Folgenden wird die Planung und Implementierung der Architekturänderung zwecks Entkopplung der Z3-Komponente aus ProB beschrieben.
-\clearpage
+
 \subsection{Planung}
 
 Um eine korrekte Systemrefaktorisierung durchzuführen, ist es notwendig, zuvor grundlegende Kernaspekte
@@ -27,10 +27,16 @@ Dies geschieht durch die Verwendung von speziellen (Hilfs-)Funktionen, welche di
 Zusätzlich existiert keine klare Struktur zur Behandlung dieser Prolog-Datentypen im Code,
 da die Funktionen zur Datenextraktion verstreut vorliegen und nicht zentralisiert sind.
 Es wird also global davon ausgegangen, dass der SICStus-Kontext verfügbar ist, was zu einer impliziten Kopplung führt, da keine Isolation der Prolog-Logik stattfindet.
-
+\clearpage
 \subsubsection{Struktur der Nachrichten}
-\FloatBarrier
-\begin{figure}[!htp]
+
+Innerhalb von ZeroMQ lassen sich verschiedene Datenwerte gemeinsam in einen Nachrichtenblock zusammenfassen.
+Ein solcher Nachrichtenblock wird über das abstrakte \texttt{zmsg\_t} Objekt repräsentiert, welches es ermöglicht,
+komplexere Daten zusammen in sogenannten Frames zu übermitteln.
+Da sich der konkrete Inhalt der Nachrichten je nach Interfacefunktion unterscheidet,
+bietet es sich an, dieses Konzept zu nutzen und den Inhalt spezifisch für jede Funktion zu definieren und zu interpretieren.
+
+\begin{figure}[!ht]
   \centering
   \begin{tikzpicture}[scale=1, every node/.style={scale=1}]
       % Request box
@@ -77,7 +83,6 @@ enum SP_Function {
 }
 \end{lstlisting}
 
-
 \begin{lstlisting}[
   float, caption={Das Statusidentifikations-Enum.}, label={lst:status-identifiers}, language=C++
 ]
@@ -87,13 +92,6 @@ enum Z3Status {
   UNFINISHED
 }
 \end{lstlisting}
-
-
-Innerhalb von ZeroMQ lassen sich verschiedene Datenwerte gemeinsam in einen Nachrichtenblock zusammenfassen.
-Ein solcher Nachrichtenblock wird über das abstrakte \texttt{zmsg\_t} Objekt repräsentiert, welches es ermöglicht,
-komplexere Daten zusammen in sogenannten Frames zu übermitteln.
-Da sich der konkrete Inhalt der Nachrichten je nach Interfacefunktion unterscheidet,
-bietet es sich an, dieses Konzept zu nutzen und den Inhalt spezifisch für jede Funktion zu definieren und zu interpretieren.
 
 \cref{fig:protocol} zeigt formal das definierte Kommunikationsprotokoll zwischen Client und Server.
 Eine Anfragenachricht besteht aus einem Funktionsidentifikator $F_\text{id}$, welcher Element der in \cref{lst:func-identifiers} definierten Konstanten ist.
@@ -111,7 +109,7 @@ gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eine
 \subsubsection{Server Struktur}
 
 \begin{lstlisting}[
-  float, caption={Die Kernstruktur des Z3-Servers.}, label={lst:server-structure}, language=C++
+  caption={Die Kernstruktur des Z3-Servers.}, label={lst:server-structure}, language=C++
 ]
   int f_id;
   zmsg_t *request = nullptr;
@@ -142,7 +140,6 @@ gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eine
   }
 \end{lstlisting}
 
-
 Da sich der Z3-Server aktuell mit nur einem einzigen Client beschäftigen muss,
 bieten sich die ZeroMQ Kommunikationsmuster \enquote{Request-Reply} oder \enquote{Pair-Pair} an.
 Da jedoch der Prozess des Lösens eines Prädikates abhängig von den vorherigen Arbeitsschritten ist,
@@ -163,23 +160,18 @@ Nachdem die Funktion, mit den aus dem \texttt{zmsg\_t} Objekt extrahierten Daten
 wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält.
 Das Ergebnis ist in den meisten Fällen der Rückgabewert eben jener Funktion, die aufgerufen wurde.
 Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt.
-\clearpage
+
 Zusätzlich besitzen manche Hilfsfunktionen ihre eigene Logik zum Empfangen und Senden von Nachrichten,
 da sie in der Lage sein müssen, auf weitere Informationen zu warten, bevor sie ihre Berechnung abschließen können.
 Hierauf wird in \cref{subsec:helper-functions} genauer eingegangen.
 Weitere Bestandteile, die zur Struktur des Servers gehören, sind die Initialisierung des Servers (\cref{subsec:server-connection}), die Verbindungsherstellung zum ProB-Prozess,
 das implementierte Logging (\cref{subsec:logging}) und die Behandlung von Exceptions (\cref{subsec:exceptions}).
-
-\FloatBarrier
-
+\vspace{3em}
 \subsection{Implementierung}
 
 In den folgenden Abschnitten wird die Implementierung detailliert beschrieben.
 Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im Code erläutert.
-
-
-
-
+\clearpage
 \subsubsection{Interfacefunktionen}
 
 Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
@@ -199,6 +191,18 @@ Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
 
 Die Kernlogik der ursprünglichen Interfacefunktionen bleibt dabei erhalten, da sie effektiv nur auf die Seite des Z3-Prozesses ausgelagert wird,
 wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
+
+Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion \texttt{mk\_var} gezeigt.
+In \cref{lst:mk-var-prob} ist die neue Implementierung der Funktion in dem ProB-Prozess dargestellt.
+Es ist zu erkennen, dass die Funktion hinsichtlich der beschriebenen Vorgehensweise umstrukturiert wurde.
+So werden die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5\texttt{-}7).
+Die Anfragenachricht wird mit dem Funktionsidentifikator zusammen an den Z3-Server gesendet (Z. 8), woraufhin
+die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall \texttt{mk\_type}) erfolgt (Z. 11\texttt{-}13).
+Zuletzt wird die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall \texttt{SP\_Integer}) umgewandelt und schließlich zurückgegeben (Z. 15ff.).
+
+Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion übergegeben.
+Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
+Hierdurch wird die Möglichkeit geboten, zukünftig mehrere Sockets zu verwalten und somit mehrere Z3-Server zu bedienen, ohne einen globalen Zustand zu verwenden.
 
 \begin{lstlisting}[
   float, caption={Die Interfacefunktion \texttt{mk\_var} in der alten Architektur.}, label={lst:mk-var-old}, language=C++
@@ -249,6 +253,7 @@ SP_integer mk_var(zsock_t *zocket,
   return -1;
 }
 \end{lstlisting}
+
 % \begin{lstlisting}[
 %   float, caption={Die Interfacefunktion \texttt{mk\_var} in der neuen Architektur (Z3 Seite).}, label={lst:mk-var-z3}, language=C++
 % ]
@@ -266,18 +271,6 @@ SP_integer mk_var(zsock_t *zocket,
 %   }
 % }
 % \end{lstlisting}
-
-Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion \texttt{mk\_var} gezeigt.
-In \cref{lst:mk-var-prob} ist die neue Implementierung der Funktion in dem ProB-Prozess dargestellt.
-Es ist zu erkennen, dass die Funktion hinsichtlich der beschriebenen Vorgehensweise umstrukturiert wurde.
-So werden die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5\texttt{-}7).
-Die Anfragenachricht wird mit dem Funktionsidentifikator zusammen an den Z3-Server gesendet (Z. 8), woraufhin
-die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall \texttt{mk\_type}) erfolgt (Z. 11\texttt{-}13).
-Zuletzt wird die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall \texttt{SP\_Integer}) umgewandelt und schließlich zurückgegeben (Z. 15ff.).
-
-Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion übergegeben.
-Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
-Hierdurch wird die Möglichkeit geboten, zukünftig mehrere Sockets zu verwalten und somit mehrere Z3-Server zu bedienen, ohne einen globalen Zustand zu verwenden.
 
 \subsubsection{Hilfsfunktionen}
 \label{subsec:helper-functions}
@@ -365,7 +358,7 @@ Zunächst wird überprüft, ob der Typ ein Atom ist, wie \texttt{integer}, \text
 Wenn dies nicht der Fall ist, wird überprüft, ob der Typ bereits zuvor konstruiert wurde.
 Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unterscheidet zwischen den Typen \texttt{set}, \texttt{global}, \texttt{couple} und \texttt{record}.
 
-\begin{figure}[!htp]
+\begin{figure}[!ht]
   \centering
   \begin{tikzpicture}[scale=3, every node/.style={scale=0.7}]
     % \node at (1,5.4) {\textbf{Sequenz Diagramm der Hilfsfunktion $mk\_type$}};

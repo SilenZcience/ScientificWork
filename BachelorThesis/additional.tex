@@ -27,14 +27,13 @@ while (true) {
  std::this_thread::sleep_for(std::chrono::milliseconds(5));
 }
 \end{lstlisting}
-\todo{formatting}
+
 Mithilfe des GNU Debuggers (GDB) \cite{stallman1988debugging} konnte das Problem dahingehend eingegrenzt werden,
 dass die laufenden Threads sich während der problematischen Endlosschleife innerhalb der Z3-Bibliothek befanden
 und dort mutmaßlich feststeckten.
 Genauer befanden sich die Threads in einer der beiden Methoden \texttt{sat::local\_search::flip\_walksat(unsigned int) ()} oder \texttt{sat::local\_search::pick\_flip\_walksat() ()}.
 Die Ursache für das Problem konnte nicht abschließend geklärt werden, jedoch wurde ein (unschöner) Workaround implementiert, der das Problem behebt.
-Durch den Aufruf zur Methode \\
-\texttt{send\_solver\_interrupts} (Z. 1) werden alle laufenden Threads unterbrochen und somit die Endlosschleife verlassen.
+Durch den Aufruf zur Methode \texttt{send\_solver\_} \texttt{interrupts} (Z. 1) werden alle laufenden Threads unterbrochen und somit die Endlosschleife verlassen.
 Da zum Zeitpunkt der Ausführung der \texttt{reset} Funktion mindestens ein Thread bereits ein Ergebnis berechnet hat, stellt das Unterbrechen der anderen Threads kein Problem dar.
 
 \subsection{Versionsinkompatibilität}

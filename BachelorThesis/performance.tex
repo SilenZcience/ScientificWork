@@ -11,7 +11,7 @@ Hierbei ist zu erwarten, dass das Inter-Process-Communication (IPC) Protokoll sc
 da es auf dem gleichen Rechner arbeitet und keine Netzwerkkommunikation benötigt, sondern das Dateisystem verwendet.
 Im nachfolgenden Abschnitt werden die Methodik der Leistungsbewertung,
 die erzielten Ergebnisse und ihre Interpretation detailliert beschrieben.
-
+\clearpage
 \subsection{Performance-Overhead}
 
 Um eine Bewertung des Performance-Overheads zu ermöglichen, müssen zunächst empirische Daten erhoben werden.
@@ -56,14 +56,6 @@ Innerhalb der eigentlichen Daten wurden die Messungen mehrfach unabhängig vonei
 Da dennoch von Messunsicherheiten und Schwankungen auszugehen ist, werden die Daten in einem statistischen Kontext betrachtet.
 Es wird angenommen, dass sowohl die tatsächlichen Laufzeiten innerhalb eines Tests als auch deren Messunsicherheiten normalverteilt sind.
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[scale=.55]{./PerformanceEvaluation/processingtime.pdf}
-    \caption{Durchschnittliche Laufzeiten der Anfragen in den verschiedenen Architekturen.}
-    \label{fig:performance-overview}
-\end{figure}
-% \FloatBarrier
-
 Um sich zunächst einen Überblick über die Rohdaten zu verschaffen,
 werden in \cref{fig:performance-overview} die durchschnittlichen Laufzeiten in den verschiedenen Konfigurationen dargestellt.
 Der obere Subgraph zeigt die durchschnittlichen Laufzeiten aller Anfragen in sowohl der alten als auch der neuen Architektur,
@@ -71,6 +63,14 @@ wobei die neue Architektur in das IPC-Protokoll und TCP-Protokoll unterteilt ist
 Wider Erwarten zeigt sich, dass die durchschnittliche Laufzeit in der neuen Architektur bei vielen Prädikaten geringer ausfällt als in der alten Architektur.
 Insgesamt sind von den 679 Prädikaten nur 172 Prädikate in der alten Architektur schneller gelöst worden.
 265 Prädikate wurden in der IPC-Konfiguration und 242 Prädikate in der TCP-Konfiguration am schnellsten gelöst.
+\FloatBarrier
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale=.55]{./PerformanceEvaluation/processingtime.pdf}
+    \caption{Durchschnittliche Laufzeiten der Anfragen in den verschiedenen Architekturen.}
+    \label{fig:performance-overview}
+\end{figure}
+% \FloatBarrier
 
 Die unteren beiden Subgraphen stellen interessante Bereiche der Rohdaten erneut dar und zeigen zusätzlich
 die Standardfehler der Mittelwerte in Form der Fehlerbalken. Diese geben an, wie sehr die
@@ -148,7 +148,7 @@ in der kontrollierten Messreihe einer einzelnen Anfrage kleiner ausfällt als in
 Zudem sind Messwerte dieser Größenordnung zunehmend ungenau, weshalb sie annehmbar plausibel bezüglich der Steigung des linearen Fits sind.
 
 
-\begin{figure}[!htp]
+\begin{figure}[!ht]
     \centering
     \includegraphics[scale=.55]{./PerformanceEvaluation/overhead.pdf}
     \caption{Induzierter Overhead der neuen Server-Architektur durch das Serialisieren auf den Socket.}
