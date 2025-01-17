@@ -19,7 +19,7 @@ Primär werden die folgenden Prolog-Datentypen verwendet: \texttt{SP\_atom}, \te
 Mithilfe des Foreign Function Interface (FFI) von SICStus Prolog \cite{carlsson1988sicstus}, das durch die Header-Datei \texttt{sicstus/sicstus.h} bereitgestellt wird, können diese Datentypen konvertiert werden.
 So stehen bei der Umwandlung von \texttt{SP\_atom} in einen C\texttt{++} String die Funktionen \texttt{SP\_string\_to\_atom} und \texttt{SP\_atom\_to\_string} zur Verfügung.
 Die Dokumentation von SICStus Prolog schlägt unter dem Kapitel \enquote{Conversions between Prolog Arguments and C Types} zudem zur Umwandlung von \texttt{SP\_integer} den Datentyp C long vor.
-Der Typ \texttt{SP\_term\_ref} wird in der Dokumentation wie folgt beschrieben: \enquote{The argument could be any term.}.
+Der Typ \texttt{SP\_term\_ref} wird in der Dokumentation wie folgt beschrieben: \enquote{The argument could be any term.}
 Insbesondere ist zu beachten, dass dies auch iterierbare Datentypen wie Listen oder Sets umfasst, welche dekonstruiert werden müssen, um an die enthaltenen Elemente zu gelangen.
 \texttt{SP\_term\_ref} lässt sich also nur schwer gezielt in einen C\texttt{++} Datentyp umwandeln und muss daher mit besonderer Vorsicht behandelt werden.
 Dies geschieht durch die Verwendung von speziellen (Hilfs-)Funktionen, welche die Prolog-Terme explizit kategorisieren und gegebenfalls in ihre Bestandteile zerlegen.
@@ -102,7 +102,7 @@ Die Statuswerte \texttt{OK} und \texttt{NOK} repräsentieren den Erfolg oder Mis
 Diese Werte sind fundamental, da bei dem Aufkommen von potenziellen Fehlern oder Exceptions (siehe \cref{subsec:exceptions}) in Z3 der ProB Prozess über den Misserfolg informiert werden muss,
 um eine entsprechende Fehlerbehandlung durchzuführen.
 Der Statuswert \texttt{UNFINISHED} wird verwendet, wenn eine Anfrage noch nicht abgeschlossen ist und der Server auf weitere Informationen wartet (siehe \cref{subsec:helper-functions}).
-Andererseits enthält die Antwortnachricht die entsprechenden Rückgabewerte des Funktionsaufrufes $F_\text{return\_value}(1), \ldots, F_\text{return\_value}(n)$.
+Andererseits enthält die Antwortnachricht die entsprechenden Rückgabewerte des Funktionsaufrufs $F_\text{return\_value}(1), \ldots, F_\text{return\_value}(n)$.
 Insgesamt besteht eine Nachricht also immer aus einem Identifikator (von Typ Integer), der entweder eine Funktion oder einen Status repräsentiert,
 gefolgt von den eigentlichen Daten, die übermittelt werden sollen, in Form eines \texttt{zmsg\_t} Objektes.
 
@@ -155,7 +155,7 @@ Das eigentliche Protokoll lässt sich jedoch innerhalb der ZeroMQ Bibliothek lei
 Die Kernlogik des Servermodells ist simpel gehalten.
 Nach dem Instanziieren des Sockets wird eine Endlosschleife gestartet, die auf eingehende Nachrichten wartet.
 Sobald eine Nachricht empfangen wird, wird zunächst der Funktionsidentifikator extrahiert und die entsprechende Funktion aufgerufen.
-Dies geschieht mittels einem Switch-Case-Block, der alle möglichen Funktionsidentifikatoren abdeckt.
+Dies geschieht mittels eines Switch-Case-Blocks, der alle möglichen Funktionsidentifikatoren abdeckt.
 Nachdem die Funktion, mit den aus dem \texttt{zmsg\_t} Objekt extrahierten Daten als Parameter ausgeführt wurde,
 wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält.
 Das Ergebnis ist in den meisten Fällen der Rückgabewert eben jener Funktion, die aufgerufen wurde.
@@ -174,7 +174,7 @@ Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im 
 \clearpage
 \subsubsection{Interfacefunktionen}
 
-Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog Schnittstelle aufgerufen werden können.
+Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog-Schnittstelle aufgerufen werden können.
 Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
 Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
 
@@ -190,18 +190,18 @@ Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
 \end{enumerate}
 
 Die Kernlogik der ursprünglichen Interfacefunktionen bleibt dabei erhalten, da sie effektiv nur auf die Seite des Z3-Prozesses ausgelagert wird,
-wobei SICStus Prolog Datentypen in C\texttt{++} Datentypen umgewandelt werden.
+wobei SICStus Prolog-Datentypen in C\texttt{++} Datentypen umgewandelt werden.
 
 Als Beispiel einer derartigen Refaktorisierung ist in \cref{lst:mk-var-old} die ursprüngliche Implementierung der Interfacefunktion \texttt{mk\_var} gezeigt.
 In \cref{lst:mk-var-prob} ist die neue Implementierung der Funktion in dem ProB-Prozess dargestellt.
 Es ist zu erkennen, dass die Funktion hinsichtlich der beschriebenen Vorgehensweise umstrukturiert wurde.
-So werden die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5\texttt{-}7).
+So werden die Funktionsparameter in einen \texttt{zmsg\_t} Block eingefügt und dabei in entsprechende Datentypen umgewandelt (Z. 5--7).
 Die Anfragenachricht wird mit dem Funktionsidentifikator zusammen an den Z3-Server gesendet (Z. 8), woraufhin
-die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall \texttt{mk\_type}) erfolgt (Z. 11\texttt{-}13).
+die nachfolgende Abarbeitung aller notwendigen Hilfsfunktionen (in diesem Fall \texttt{mk\_type}) erfolgt (Z. 11--13).
 Zuletzt wird die Antwortnachricht empfangen, deren Informationen extrahiert, zurück in einen Prolog-Datentyp (in diesem Fall \texttt{SP\_Integer}) umgewandelt und schließlich zurückgegeben (Z. 15ff.).
 
 Im Gegensatz zu einer globalen Definition des Sockets im Z3-Prozess wird der Socket in der ProB-Seite als Parameter an jede Interfacefunktion übergegeben.
-Dies wird erreicht, indem der Socket innerhalb der Prolog Schnittstelle als erstes Argument injiziert wird.
+Dies wird erreicht, indem der Socket innerhalb der Prolog-Schnittstelle als erstes Argument injiziert wird.
 Hierdurch wird die Möglichkeit geboten, zukünftig mehrere Sockets zu verwalten und somit mehrere Z3-Server zu bedienen, ohne einen globalen Zustand zu verwenden.
 
 \begin{lstlisting}[
@@ -345,7 +345,7 @@ Insbesondere ist die Funktion \texttt{mk\_type} hervorzuheben, welche die Typen 
 Bei Bedarf dekonstruiert sie den Datentyp von iterierbaren Elementen, wie etwa Listen oder Sets, um an die Typen der wiederum darin enthaltenen Elemente zu gelangen.
 Des Weiteren ist die Funktion indirekt rekursiv durch den Aufruf anderer Hilfsfunktionen, welche erneut \texttt{mk\_type} selbst aufrufen.
 Die Kopplung zwischen SICStus Prolog und Z3 ist hierbei durch die enthaltenen Bedingungen im Kontrollfluss zusätzlich komplex.
-Sowohl die Verwendung von Funktionalitäten der Prolog Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
+Sowohl die Verwendung von Funktionalitäten der Prolog-Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
 Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die in verschiedenen Szenarien zusätzliche Informationen
 an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
 Die Kommunikation macht sich dabei den Statusidentifikator \texttt{UNFINISHED} zu Nutze, um den Prozess über den aktuellen Zustand zu informieren.
@@ -500,12 +500,12 @@ Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung alle
 lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
 
 Eine der elementarsten Optimierungsmöglichkeiten ist die Vermeidung von Nachrichtenaustausch beider Prozesse
-innerhalb von Schleifen. Dieses Verhalten tritt insbesondere dann auf, wenn Prolog Datenstrukturen übermittelt werden,
+innerhalb von Schleifen. Dieses Verhalten tritt insbesondere dann auf, wenn Prolog-Datenstrukturen übermittelt werden,
 die iterierbar sind, wie Listen, Vektoren und Records.
 In diesen Fällen wird für jedes Element der Struktur eine Nachricht an den Server gesendet,
 um das aktuelle Element zu übermitteln.
 Dieses Verhalten kann in einzelnen Fällen durch die Übermittlung der gesamten Struktur in einer einzigen Nachricht vermieden werden,
-indem die vollständige Prolog Liste innerhalb eines \texttt{zmsg\_t} Objektes akkumuliert wird.
+indem die vollständige Prolog-Liste innerhalb eines \texttt{zmsg\_t} Objektes akkumuliert wird.
 
 Eine weitere Optimierungsmöglichkeit ist die Vermeidung von unnötigen Nachrichten an den Server.
 Beispielsweise verwenden eine Vielzahl von Hilfsfunktionen das \texttt{ContextData ctx\_data} Objekt,
@@ -561,7 +561,7 @@ init_z3interface :-
 \end{lstlisting}
 
 Der Endpoint zur ZeroMQ Kommunikation wird generiert
-und als Funktionsargument an die \texttt{init} Funktion übergeben, welche die Verbindung zum Z3-Server herstellt (Z. 8\texttt{-}10).
+und als Funktionsargument an die \texttt{init} Funktion übergeben, welche die Verbindung zum Z3-Server herstellt (Z. 8--10).
 Die Funktion \texttt{process\_create} wird eingesetzt, um den Z3-Server als Subprozess zu starten,
 welcher durch die Verwendung der Systemargumente ebenfalls über den generierten Endpoint informiert wird.
 So sind beide Prozesse in Kenntnis desselben Endpoints und können miteinander kommunizieren.
@@ -571,12 +571,12 @@ Er wird als einzigartiger Dateiname innerhalb von \texttt{get\_path\_to\_fresh\_
 \subsubsection{Logging}
 \label{subsec:logging}
 
-Der Z3-Server wurde mit einem Logging-System ausgestattet, um die potentielle Fehlersuche und -behebung zu erleichtern.
+Der Z3-Server wurde mit einem Logging-System ausgestattet, um die potenzielle Fehlersuche und -behebung zu erleichtern.
 Insbesondere hilft das Logging-System dabei, eine klare Übersicht über den Verlauf des Servers zu erhalten und damit die Nachvollziehbarkeit zu erhöhen.
 Durch das Protokollieren von Ereignissen, wie etwa dem Empfangen und Senden von Nachrichten, der aktuellen Funktion, die ausgeführt wird, sowie dem Auftreten von Fehlern,
 wird gewährleistet, dass das Serververhalten transparent und ersichtlich ist.
 Derartige Informationen erleichtern auch die zukünftige Wartung und Erweiterung des Systems.
-Innerhalb des Prolog Prädikates \texttt{process\_create} lässt sich die Ausgabe des Z3-Servers allerdings nur schwer kontrollieren und verlangt die Verwendung der standard shell (sh).
+Innerhalb des Prolog-Prädikates \texttt{process\_create} lässt sich die Ausgabe des Z3-Servers allerdings nur schwer kontrollieren und verlangt die Verwendung der standard shell (sh).
 Aus diesem Grund wurde das Logging-System auf der Seite des Z3-Servers selbst implementiert, um gegebenenfalls die Ausgabe in einer Datei zu speichern.
 Diese Funktionsweise ist zudem autonom und macht den Z3-Solver somit zunehmend unabhängig von anderen Faktoren.
 Die Implementierung funktioniert durch das Umleiten des Standardausgabestreams in einen eigenen Dateideskriptor.
