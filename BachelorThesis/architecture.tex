@@ -152,14 +152,13 @@ Innerhalb der Entwicklungsumgebung wird der entkoppelte Solver auf demselben Rec
 weshalb IPC als Kommunikationsprotokoll verwendet wird, um eine effiziente und schnelle Kommunikation über das Dateisystem zu gewährleisten.
 Das eigentliche Protokoll lässt sich jedoch innerhalb der ZeroMQ Bibliothek leicht konfigurieren, sodass zukünftig auch eine verteilte Systemarchitektur möglich ist.
 
-Die Kernlogik des Servermodells ist simpel gehalten.
-Nach dem Instanziieren des Sockets wird eine Endlosschleife gestartet, die auf eingehende Nachrichten wartet.
-Sobald eine Nachricht empfangen wird, wird zunächst der Funktionsidentifikator extrahiert und die entsprechende Funktion aufgerufen.
-Dies geschieht mittels eines Switch-Case-Blocks, der alle möglichen Funktionsidentifikatoren abdeckt.
-Nachdem die Funktion, mit den aus dem \texttt{zmsg\_t} Objekt extrahierten Daten als Parameter ausgeführt wurde,
-wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält.
+Die Kernlogik des Servermodells ist simpel gehalten und wird in \cref{lst:server-structure} gezeigt.
+Nach dem Instanziieren des Sockets wird eine Endlosschleife gestartet, die auf eingehende Nachrichten wartet (Z. 5).
+Sobald eine Nachricht empfangen wird, wird zunächst der Funktionsidentifikator extrahiert (Z. 6) und die entsprechende Funktion aufgerufen.
+Dies geschieht mittels eines Switch-Case-Blocks, der alle möglichen Funktionsidentifikatoren abdeckt (Z. 11--23).
+Nachdem die Funktion, mit den aus dem \texttt{zmsg\_t} Objekt extrahierten Daten als Parameter ausgeführt wurde (Z. 13,16--20),
+wird eine Antwortnachricht an den ProB-Prozess gesendet, die den Status der Anfrage und die Ergebnisse enthält (Z. 25).
 Das Ergebnis ist in den meisten Fällen der Rückgabewert eben jener Funktion, die aufgerufen wurde.
-Die beschriebene Struktur des Servers ist in \cref{lst:server-structure} gezeigt.
 
 Zusätzlich besitzen manche Hilfsfunktionen ihre eigene Logik zum Empfangen und Senden von Nachrichten,
 da sie in der Lage sein müssen, auf weitere Informationen zu warten, bevor sie ihre Berechnung abschließen können.
@@ -176,7 +175,7 @@ Dabei werden die angewandten Refaktorisierungsschritte sowie deren Umsetzung im 
 
 Es existieren 56 Funktionen im Z3-Interface, welche direkt über die Prolog-Schnittstelle aufgerufen werden können.
 Diese Interfacefunktionen müssen in der neuen Architektur so implementiert werden, dass sie die Nachrichten an den Z3-Server senden und die Antwort empfangen.
-Der Ablauf der Portierung einer Interfacefunktion ist dabei immer gleich:
+Der Ablauf der Portierung einer Interfacefunktion ist dabei immer identisch:
 
 \begin{enumerate}
   \item Konvertieren der Funktionsparameter in einen C\texttt{++} Datentyp

@@ -98,7 +98,7 @@ Overhead nicht nur annulliert, sondern überkompensiert.
 Insgesamt scheint die neu eingeführte Server-Architektur hinsichtlich der Laufzeitperformance um einen gewissen Faktor effizienter geworden zu sein.
 
 Ebenfalls ist zu erkennen, dass der Unterschied zwischen IPC und TCP nur minimal ist und keine signifikanten Unterschiede aufweist.
-Innerhalb der 679 Testprädikaten ist IPC in 365 ($53.76\%$) Fällen schneller als TCP und entsprechend TCP in 314 ($46.24\%$) Fällen schneller als IPC.
+Innerhalb der 679 Testprädikate ist IPC in 365 ($53.76\%$) Fällen schneller als TCP und entsprechend TCP in 314 ($46.24\%$) Fällen schneller als IPC.
 Da zur TCP-Kommunikation die Adresse \texttt{tcp://127.0.0.1} verwendet wurde, ist eine mögliche Erklärung hierfür, dass die Kommunikation über das Loopback-Interface
 einen Großteil des Netzwerk-Stacks umgeht und vom Betriebssystem speziell optimiert wird.
 In der weiteren Analyse wird daher nur das IPC-Protokoll betrachtet.
