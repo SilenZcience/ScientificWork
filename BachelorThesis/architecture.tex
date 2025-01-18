@@ -468,7 +468,7 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
       \draw[dashed] ($(a)!0.495!(b) + (-0.1,0)$) --  node[above,sloped,pos=0.95,magenta]{\scalebox{2}{\boldmath$\circlearrowleft$}} ($(c)!0.495!(d) + (0.4,0)$);
       \draw[dashed] ($(a)!0.415!(b) + (-0.1,0)$) --  node[above,sloped,pos=0.95,magenta]{\scalebox{2}{\boldmath$\circlearrowleft$}} ($(c)!0.415!(d) + (0.4,0)$);
 
-      \node at (-1,2.55) {\small legend:};
+      % \node at (-1,2.55) {\small legend:};
       % \draw[thick,magenta!85!black] (-1.1,2.4) circle[radius=0.5mm];
       % \node[right] at (-1,2.4) {\small recursion};
       \draw[thick,stealth-,green!50!black] (-1.15,2.4) -- (-1.05,2.4);
@@ -537,7 +537,7 @@ in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler A
 \label{subsec:server-connection}
 
 Der Z3-Prozess wird nicht manuell gestartet, sondern,
-um eine angenehme Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
+um eine Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
 Insbesondere bedeutet das, dass der Z3-Server ausschließlich auf Anfrage von ProB gestartet wird, wenn das entsprechende Interface verwendet wird.
 Als Subprozess wird der Z3-Solver mit der Beendigung von ProB ebenfalls terminiert.
 Dieses Verhalten ist innerhalb der Prolog-Seite des Z3-Interfaces implementiert und wird durch das Prädikat \texttt{init\_z3interface} realisiert, welches dahingehend erweitert wurde.
@@ -584,11 +584,11 @@ Sollte das Logging-System nicht verwendet werden, wird der Standardausgabestream
 Somit lässt sich über die Systemargumente beim Start des Servers entscheiden, ob das Logging-System aktiviert werden soll oder nicht.
 Zur Aktivierung muss lediglich \cref{lst:init-z3interface} so angepasst werden, dass neben dem Endpoint (Z. 9) zusätzlich das Argument \enquote{\texttt{-}\texttt{-}log} an den Server übergeben wird.
 
-Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet werden, dass der Z3-Server in eine Datei schreibt, die einzigartig zu seinem Prozess ist.
+Da die Erweiterbarkeit des Systems gewährleistet werden soll, muss beachtet werden, dass der Z3-Server in eine Datei protokolliert, die einzigartig zu seinem Prozess ist.
 Sollten in Zukunft mehrere Z3-Prozesse existieren, würden diese andernfalls in dieselbe Datei schreiben und die Logausgabe dadurch unübersichtlich machen.
-Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig in dieselbe Datei schreiben, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver die Datei beschreiben kann.
+Womöglich könnte dies auch zu Konflikten führen, wenn mehrere Prozesse gleichzeitig auf dieselbe Datei zugreifen, sodass Informationen vollständig verloren gehen oder nur ein einziger Z3-Solver Zugriff auf die Datei erhält.
 Um dies zu verhindern, wird der Dateiname der Logdatei durch den Endpoint des Z3-Servers ergänzt.
-Beispielsweise schreibt der Z3-Solver bei einem Endpoint \texttt{ipc:///tmp/z3rver96485092.probz} in die Datei \texttt{z3rver96485092.probz.log}.
+Beispielsweise beschreibt der Z3-Solver bei einem Endpoint \texttt{ipc:///tmp/z3rver96485092.probz} die Datei \texttt{z3rver96485092.probz.log}.
 
 \subsubsection{Exceptions}
 \label{subsec:exceptions}

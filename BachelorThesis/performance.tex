@@ -58,7 +58,7 @@ Es wird angenommen, dass sowohl die tatsächlichen Laufzeiten innerhalb eines Te
 
 Um sich zunächst einen Überblick über die Rohdaten zu verschaffen,
 werden in \cref{fig:performance-overview} die durchschnittlichen Laufzeiten in den verschiedenen Konfigurationen dargestellt.
-Der obere Subgraph zeigt die durchschnittlichen Laufzeiten aller Anfragen in sowohl der alten als auch der neuen Architektur,
+Die obere Subgrafik zeigt die durchschnittlichen Laufzeiten aller Anfragen in sowohl der alten als auch der neuen Architektur,
 wobei die neue Architektur in das IPC-Protokoll und TCP-Protokoll unterteilt ist.
 Wider Erwarten zeigt sich, dass die durchschnittliche Laufzeit in der neuen Architektur bei vielen Prädikaten geringer ausfällt als in der alten Architektur.
 Insgesamt sind von den 679 Prädikaten nur 172 Prädikate in der alten Architektur schneller gelöst worden.
@@ -72,7 +72,7 @@ Insgesamt sind von den 679 Prädikaten nur 172 Prädikate in der alten Architekt
 \end{figure}
 % \FloatBarrier
 
-Die unteren beiden Subgraphen stellen interessante Bereiche der Rohdaten erneut dar und zeigen zusätzlich
+Die unteren beiden Subgrafen stellen interessante Bereiche der Rohdaten erneut dar und zeigen zusätzlich
 die Standardfehler der Mittelwerte in Form der Fehlerbalken. Diese geben an, wie sehr die
 Mittelwerte der Laufzeiten von den tatsächlichen Mittelwerten der Grundgesamtheit abweichen.
 Kalkuliert wird dieser Standardfehler mittels der folgenden Formel:
@@ -82,12 +82,12 @@ Kalkuliert wird dieser Standardfehler mittels der folgenden Formel:
 Hierbei ist $\sigma_{\overline{x}}$ der Standardfehler des Mittelwertes, $\sigma$ die Standardabweichung der Grundgesamtheit und $n$ die Anzahl der Messungen.
 Somit werden ausschließlich statistische Fehler betrachtet und systematische Fehler nicht berücksichtigt.
 
-So zeigt der untere linke Subgraph die Rohdaten im Bereich der Prädikate 60 bis 115 erneut,
+So zeigt der untere linke Subgraf die Rohdaten im Bereich der Prädikate 60 bis 115 erneut,
 wobei klar zu erkennen ist, dass hier die neue Server-Architektur konstant schneller ist.
 Dieser Trend ist über die gesamte Messung hin unterhalb einer gewissen Grenze zu beobachten.
 Ebenfalls ersichtlich ist der nur minimal ausfallende Unterschied zwischen IPC und TCP.
 
-Auf der anderen Seite zeigt der untere rechte Subgraph die Rohdaten im Bereich der Prädikate 555 bis 610.
+Auf der anderen Seite zeigt der untere rechte Subgraf die Rohdaten im Bereich der Prädikate 555 bis 610.
 Hier haben die Laufzeit Messungen einen vergleichsweise hohen Wert und es ist zu erkennen,
 dass die alte Architektur in diesem Bereich schneller ist.
 
@@ -114,12 +114,12 @@ Der induzierte Overhead $t_\text{induced}$ wird also wie folgt definiert:
     t_\text{induced} = \overline{t_\text{IPC}} - \overline{t_\text{Old}}
 \end{equation}
 
-Der oberste Subgraph in \cref{fig:overhead} zeigt den induzierten Overhead der neuen Architektur in Abhängigkeit der Anzahl der ZeroMQ-Anfragen auf einer logarithmischen Skala.
+Der oberste Subgraf in \cref{fig:overhead} zeigt den induzierten Overhead der neuen Architektur in Abhängigkeit der Anzahl der ZeroMQ-Anfragen auf einer logarithmischen Skala.
 Im groben Verlauf ist zu erkennen, dass der Overhead mit steigender Anzahl der Anfragen annähernd linear zunimmt.
 Zusätzlich scheint jedoch eine ausgeprägte Systematik vorzuliegen, welche sich inhaltlich durch die horizontale Verzerrung der Daten ausprägt.
 Einige wenige Datenpunkte weichen stark von jeglicher Systematik ab und sind als Ausreißer zu klassifizieren.
 
-Im zweiten Subgraphen wird die lineare Abhängigkeit des Overheads von der Anzahl der Anfragen untersucht, indem der Zusammenhang linear gefittet\footnote{Der lineare Fit wurde mit dem von scipi.optimize bereitgestellten curve\_fit berechnet.} wird.
+Im zweiten Subgrafen zum induzierten Overhead wird die lineare Abhängigkeit des Overheads von der Anzahl der Anfragen untersucht, indem der Zusammenhang linear gefittet\footnote{Der lineare Fit wurde mit dem von scipi.optimize bereitgestellten curve\_fit berechnet.} wird.
 Dies geschieht unter Berücksichtigung des kombinierten Standardfehlers der Mittelwerte der alten und neuen IPC-Architektur.
 Die Unsicherheitsberechnung wird berechnet mit der gaußschen Fehlerfortpflanzung
 
@@ -157,17 +157,17 @@ Zudem sind Messwerte dieser Größenordnung zunehmend ungenau, weshalb sie anneh
 % \FloatBarrier
 % \clearpage
 
-Der lineare Fit zeigt augenscheinlich eine gute Übereinstimmung mit den Daten, welche in dem dritten Subgraphen aus \cref{fig:overhead} verifiziert wird.
+Der lineare Fit zeigt augenscheinlich eine gute Übereinstimmung mit den Daten, welche in dem dritten Subgrafen aus \cref{fig:overhead} verifiziert wird.
 Hierbei wird die Differenz des induzierten Overheads und des linearen Fits gegen die Anzahl der Anfragen dargestellt.
 Es ergibt sich ein Residuenplot.
-In diesem Plot ist die Systematik des obersten Subgraphen erneut zu erkennen.
+In diesem Plot ist die Systematik des obersten Subgrafen erneut zu erkennen.
 Sie bildet ein kleines Cluster oberhalb der $0$-Linie, bei sehr kleinen Anfragenzahlen.
 Es stellt sich heraus, dass innerhalb dieses Datenclusters alle Datenpunkte die QueryID $1$ aufweisen.
 Somit lässt sich die Abweichung durch das Initialisieren des Sockets, der Verbindung des Z3-Servers und dessen initialen Overheads zum Aufsetzten der Z3-Konfigurationen erklären.
 Innerhalb einer TestID wird der Z3-Server nur einmalig initialisiert und folgende Prädikate desselben Tests nutzen denselben Z3-Server, indem sie die Konfiguration zurücksetzten und nicht grundlegend neu initialisieren.
 
-Zur Überprüfung stellt der letzte Subgraph erneut den Residuenplot dar, jedoch ohne diejenigen Datenpunkte mit QueryID $1$.
-Hierbei ist zu erkennen, dass die Systematik des vorherigen Graphen verschwindet und der lineare Fit eine gute Übereinstimmung mit den Daten aufweist.
+Zur Überprüfung stellt die letzte Subgrafik erneut den Residuenplot dar, jedoch ohne diejenigen Datenpunkte mit QueryID $1$.
+Hierbei ist zu erkennen, dass die Systematik des vorherigen Grafen verschwindet und der lineare Fit eine gute Übereinstimmung mit den Daten aufweist.
 Somit ist gezeigt, dass der Overhead der neuen Architektur durch das Serialisieren auf den Socket annähernd linear mit der Anzahl der Anfragen zunimmt
 und keine weiteren relevanten Systematiken besitzt. Eine Voraussage des Overheads ist mithilfe des linearen Fits möglich.
 Es ist zu beachten, dass die absoluten Werte des Overheads nur in der gegebenen Testumgebung gültig sind und nicht auf andere Umgebungen übertragen werden können.
@@ -190,10 +190,11 @@ In \cref{tab:broken-datapoint} ist dieser Datenpunkt dargestellt.
 % \FloatBarrier
 
 Die verschiedenen Messwerte der alten Architektur in Millisekunden zeigen zwei starke Ausreißer bei der zweiten und dritten Messung.
-Diese Varianz ist womöglich auf die in \cref{subsec:softlock} beschriebene Problematik zurückzuführen.
+Diese Varianz ist womöglich auf die in \cref{subsec:softlock} beschriebene Problematik der Endlosschleife zurückzuführen.
 In jedem Fall ist dieser Datenpunkt als individueller Ausreißer zu betrachten und weist keine besondere statistische Relevanz auf.
 
-Die ermittelte Performance-Verbesserung wird an dieser Stelle nicht weiter analysiert, da sie nicht Gegenstand dieser Arbeit ist.
+Auch wenn die ermittelte Performance-Verbesserung eine interessante Erkenntnis darstellt,
+wird sie an dieser Stelle nicht weiter analysiert, da sie nicht Gegenstand dieser Arbeit ist.
 Ein möglicher Grund für die Verbesserung könnte die Kompilierung sein, die durch die neue Architektur ermöglicht wird,
 da der Z3-Solver als eigenständiger Prozess womöglich besser vom Compiler optimiert werden kann.
 Als eigenständiger Prozess ist es ebenfalls möglich, dass der runtime linker die Z3-Bibliothek optimierter laden und ausführen kann.

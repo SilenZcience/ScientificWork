@@ -38,7 +38,7 @@ Zusammen lassen sich so vollständige Fehler und problematische Operationen iden
 Beide Ansätze bieten wertvolle Instrumente für die Konsistenzprüfung von B-Modellen, und sind in der Lage, die Verletzung von Invarianten und daraus folgenden Bedingungen sowie
 die Abwesenheit von Deadlocks und das Erreichen von spezifizierten Zielprädikaten zu überprüfen \cite{leuschel2008prob}.
 
-Zuletzt bietet ProB auch eine Constraint-Solving-Funktionalität, die es ermöglicht, unter Berücksichtigung von gegebenen Constraints (Einschränkungen) Lösungen für spezifische Prädikate zu finden,
+Zuletzt bietet ProB auch eine Constraint-Solving-Funktionalität, die es ermöglicht, unter Berücksichtigung von gegebenen Constraints (dt.: Einschränkungen) Lösungen für spezifische Prädikate zu finden,
 was die Grundlage des Animators und Model-Checkers bildet.
 Derartige Einschränkungen oder Bedingungen können in Form von logischen Ausdrücken oder Gleichungen gegeben sein, die es zu erfüllen gilt.
 Ein Constraint-Solver ist ein Algorithmus oder System, welches darauf abzielt, unter Berücksichtigung eben jener Bedingungen eine Belegung aller Variablen zu finden, die die gegebenen Prädikate erfüllt
@@ -71,7 +71,7 @@ Zum Beispiel wird der Z3-Solver in der Softwareverifikation eingesetzt, um die K
 Andere Einsatzbereiche sind die automatische Generierung von Testfällen basierend auf formalen Modellen sowie dem Modellieren von Entscheidungsproblemen und dem Abstrahieren von Prädikaten.
 
 Der Aufbau von Z3 ist modular und basiert auf dem DPLL\footnote{Davis-Putnam-Logemann-Loveland}(T)-Framework,
-das die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
+welches die grundlegenden Prinzipien des DPLL-Algorithmus zur Lösung des CNF-SAT-Problems um weitere Theorien (wie SMT) ergänzt.
 Der DPLL ist ein Algorithmus zur Entscheidung der Erfüllbarkeit einer booleschen Aussagenlogikformel in konjunktiver Normalform (CNF).
 
 In Z3 dient der DPLL-Algorithmus als Kern des SAT-Solvers.
@@ -88,7 +88,7 @@ Es wird die C\texttt{++} Bibliothek für das Threaden der Anwendung verwendet, u
 \clearpage
 Innerhalb von ProB wird Z3 vor allem dann eingesetzt, wenn ProBs interner Constraint-Solver bei der Lösung bestimmter Probleme an seine Grenzen stößt \cite{10.1007/978-3-319-33693-0_23}.
 Dies betrifft insbesondere große oder komplexe Constraints mit nicht-linearen Bedingungen.
-Beispielsweise lässt sich die Formel, welche in \cref{lst:z3-example} gezeigt wird, in Z3 aber nicht in ProB lösen.
+Die in \cref{lst:z3-example} gezeigte Formel lässt sich beispielsweise in Z3, allerdings nicht in ProB lösen.
 
 \begin{lstlisting}[
     float, caption={Ein Beispiel zur Verwendung des Z3-Solvers innerhalb der ProB REPL.}, label={lst:z3-example}, language=bash

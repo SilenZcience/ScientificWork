@@ -26,14 +26,14 @@ Ein bekanntes Problem besteht in dem sporadischen Auftreten von Speicherlecks un
 die sowohl die Stabilität als auch die Nutzbarkeit von ProB's Z3-Interface negativ beeinflussen.
 Diese technischen Mängel erschweren nicht nur die Durchführung formaler Verifikationen,
 sondern können auch zu einer zeitraubenden Verwendung der Z3-Solver-Komponente sowie Unterbrechung von Arbeitsprozessen führen.
-Die Problematik wird in einem Papier \cite{10.1007/978-3-031-25803-9_5}, geschrieben von Körner und Leuschel, genauer erörtert.
+Körner und Leuchel haben diese Problematik in einem aktuellen Papier \cite{10.1007/978-3-031-25803-9_5} genauer erörtert.
 
 Ein weiterer Mangel liegt in der aktuellen sequenziellen Lösung mehrerer Prädikate.
 Dieser Ansatz, bei dem die Prädikate nacheinander gelöst werden,
 ist in seiner Natur ressourcenintensiv und zeitaufwendig.
-Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequenzielle Verarbeitung immer offensichtlicher.
-Eine Parallelisierung der Lösung von Prädikaten könnte hier erhebliche Leistungsverbesserungen bringen,
-indem moderne Mehrkernarchitekturen effizienter ausgenutzt werden,
+Angesichts der steigenden Komplexität formaler Modelle und der wachsenden Nachfrage nach schnellerer Verifikation wird die Limitierung durch die sequenzielle Verarbeitung jedoch immer offensichtlicher.
+Eine Parallelisierung der Lösung von Prädikaten könnte hier erhebliche Leistungsverbesserungen bringen.
+Moderne Mehrkernarchitekturen können hierdurch effizienter ausgenutzt werden,
 um den Anforderungen der Nutzer und der immer komplexer werdenden Modelle gerecht zu werden.
 
 Die Kombination dieser Herausforderungen (sporadische technische Instabilitäten und begrenzte Effizienz durch sequenzielle Verarbeitung) macht es notwendig,
@@ -98,7 +98,7 @@ Diese geplante Architekturänderung ist in der folgenden \cref{fig:architecture}
 
         \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
 
-        \node at (0,-1.8) {\small Legende:};
+        % \node at (0,-1.8) {\small Legende:};
         \node[PB, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.2) {};
         \node[right] at (0,-2.2) {\small ProB};
         \node[HOT, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.7) {};
