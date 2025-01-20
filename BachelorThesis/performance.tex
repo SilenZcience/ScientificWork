@@ -128,22 +128,22 @@ Die Unsicherheitsberechnung wird berechnet mit der gaußschen Fehlerfortpflanzun
 \end{equation}
 
 welche ebenfalls in den Fehlerbalken dargestellt wird.
-Das Ergebnis des linearen Fits zeigt eine Steigung von $0.03 ms$ pro Anfrage, was bedeutet, dass der Overhead pro Anfrage um $0.03 ms$ steigt.
-Zusätzlich gibt es einen y-Achsenabschnitt von $-13.13 ms$, was bedeutet, dass der Overhead bei $0$ Anfragen $-13.13 ms$ beträgt.
+Das Ergebnis des linearen Fits zeigt eine Steigung von \SI{0,03}{ms} pro Anfrage, was bedeutet, dass der Overhead pro Anfrage um \SI{0,03}{ms} steigt.
+Zusätzlich gibt es einen y-Achsenabschnitt von \SI{-13,13}{ms}, was bedeutet, dass der Overhead bei $0$ Anfragen \SI{-13,13}{ms} beträgt.
 Dieser Wert beschreibt die zuvor erfasste Laufzeitverbesserung der neuen Architektur.
-Insgesamt ergibt sich die folgende lineare Funktion zur Beschreibung des Overheads:
+Insgesamt ergibt sich die folgende lineare Funktion zur Beschreibung des Overheads ($t_\text{overhead}$) in Abhängigkeit der Anzahl der Anfragen ($n_\text{requests}$):
 
 \begin{equation}
-    Overhead = 0.03ms \cdot Anfragenanzahl - 13.13ms
+    t_\text{overhead} = \SI{0,03}{ms} \cdot n_\text{requests} - \SI{13,13}{ms}
 \end{equation}
 
 Durch das Kalkulieren der Nullstellen dieser Overhead-Funktion ergibt sich eine Anzahl an Anfragen von etwa $438$, bis der Overhead nicht länger von der Laufzeitverbesserung kompensiert werden kann.
 
 Eine separate Messreihe wurde durchgeführt, um die durchschnittliche Laufzeit einer einzelnen Anfrage an den Z3-Server zu ermitteln.
-Hierbei wurde die durchschnittliche Laufzeit von $0.0054 ms$ bestimmt.
-Da für jede Anfrage zwei Nachrichten (Anfrage und Antwort) über den Socket gesendet werden, ergibt sich eine Laufzeit von $0.0216 ms$ pro Anfrage
+Hierbei wurde die durchschnittliche Laufzeit von \SI{0,0054}{ms} bestimmt.
+Da für jede Anfrage zwei Nachrichten (Anfrage und Antwort) über den Socket gesendet werden, ergibt sich eine Laufzeit von \SI{0,0216}{ms} pro Anfrage
 unter der Annahme, dass das Erhalten einer ZeroMQ-Nachricht die gleiche Laufzeit aufweist wie das Senden einer Nachricht.
-Die Differenz von $0.0084 ms$ zur ermittelten Steigung des linearen Fits könnte beispielsweise auf die Größe der Nachrichten zurückzuführen, welche
+Die Differenz von \SI{0,0084}{ms} zur ermittelten Steigung des linearen Fits könnte beispielsweise auf die Größe der Nachrichten zurückzuführen, welche
 in der kontrollierten Messreihe einer einzelnen Anfrage kleiner ausfällt als in den 52 Testszenarien.
 Zudem sind Messwerte dieser Größenordnung zunehmend ungenau, weshalb sie annehmbar plausibel bezüglich der Steigung des linearen Fits sind.
 

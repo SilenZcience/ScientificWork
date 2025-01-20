@@ -496,7 +496,7 @@ Sollte er nicht existieren, wird der Typ dekonstruiert. Die Dekonstruktion unter
 \label{subsec:optimizations}
 
 Nach der erfolgreichen Portierung der Schnittstelle und der Implementierung aller notwendigen Funktionen
-lassen sich zusätzlich kleine Optimierungen und Verbesserungen vornehmen, um Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
+wurden zusätzlich kleine Optimierungen und Verbesserungen vorgenommen, um die Effizienz, Lesbarkeit und Wartbarkeit des Codes zu erhöhen.
 
 Eine der elementarsten Optimierungsmöglichkeiten ist die Vermeidung von Nachrichtenaustausch beider Prozesse
 innerhalb von Schleifen. Dieses Verhalten tritt insbesondere dann auf, wenn Prolog-Datenstrukturen übermittelt werden,
@@ -537,7 +537,7 @@ in beiden Prozessen. Durch die Anwendung des Programmierprinzips und minimaler A
 \label{subsec:server-connection}
 
 Der Z3-Prozess wird nicht manuell gestartet, sondern,
-um eine Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
+um Nutzerfreundlichkeit zu gewährleisten, automatisch im Z3-Interface als Subprozess von ProB erzeugt.
 Insbesondere bedeutet das, dass der Z3-Server ausschließlich auf Anfrage von ProB gestartet wird, wenn das entsprechende Interface verwendet wird.
 Als Subprozess wird der Z3-Solver mit der Beendigung von ProB ebenfalls terminiert.
 Dieses Verhalten ist innerhalb der Prolog-Seite des Z3-Interfaces implementiert und wird durch das Prädikat \texttt{init\_z3interface} realisiert, welches dahingehend erweitert wurde.

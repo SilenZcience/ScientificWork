@@ -7,7 +7,7 @@ Im Verlauf der Arbeit traten einige Probleme auf, die nicht direkt mit der Entko
 \label{subsec:softlock}
 
 Bei der exzessiven Ausführung der relevanten Testkategorie \texttt{smt\_solver\_integration} fiel während der Entwicklung auf,
-dass die Tests sporadisch nicht terminieren.
+dass die Tests sporadisch nicht terminierten.
 Mithilfe eines simplen Skripts wurde die Testkategorie endlos ausgeführt, um das Problem zu reproduzieren und einen Einblick in dessen Häufigkeit zu erhalten.
 Am meisten war die Testnummer $2395$ betroffen, welche sich auf der Entwicklungsumgebung etwa alle $18$ Durchläufe nicht beendete.
 Nach einer Analyse des Problems stellte sich heraus, dass die Endlosschleife in \cref{lst:softlock} die Ursache war, welche in der Methode \texttt{reset} ausgeführt wird.
