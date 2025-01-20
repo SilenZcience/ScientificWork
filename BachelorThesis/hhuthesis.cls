@@ -4,8 +4,8 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}} % Options fallback.
 \ProcessOptions\relax
 
-\LoadClass[11pt,a4paper,twoside,titlepage]{article}
-
+\LoadClass[11pt,a4paper,titlepage]{article}
+% \LoadClass[11pt,a4paper,twoside,titlepage]{article}
 
 %%% Define user-settings commands
 
