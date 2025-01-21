@@ -346,7 +346,7 @@ Des Weiteren ist die Funktion indirekt rekursiv durch den Aufruf anderer Hilfsfu
 Die Kopplung zwischen SICStus Prolog und Z3 ist hierbei durch die enthaltenen Bedingungen im Kontrollfluss zusätzlich komplex.
 Sowohl die Verwendung von Funktionalitäten der Prolog-Bibliothek sowie der Z3-Komponente verändern und bedingen den Verlauf der Methode.
 Zur Entkopplung wurde die Logik einer \enquote{State Machine} implementiert, die in verschiedenen Szenarien zusätzliche Informationen
-an dem entsprechend anderen Prozess anfordern oder diese an ihn zu senden.
+an dem entsprechend anderen Prozess anfordert oder diese an ihn sendet.
 Die Kommunikation macht sich dabei den Statusidentifikator \texttt{UNFINISHED} zu Nutze, um den Prozess über den aktuellen Zustand zu informieren.
 Die Funktion wird in den meisten Interfacefunktionen aufgerufen und ist daher ein zentraler Bestandteil des Z3-Interfaces.
 
