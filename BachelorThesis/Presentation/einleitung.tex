@@ -1,0 +1,74 @@
+\section{Einleitung}
+
+\subsection{Foliengestaltung}
+
+\begin{frame}{Motivation und Zielsetzung}
+    \begin{figure}[!htp]
+        \centering
+        \resizebox{0.8\textwidth}{!}{
+            \begin{tikzpicture}[
+                    HOT/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=40, align=center},
+                    PB/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=40, align=center},
+                    COLD/.style={rectangle, draw=black!40, fill=black!3, very thick, minimum size=40, align=center},
+                ]
+                \begin{scope}
+                    \node[PB]    (ProB)                             {ProB};
+                    \node[HOT]    (C_Interface)       [right=of ProB] {C-Interface\\Z3-Solver};
+                    \node[draw=none,fill=none,rectangle,above=0.5cm of ProB,xshift=-0.5cm,anchor=south west]
+                    (Arch_A){Bestehende Architektur};
+
+                    \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above,scale=1] {\tiny{constraint}} node[below,scale=1] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+                    \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below,scale=1] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+                \end{scope}
+                \node[draw,inner xsep=0.5cm, inner ysep=0.5cm,fit=(Arch_A) (ProB) (C_Interface)] (LeftScope){};
+                \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P0){};
+
+                \begin{scope}[xshift=6.5cm]
+                    \node[PB]    (ProB)        {ProB};
+                    \node[HOT]    (C_Interface)       [right=of ProB] {C-Interface};
+                    \node[HOT]    (Z3_Solver)       [right=of C_Interface] {Z3-Solver};
+                    \node[COLD]    (Z3_Solver_G1)       [above=of Z3_Solver] {Z3-Solver};
+                    \node[COLD]    (Z3_Solver_G2)       [below=of Z3_Solver] {Z3-Solver};
+                    \node[draw=none,fill=none,rectangle,above=1cm of ProB,xshift=1cm,anchor=south west]
+                    (Arch_B){Zielarchitektur};
+
+                    \draw[->, very thick] ([yshift=0.4cm]ProB.east)  to node[above,scale=1] {\tiny{constraint}} node[below,scale=1] {\tiny{posting}} ([yshift=0.4cm]C_Interface.west);
+                    \draw[<-, very thick] ([yshift=-0.4cm]ProB.east) to node[below,scale=1] {\tiny{Solution}} ([yshift=-0.4cm]C_Interface.west);
+                    \draw[<->, very thick] (C_Interface) to node[below,scale=1] {\tiny{ZMQ}} (Z3_Solver);
+                    \draw[<->, dashed, thick] (C_Interface.north east) to node[right,scale=1] {\tiny{ZMQ}} (Z3_Solver_G1.south west);
+                    \draw[<->, dashed, thick] (C_Interface.south east) to node[right,scale=1] {\tiny{ZMQ}} (Z3_Solver_G2.north west);
+                \end{scope}
+                \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(ProB) (C_Interface)] (P1){};
+                \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver)] (P2){};
+                \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver_G1)] (P3){};
+                \node[draw,dashed,inner xsep=0.2cm,inner ysep=0.2cm,fit=(Z3_Solver_G2)] (P4){};
+                \node[draw,inner xsep=0.5cm,inner ysep=0.5cm,fit=(ProB) (Z3_Solver_G1) (Z3_Solver_G2)] (RightScope){};
+
+                \draw[->, double, thick, shorten <= 2pt, shorten >= 2pt] (LeftScope.east) -- (LeftScope-|RightScope.west);
+
+                % \node at (0,-1.8) {\small Legende:};
+                \node[PB, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.2) {};
+                \node[right] at (0,-2.2) {\small ProB};
+                \node[HOT, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-2.7) {};
+                \node[right] at (0,-2.7) {\small Komponenten-Entkopplung};
+                \node[draw,dashed, minimum width=0.4cm, minimum height=0.4cm] at (-0.4,-3.2) {};
+                \node[right] at (0,-3.2) {\small Individuelle Prozesse};
+
+            \end{tikzpicture}
+        }
+        % \caption{Die umgesetzte Architekturänderung.}
+        % \label{fig:architecture}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Hintergrundinformationen}
+    \vspace{1em}
+    \Large
+    \begin{center}
+        \begin{itemize}
+            \item ProB: Animator, Model Checker und Constraint Solver für B-Methoden.
+            \item Z3: Constraint Solver von Microsoft Research.
+            \item ZeroMQ: Kommunikationsbibliothek für verteilte Systeme.
+        \end{itemize}
+    \end{center}
+\end{frame}
