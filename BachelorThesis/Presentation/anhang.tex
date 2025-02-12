@@ -1,8 +1,41 @@
 \section{Anhang}
-\begin{frame}{Anhang}
-    Bild von successfull tests
-    Messwert tabelle
+\begin{frame}{Anhang - Gitlab CI}
+    \begin{center}
+        \includegraphics[width=0.65\textwidth]{./fig/gitci.png}
+    \end{center}
+\end{frame}
 
-    exceptions iwas
-    evtl hilfsfunktion
+\begin{frame}{Anhang - Softlock Stacktrace}
+    \vspace{2em}
+    \fontsize{7pt}{8pt}\selectfont
+
+    \inputminted[linenos=false]{c++}{stacktrace.sh}
+
+    \makebox[\textwidth]{\textbf{\vdots}} % Centers \vdots horizontally
+\end{frame}
+
+\begin{frame}{Anhang - Datenauszug Performance-Messung}
+    \begin{table}[!htp]
+        \centering
+        \resizebox{\textwidth}{!}{ % Adjust table size to fit the page
+            \begin{tabular}{ cccccc }
+                \toprule
+                \textbf{TestID} & \textbf{QueryID} & \textbf{Old(ns)} & \textbf{New(IPC, ns)} & \textbf{New(TCP, ns)} & \textbf{Req. Count} \\
+                \midrule
+                \noalign{\vskip -1mm}
+                \vdots          & \vdots           & \vdots           & \vdots                & \vdots                & \vdots              \\
+                \noalign{\vskip -1mm}
+                1510            & 1                & \num{114815014}  & \num{283392117}       & \num{113503997}       & 191                 \\
+                1510            & 2                & \num{52048678}   & \num{59273375}        & \num{44489012}        & 166                 \\
+                1510            & 3                & \num{30853103}   & \num{24983820}        & \num{25212332}        & 286                 \\
+                1511            & 1                & \num{69240686}   & \num{199325313}       & \num{61823314}        & 21                  \\
+                1511            & 2                & \num{61404523}   & \num{62220124}        & \num{48522297}        & 20                  \\
+                1513            & 1                & \num{80829324}   & \num{202694845}       & \num{75877790}        & 25                  \\
+                \noalign{\vskip -1mm}
+                \vdots & \vdots & \vdots    & \vdots    & \vdots    & \vdots \\
+                \noalign{\vskip -1mm}
+                \bottomrule
+            \end{tabular}
+        }
+    \end{table}
 \end{frame}
