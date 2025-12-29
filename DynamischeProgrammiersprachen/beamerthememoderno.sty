@@ -1,0 +1,228 @@
+% Modern Beamer Theme - Moderno
+% A clean, contemporary theme for academic presentations
+% 2025
+
+\ProvidesPackage{beamerthememoderno}[2025/12/27]
+
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+% Force 16:9 aspect ratio
+\RequirePackage{geometry}
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+% Modern fonts
+\RequirePackage{carlito}
+\renewcommand{\familydefault}{\sfdefault}
+
+\RequirePackage{graphicx}
+
+% Modern color scheme
+\definecolor{modernblue}{RGB}{41, 128, 185}      % Sophisticated blue
+\definecolor{modernaccent}{RGB}{52, 152, 219}    % Lighter accent blue
+\definecolor{moderndark}{RGB}{44, 62, 80}        % Dark gray-blue
+\definecolor{modernlight}{RGB}{236, 240, 241}    % Light gray
+\definecolor{moderntext}{RGB}{52, 73, 94}        % Text color
+\definecolor{moderngreen}{RGB}{39, 174, 96}      % Success green
+\definecolor{modernred}{RGB}{231, 76, 60}        % Alert red
+
+% No navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Color settings
+\setbeamercolor{normal text}{fg=moderntext,bg=white}
+\setbeamercolor{structure}{fg=modernblue}
+\setbeamercolor{alerted text}{fg=modernred}
+\setbeamercolor{example text}{fg=moderngreen}
+
+\setbeamercolor{title}{fg=white,bg=modernblue}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{author}{fg=modernlight}
+\setbeamercolor{date}{fg=modernlight}
+\setbeamercolor{institute}{fg=modernlight}
+
+\setbeamercolor{frametitle}{fg=modernblue,bg=white}
+\setbeamercolor{framesubtitle}{fg=moderndark}
+
+\setbeamercolor{block title}{fg=white,bg=modernblue}
+\setbeamercolor{block body}{fg=moderntext,bg=modernlight}
+
+\setbeamercolor{block title alerted}{fg=white,bg=modernred}
+\setbeamercolor{block body alerted}{fg=moderntext,bg=modernlight}
+
+\setbeamercolor{block title example}{fg=white,bg=moderngreen}
+\setbeamercolor{block body example}{fg=moderntext,bg=modernlight}
+
+\setbeamercolor{footline}{fg=moderndark,bg=modernlight}
+\setbeamercolor{section in toc}{fg=modernblue}
+\setbeamercolor{subsection in toc}{fg=moderndark}
+
+% Font settings
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large,series=\normalfont}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{institute}{size=\small}
+
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\footnotesize,series=\normalfont}
+
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{block body}{size=\small}
+
+\setbeamerfont{footline}{size=\tiny}
+\setbeamerfont{section in toc}{series=\bfseries}
+
+% Modern itemize items
+\setbeamertemplate{itemize item}{\raisebox{0.12ex}{$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.12ex}{$\triangleright$}}
+\setbeamertemplate{itemize subsubitem}{$\circ$}
+
+% Modern enumerate
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+
+% Modern blocks with rounded corners
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% Define toggle for section subtitle
+\newif\ifshowsectionsubtitle
+\showsectionsubtitletrue
+
+% Custom frametitle with modern design
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.8cm,rightskip=0.8cm,ht=2.5ex,dp=0.5ex]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle%
+  \end{beamercolorbox}%
+  % Subtitle line (Section number and name)
+  \ifshowsectionsubtitle
+    \ifnum\value{section}>0
+      \vskip-0.2ex
+      \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.8cm,rightskip=0.8cm,ht=1.2ex,dp=0.3ex]{framesubtitle}
+        \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\thesection~\secname
+      \end{beamercolorbox}%
+    \fi
+  \fi
+  % Modern accent line
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.15ex,dp=0pt]{frametitle}
+    \tikz\fill[modernaccent] (0,0) rectangle (\paperwidth,0.15ex);
+  \end{beamercolorbox}
+}
+
+% Modern footline
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.25ex,leftskip=0.8cm,rightskip=0.8cm]{footline}%
+    \usebeamerfont{footline}%
+    \insertshortauthor\hfill
+    \insertframenumber{} / \inserttotalframenumber
+  \end{beamercolorbox}%
+}
+
+% Modern title page
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Background gradient
+    \fill[modernblue] (current page.north west) rectangle (current page.south east);
+
+    % Geometric accent elements
+    \fill[modernaccent,opacity=0.3] (current page.north east) -- +(-4,0) -- +(0,-3) -- cycle;
+    \fill[moderndark,opacity=0.2] (current page.south west) -- +(3,0) -- +(0,2.5) -- cycle;
+
+    % Content box
+    \node[anchor=center,text width=0.9\paperwidth,inner sep=0pt] at (current page.center) {%
+      \begin{beamercolorbox}[center,sep=20pt]{title}
+        \usebeamerfont{title}\inserttitle\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+          \vskip0.5em%
+          {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+        \fi%
+      \end{beamercolorbox}%
+      \vskip1.5em\par
+      \begin{beamercolorbox}[center,sep=8pt]{author}
+        \usebeamerfont{author}\insertauthor
+      \end{beamercolorbox}
+      \vskip0.3em
+      \begin{beamercolorbox}[center,sep=8pt]{institute}
+        \usebeamerfont{institute}\insertinstitute
+      \end{beamercolorbox}
+      \vskip0.5em
+      \begin{beamercolorbox}[center,sep=8pt]{date}
+        \usebeamerfont{date}\insertdate
+      \end{beamercolorbox}
+    };
+  \end{tikzpicture}
+}
+
+% Table of contents style
+\setbeamertemplate{section in toc}{%
+  \leavevmode\leftskip=2em%
+  \llap{%
+    \usebeamerfont{section number projected}%
+    \usebeamercolor[bg]{section number projected}%
+    \tikz[baseline=(char.base)]{
+      \node[circle,fill=modernblue,inner sep=1.5pt,text=white] (char) {\inserttocsectionnumber};
+    }%
+    \kern1.25ex%
+  }%
+  \inserttocsection\par
+}
+
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=3.5em\usebeamerfont{subsection in toc}%
+  \llap{\raisebox{0.12ex}{$\triangleright$}\kern1ex}%
+  \inserttocsubsection\par
+}
+
+% Disable subsection pages
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% Modern background for special frames
+\newenvironment{modernframe}[1]{%
+  \setbeamercolor{background canvas}{bg=modernlight}
+  \begin{frame}{#1}
+}{%
+  \end{frame}
+}
+
+% Highlight box environment
+\newenvironment{highlightbox}{%
+  \begin{beamercolorbox}[rounded=true,shadow=false,sep=0.8em,wd=0.95\textwidth]{block body}
+}{%
+  \end{beamercolorbox}
+}
+
+% Section title frame
+\newcommand{\sectionframe}{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=modernblue}
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\textcolor{white}{\insertsectionhead}
+    \end{beamercolorbox}
+    \vfill
+  \end{frame}
+  \endgroup
+}
+
+% Customize caption
+\setbeamertemplate{caption}[numbered]
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{series=\bfseries}
+
+% Bibliography style
+\setbeamertemplate{bibliography item}[text]
+\setbeamerfont{bibliography item}{size=\footnotesize}
+\setbeamerfont{bibliography entry author}{size=\footnotesize}
+\setbeamerfont{bibliography entry title}{size=\footnotesize}
+\setbeamerfont{bibliography entry location}{size=\footnotesize}
+\setbeamerfont{bibliography entry note}{size=\footnotesize}
+
+\mode<all>

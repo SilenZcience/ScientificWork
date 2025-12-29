@@ -1,0 +1,890 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx, float}
+\graphicspath{{res/}}
+\usepackage{amsfonts,amsmath}
+\usepackage{listings}
+
+% Modernes Theme verwenden
+\usetheme{moderno}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  frame=single
+}
+
+\title{Let's Take Esoteric Programming Languages Seriously}
+\subtitle{Geschrieben von J. Singer \& S. Draper}
+\author{Silas A. Kraume}
+\institute{Heinrich-Heine-Universität Düsseldorf}
+\date{Dynamische Programmiersprachen - Präsentation}
+
+\begin{document}
+\maketitle
+
+\begin{frame}[noframenumbering]{Inhaltsverzeichnis}
+    \tableofcontents
+\end{frame}
+
+\section{Einführung \& Definition}
+
+\begin{frame}{Das Phänomen Esolang}
+    \begin{itemize}
+        \item Unpraktisch und unnötig Komplex
+        \item Dennoch überraschend populär in der Informatik-Community
+    \end{itemize}
+    \vspace{1cm}
+    \begin{block}{Kernfrage}
+        Warum gibt es sie und welchen Nutzen haben sie?
+    \end{block}
+\end{frame}
+
+\begin{frame}{Was ist eine esoterische Programmiersprache $\left(\text{"Esolang"}\right)$?}
+    \begin{block}{Konventionelle Definition}
+        Eine Sprache, die für Experimente mit seltsamen Ideen, schwierige Programmierung oder als Scherz gedacht ist.
+    \end{block}
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Oftmals absichtlich unbrauchbar
+        \item Ungewöhnliche oder obskure Syntax/Semantik
+    \end{itemize}
+    \vspace{0.5cm}
+    \textbf{Unterschied zu Mainstream-Sprachen:} Nicht für praktische Anwendung gedacht.
+\end{frame}
+
+\begin{frame}{Das Wesen von Esolangs}
+    \begin{itemize}
+        \item \textbf{Low-Level Semantik:} Meist primitive arithmetische Operationen, begrenzter I/O
+        \vspace{0.5cm}
+        \item \textbf{Keine Abstraktion:} Keine komplexen Datentypen, keine Modularität
+        \vspace{0.5cm}
+        \item \textbf{Unkonventionelle Syntax:} Der Code sieht oft gar nicht aus wie Code
+    \end{itemize}
+\end{frame}
+
+\section{Klassifizierung \& Beispiele}
+
+% \begin{frame}{Der Urvater: INTERCAL}
+%     \begin{itemize}
+%         \item Erschaffen 1972 als Parodie auf FORTRAN und COBOL
+%         \item Name: "Compiler Language With No Pronounceable Acronym"
+%     \end{itemize}
+%     \vspace{0.5cm}
+%     \begin{block}{Besonderheit: Der PLEASE Befehl}
+%         \begin{itemize}
+%             \item Zu wenig PLEASE: Fehlermeldung (unhöflich)
+%             \item Zu viel PLEASE: Fehlermeldung (unterwürfig)
+%         \end{itemize}
+%     \end{block}
+% \end{frame}
+
+\begin{frame}{Klassifizierung von Esolangs}
+    Wir teilen Esolangs in drei Kategorien (nicht exklusiv):
+    \vspace{1cm}
+    \begin{enumerate}
+        \item Natürliche Sprache (Natural Language)
+        \vspace{0.5cm}
+        \item Exotische Syntax (Quirky Syntax)
+        \vspace{0.5cm}
+        \item Exotisches Rechenmodell (Quirky Computational Model)
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Kategorie 1: Natürliche Sprachen - Shakespeare}
+    \begin{itemize}
+        \item Programme sehen aus wie Theaterstücke Von William Shakespeare
+        \item Variablen sind Charaktere (Romeo, Julia)
+        \item Wertezuweisung durch Dialoge
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Beispiel}
+        \small
+        \texttt{[Enter Hamlet and Romeo]}
+        \newline
+        \texttt{Hamlet:}
+        \newline
+        \texttt{You lying stupid fatherless big smelly half-witted coward! You are as
+        stupid as the difference between a handsome rich brave hero and thyself!
+        Speak your mind!}
+        \newline
+        \texttt{\dots}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Kategorie 1: Natürliche Sprachen - Chef}
+    \begin{itemize}
+        \item Code sieht aus wie ein Kochrezept
+        \item Variablen sind "Zutaten"
+        \item Kochanweisungen sind Methodiken
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Beispiel}
+        \small
+        \texttt{Ingredients.}
+        \newline
+        \texttt{72 g haricot beans}
+        \newline
+        \texttt{101 eggs}
+        \newline
+        \newline
+        \texttt{Method.}
+        \newline
+        \texttt{Put eggs into the mixing bowl.}
+        \newline
+        \texttt{Put haricot beans into the mixing bowl.}
+        \newline
+        \texttt{Liquefy contents of the mixing bowl.}
+        \newline
+        \texttt{Pour contents of the mixing bowl into the baking dish.}
+        \newline
+        \texttt{Serves 1.}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Kategorie 2: Exotische Syntax - Whitespace}
+    \begin{itemize}
+        \item Syntax besteht nur aus Leerzeichen, Tabs und Zeilenumbrüchen
+        % \vspace{0.5cm}
+        \item Für das menschliche Auge unsichtbar
+        % \vspace{0.5cm}
+        \item Alle anderen Zeichen werden als Kommentare ignoriert
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Beispiel}
+        \small
+        \texttt{}
+        \newline
+        \newline
+        \newline
+        \newline
+        \newline
+        \texttt{}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Kategorie 2: Exotische Syntax - Piet}
+    \begin{itemize}
+        \item Code ist ein Bitmap-Bild (ähnlich Mondrian-Kunst)
+        % \vspace{0.5cm}
+        \item \textbf{Program Flow:} Ein Zeiger bewegt sich 2-dimensional über die Farbfläche
+        % \vspace{0.5cm}
+        \item Befehle entstehen beim Wechsel von Farben/Helligkeiten
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.2\textwidth]{Piet_Hello_World.png}
+        \caption{Ein "Hello World" Programm in Piet}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Kategorie 3: Exotische Rechenmodelle - Brainfuck}
+    \begin{itemize}
+        \item Minimalistische Sprache, simuliert Turing-Maschine
+        \item Nur 8 Befehle: \texttt{> < + - . , [ ]}
+        \item Extrem begrenzter Speicher (typischerweise 30KB Array)
+        \vspace{0.5cm}
+        \item \textbf{Jedes "interessante" Programm wird extrem lang und unleserlich}
+    \end{itemize}
+        \begin{block}{Beispiel}
+        \small
+        \texttt{++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.}
+        \texttt{------.--------.>>+.>++.}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Das extremste Beispiel: Malbolge}
+    \begin{itemize}
+        \item Benannt nach dem 8. Kreis der Hölle in Dantes Inferno
+        \item \textbf{Designziel:} Die schwerstmögliche Sprache überhaupt
+        \item Selbstmodifizierend: Befehle ändern sich nach Ausführung ("Verschlüsselung")
+        \item Erstes Programm wurde erst Jahre später durch einen Such-Algorithmus generiert
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{block}{Beispiel}
+        \small
+        \texttt{(=BA\#9"=<;:3y7x54-21q/p-,+*)"!h\%B0/.}
+        \newline
+        \texttt{$\sim$P<}
+        \newline
+        \texttt{<:(8\&}
+        \newline
+        \texttt{66\#"!$\sim$\}|\{zyxwvu}
+        \newline
+        \texttt{gJ\%}
+    \end{block}
+\end{frame}
+
+\section{Der Reiz von Esolangs}
+
+\begin{frame}{Warum sind Esolangs so beliebt?}
+    Vier Hauptgründe für die Popularität:
+    \vspace{1cm}
+    \begin{enumerate}
+        \item Verspieltheit (Playfulness)
+        \vspace{0.3cm}
+        \item Nostalgie
+        \vspace{0.3cm}
+        \item Zugehörigkeitsgefühl (Cultic initiation)
+        \vspace{0.3cm}
+        \item Künstlerischer Ausdruck
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{1. Verspieltheit}
+    \begin{quote}
+            "Deep down, we like confusing people who are stuffier and less mentally agile than we are [...]" \cite{hacker}
+        \end{quote}
+    \begin{itemize}
+        \item Anti-autoritäre Haltung: Verwirrung stiften mit "snazzy special effects"
+        \vspace{0.5cm}
+        \item \textbf{Advent of Code:} Viele lösen Rätsel in Esolangs als zusätzliche Herausforderung
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{2. Nostalgie ("Das Goldene Zeitalter")}
+    \begin{itemize}
+        \item Sehnsucht nach der Zeit, als Programmieren noch "schwer" war
+        \vspace{0.5cm}
+        \item \textbf{Das "Haarhemd" tragen (Peyton Jones):} Stolz darauf, unter schwierigen Bedingungen Code zu produzieren
+        \begin{itemize}
+            \item "Technomasochismus"
+        \end{itemize}
+        \vspace{0.5cm}
+        \item Gegenbewegung zu modernen IDEs, Autocomplete und KI-Hilfen
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{3. Zugehörigkeit \& Kult}
+    \begin{itemize}
+        \item Sprache als soziales Bindemittel (wie Klingonisch)
+        \vspace{0.5cm}
+        \item \textbf{Initiationsritus:} Wer Brainfuck lesen kann, gehört zum "Inner Circle"
+        \vspace{0.5cm}
+        \item Wissen wird oft mündlich oder in versteckten Wikis weitergegeben, nicht in Lehrbüchern
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{4. Künstlerischer Ausdruck}
+    \begin{itemize}
+        \item Code als Artefakt vs. ausführbare Entität
+        \vspace{0.5cm}
+        \item Esolangs betonen das Artefakt (das Bild bei Piet, das Rezept bei Chef)
+        \vspace{0.5cm}
+        \item \textbf{Knuth:} "Literate Programming" – Code wird für Menschen geschrieben
+        \vspace{0.5cm}
+        \item Steganographie: Code versteckt in Bildern oder Texten
+    \end{itemize}
+\end{frame}
+
+% {\showsectionsubtitlefalse
+% \begin{frame}{Exkurs: Sind Esolangs dynamische Sprachen?}
+%     \begin{block}{Sind Esolangs dynamisch?}
+%         \textbf{Nein.} Esolangs teilen einzelne Eigenschaften mit dynamischen Sprachen (z.B. Interpretation), erfüllen aber nicht das Gesamtpaket.
+%     \end{block}
+%     \vspace{0.3cm}
+%     \begin{block}{Sind Esolangs statisch?}
+%         \textbf{Auch nein.} Die meisten haben gar kein Typsystem im klassischen Sinne.
+%     \end{block}
+%     \vspace{0.5cm}
+%     \begin{block}{Die Wahrheit}
+%         Esolangs bilden eine \textbf{eigene Kategorie}, die sich der traditionellen Klassifikation entzieht:
+%         \begin{itemize}
+%             \item Minimalistisch statt abstrakt
+%             \item Obfuskation statt Klarheit
+%             \item Kunst/Experiment statt Produktivität
+%         \end{itemize}
+%     \end{block}
+%     \vspace{0.2cm}
+%     \small
+%     Sie sind der "Anti-Typ" – weder dynamisch noch statisch, sondern \textit{absichtlich unpraktisch}.
+% \end{frame}
+% }
+
+\section{Pädagogischer Wert}
+
+\begin{frame}{Lernen durch Esolangs?}
+    \begin{block}{Konzept von "Hard Fun"}
+        Lernen ist besonders effektiv, wenn es herausfordernd, aber lohnend ist
+    \end{block}
+    \vspace{0.5cm}
+    \begin{block}{Variationstheorie}
+        Dasselbe Konzept in verschiedenen Kontexten sehen fördert das Verständnis
+    \end{block}
+    \begin{itemize}
+        \item Wer Schleifen in Brainfuck versteht, hat das Konzept "Schleife" \textbf{wirklich} verstanden
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Lektionen durch Esolangs}
+    \begin{block}{1. Die Gefahr von "GOTO"}
+        \begin{itemize}
+            \item Dijkstras Kritik an \textit{GOTO} wird greifbar
+            \item Beispiel Shakespeare: \textit{Let us proceed to Scene N} erzeugt schnell Spaghetti-Code
+            \item Als Anfänger erkennt man dies sofort als problematisch
+        \end{itemize}
+    \end{block}
+    \vspace{0.5cm}
+    \begin{block}{2. Das Turing-Tarpit}
+        \begin{itemize}
+            \item \textit{"Beware of the Turing tar-pit in which everything is possible but nothing of interest is easy"} \cite{turingtarpit}
+            \item Turing-Vollständigkeit allein reicht nicht für eine gute Sprache
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Einblick in die Maschine}
+    \begin{itemize}
+        \item Esolangs entfernen den Komfort
+        \vspace{0.5cm}
+        \item Man lernt das zugrunde liegende Rechenmodell (Stack, Speicherzellen, Pointer) direkt kennen
+        \vspace{0.5cm}
+        \item Entmystifizierung dessen, was "unter der Haube" passiert
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Empathie für Lehrende}
+    \begin{itemize}
+        \item Erfahrene Programmierer fühlen sich in Esolangs wieder wie Anfänger
+        \vspace{1cm}
+        \item Hilft Dozenten, die Frustration von Erstsemestern wieder nachzuvollziehen
+    \end{itemize}
+\end{frame}
+
+\section{Design von Esolangs \& Sprachdesign}
+
+\begin{frame}{Wer entwickelt Esolangs?}
+    \begin{itemize}
+        \item Oft Informatik-Studenten (z.B. INTERCAL in Princeton, Whitespace in Durham)
+        \vspace{0.5cm}
+        \item Oft als Projekt, um Kompilerbau zu lernen
+        \vspace{0.5cm}
+        \item Demografisch oft männlich dominiert
+        \vspace{0.5cm}
+        \item Kultur die "Härte" und "Technomasochismus" glorifiziert
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Warum entwickelt man eine Esolang?}
+    \begin{enumerate}
+        \item \textbf{Comedy:} Parodie auf existierende Sprachen (INTERCAL vs. Fortran)
+        \vspace{0.5cm}
+        \item \textbf{Herausforderung:} Sich selbst extreme Beschränkungen auferlegen
+        \vspace{0.5cm}
+        \item \textbf{Kreativität:} Eine "eigene" Sprache haben ("A room of one's own")
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Die 5 Motive für Sprachdesign (Die 5 E's)}
+    Warum werden Sprachen generell entwickelt?
+    \vspace{0.5cm}
+    \begin{enumerate}
+        \item \textbf{E}xpressivity (Ausdrucksstärke)
+        \item \textbf{E}fficiency (Effizienz)
+        \item \textbf{E}ducation (Bildung)
+        \item \textbf{E}conomy (Wirtschaftlichkeit)
+        \item \textbf{E}xploration (Forschung/Neugier)
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Motiv 1: Expressivity}
+    \begin{block}{Ziel}
+        Komplexe Konzepte kürzer ausdrücken
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{Beispiele:} Lisp, Prolog
+    \newline
+    % \vspace{0.5cm}
+    \textbf{Esolangs:} Das Gegenteil. Sie fügen Komplexität hinzu
+\end{frame}
+
+\begin{frame}{Motiv 2: Efficiency}
+    \begin{block}{Ziel}
+        Nähe zur Hardware, Geschwindigkeit
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{Beispiele:} C, Rust, Zig
+    \newline
+    \textbf{Esolangs:} Ineffizient, da das Rechenmodell oft abstrakt und umständlich ist
+\end{frame}
+
+\begin{frame}{Motiv 3: Education}
+    \begin{block}{Ziel}
+        Leicht zu lernen
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{Beispiele:} BASIC, Scratch, Logo
+    \newline
+    \textbf{Esolangs:} Explizit nicht für Anfänger
+    \newline
+    \small
+    (INTERCAL Manual: "besser geeignet, Anfänger dazu zu bringen, den Beruf zu wechseln" \cite{intercal})
+\end{frame}
+
+\begin{frame}{Motiv 4: Economy}
+    \begin{block}{Ziel}
+        finanzieller Gewinn, Marktdominanz
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{Beispiel:} C\# (als Rivale zu Java)
+    \newline
+    \textbf{Esolangs:} Kein kommerzieller Nutzen (außer ggf. Buchverkäufe)
+\end{frame}
+
+\begin{frame}{Motiv 5: Exploration}
+    \begin{block}{Ziel}
+        Intellektuelle Übung, Grenzen testen
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{Beispiel:} Haskell (ursprünglich)
+    \newline
+    \newline
+    \newline
+    \newline
+    \Large
+    \textbf{Hier leben die Esolangs. Sie sind reine Exploration.}
+\end{frame}
+
+% \begin{frame}{Esolangs als Sprachkritik}
+%     \begin{itemize}
+%         \item Sie zwingen uns, darüber nachzudenken, was eine Sprache "gut" macht
+%         \vspace{1cm}
+%         \item Sie sind ein Gegenentwurf zu den "bland, bloated multiparadigm languages"
+%     \end{itemize}
+% \end{frame}
+
+\section{KI und Zukunft}
+
+\begin{frame}{KI und Esolangs - Codegenerierung}
+    \begin{itemize}
+        \item LLMs (wie ChatGPT) sind gut in Python, aber schlecht in Esolangs
+        \vspace{0.5cm}
+        \item \textbf{Grund:} Mangelnde Trainingsdaten (Es gibt kaum Brainfuck oder Piet Repositories)
+        \vspace{0.5cm}
+        \item Experimente zeigen: Generierter Code für Piet oder Shakespeare enthält meist fundamentale Syntaxfehler
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{KI und Esolangs - Spracherfindung}
+    \begin{itemize}
+        \item Kann eine KI eine neue Esolang erfinden?
+        \vspace{0.5cm}
+        \item Versuche ergaben: Sprachen waren oft nicht Turing-vollständig oder plagiierten existierende Ideen (z.B. Musik-Sprachen)
+        \vspace{0.5cm}
+        \item \textbf{Kreativität und "Witz" fehlen der KI hier noch}
+    \end{itemize}
+\end{frame}
+
+% \begin{frame}{Software Engineering \& KI}
+%     \begin{block}{Erkenntnis}
+%         Die Tatsache, dass KI an Esolangs scheitert, zeigt:
+%     \end{block}
+%     \vspace{0.5cm}
+%     \begin{itemize}
+%         \item KI wird Software Engineering nicht irrelevant machen
+%         \vspace{0.5cm}
+%         \item Es gibt Nischen, die menschliches Verständnis und kreative "Unvernunft" erfordern
+%     \end{itemize}
+% \end{frame}
+
+\section{Fazit}
+
+\begin{frame}{Zusammenfassung}
+    \begin{itemize}
+        \item Esolangs sind Kunst, Kult und pädagogisches Werkzeug
+        \vspace{0.5cm}
+        \item Sie stellen sich den Mainstream-Sprachen entgegen
+        \vspace{0.5cm}
+        \item Sie lehren uns kritisches Denken über Design und Konzepte
+    \end{itemize}
+    \nocite{esoteric}
+\end{frame}
+
+\begin{frame}{Abschließendes Zitat}
+    \begin{block}{Alan Perlis (Epigramm 19)}
+        "A language that doesn't affect the way you think about programming, is not worth knowing."
+        \cite{turingtarpit}
+    \end{block}
+    \vspace{1cm}
+    \Large
+    \textbf{Esolangs verändern definitiv, wie wir denken – also sind sie es wert, gekannt zu werden.}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vielen Dank!}
+    \begin{center}
+        \LARGE{Vielen Dank für Eure Aufmerksamkeit!}
+    \end{center}
+\end{frame}
+
+\section{Quellen}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Quellenverzeichnis}
+    \bibliographystyle{amsalpha}
+    \bibliography{references}
+\end{frame}
+
+\appendix
+\section{Anhang}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Titel frei wählbar, wird als Kommentar behandelt
+        \item Variablen sind Charaktere und müssen in Shakespeare-Dramen vorkommen (152 insgesamt)
+        \item Variablen müssen zunächst deklariert werden (deren Beschreibung ist verpflichtend aber wird ignoriert)
+    \end{itemize}
+    \begin{lstlisting}[language=C]
+The Infamous Hello World Program
+
+Romeo, a young man with a remarkable patience.
+Juliet, a likewise young woman of remarkable grace.
+Ophelia, a remarkable woman much in dispute with Hamlet.
+Hamlet, the flatterer of Andersen Insulting A/S.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Folgend werden Akte und Szenen definiert
+        \item Diese dienen als Sprungziele für "Goto"-artige Befehle
+        \item Zwischen Akten kann nicht gesprungen werden, nur zwischen Szenen innerhalb eines Akts
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=8]
+Act I: Hamlets insults and flattery.
+Scene I: The insulting of Romeo.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Es können immer nur zwei Variablen gleichzeitig angesprochen werden
+        \item Variablen werden über "Enter" und "Exit" ein- und ausgeführt
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=11]
+[Enter Hamlet and Romeo]
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Variablen/Charaktere werden durch Dialoge manipuliert
+        \item Die beiden aktiven Charaktere sprechen sich gegenseitig Werte zu
+        \item Die Anzahl der Adjektive und das Nomen bestimmen den Wert
+        \item Adjektive haben den Wert 2, Nomen haben den Wert 1 (nette Worte) oder -1 (beleidigende Worte)
+        \item Die Werte werden multipliziert (big smelly coward = 2*2*-1 = -4)
+        \item Im Folgenden entsteht der Wert 2*2*2*2*2*2*-1 = -64
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=13]
+Hamlet:
+You lying stupid fatherless big smelly half-witted coward!
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Arithmetik durch "as" über Schlüsselwörter "difference", "sum", "product", "quotient"
+        \item Im Folgenden entsteht 2*2*2*1 - thyself = 8 - (-64) = 72
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=15]
+You are as stupid as the difference between a handsome rich brave hero and thyself!
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Eingabe durch "Open your mind" (als Char) oder "Listen to your heart" (als Zahl)
+        \item Ausgabe durch "Speak your mind" (als Char) oder "Open your heart" (als Zahl)
+        \item Im Folgenden wird das ASCII-Zeichen 72 = 'H' ausgegeben
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=16]
+Speak your mind!
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Shakespeare}
+    \begin{itemize}
+        \item Aussagenlogik durch "X as good as Y" (X=Y), "X better than Y" (X>Y), "X worse than Y" (X<Y)
+        \item Sprünge durch "Let us proceed to Scene N" oder "Let us return to Scene N"
+        \item bedingte Sprünge durch "If so" und "If not"
+    \end{itemize}
+    \begin{lstlisting}[language=C]
+Juliet:
+
+ Am I better than you?
+
+Hamlet:
+
+ If so, let us proceed to scene III.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item Rezeptname und -beschreibung frei wählbar, werden als Kommentare behandelt
+        \item Variablen sind "Zutaten" und müssen zunächst deklariert werden (mit Startwert)
+        \item Es gibt trockene (kg, g, lb) und flüssige (l, ml, cup) Zutaten
+        \item trockene Zutaten werden als Ganzzahlen, Flüssige als ASCII Characters gespeichert
+    \end{itemize}
+    \begin{lstlisting}[language=C]
+Factorial and Chips.
+This recipe calculates the factorial of a number.
+
+Ingredients.
+1000 g fish
+1 kg Chips
+500g breading
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item Es folgt die "Method." Sektion mit Kochanweisungen / Programminstruktionen
+        \item "Take X from refrigerator.": X wird ein Wert durch Eingabe zugewiesen (User Input)
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=9]
+Method.
+Take fish from refrigerator.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item Schüsseln dienen als Stapelspeicher / Stack (LIFO)
+        \item "Put X into the mixing bowl.": Wert von X auf den Stack legen
+        \item "Add X to mixing bowl.": Wert von X zum obersten Stack-Wert addieren
+        \item "Combine X into the mixing bowl.": Wert von X zum obersten Stack-Wert multiplizieren
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=11]
+Put chips into the mixing bowl.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item Schleifen durchlaufen solange Variable > 0 ist (solange bis X = 0)
+        \item "\_ the X." beginnt eine Schleife
+        \item "\_ X until \_." endet eine Schleife
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=12]
+Bread the fish.
+    Combine fish into the mixin bowl.
+Coat fish until breaded.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item "Pour contents of the mixing bowl into the baking dish.": Wert(e) vom Stack nehmen und für Ausgabe vorbereiten
+        \item "Serves X.": Ausgabe der letzten X Werte (als Zahl oder Char, je nach Zutatentyp)
+    \end{itemize}
+    \begin{lstlisting}[language=C, firstnumber=15]
+Pour contents of the mixing bowl into the baking dish
+
+Serves 1.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item "Stir for X minutes": Den obersten Stack-Wert um X nach unten verschieben
+    \end{itemize}
+    \begin{lstlisting}[]
+Input int to ascii converter.
+
+Ingredients.
+1 l water
+
+Method.
+Carbonate the water.
+    Take water from refrigerator.
+    Put water into mixing bowl.
+    Stir for 999 minutes.
+Filter until carbonated.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Chef}
+    \begin{itemize}
+        \item "Mix the mixing bowl well": Stack random permutieren
+        \item "Clean the mixing bowl": Stack leeren
+        \item "Liquify contents of the mixing bowl": Alle Werte im Stack zu ASCII-Chars konvertieren
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item 3 Lexeme: Space (S), Tab (T), Newline (N), alles andere sind Kommentare
+        \item Jede Instruktion hat einen Instruction Modification Parameter (IMP)
+        \item Nach dem IMP folgt der Befehl selbst
+        \item Nach dem Befehl folgt ggf. ein Parameter
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{IMP} & \textbf{Bereich} \\
+            \hline
+            S & Stack Manipulation \\
+            \hline
+            TS & Arithmetik \\
+            \hline
+            TT & Heap-Zugriff \\
+            \hline
+            N & Flow Control \\
+            \hline
+            TN & I/O \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace IMPs}
+        \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item Zahl Parameter werden als binäre Zahlen kodiert (Space=0, Tab=1)
+        \item Zahlen beginnen mit Vorzeichen (Space=+, Tab=-) und enden mit Newline
+        \item Dadurch sind Stack Manipulationen möglich
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Befehl} & \textbf{Parameter} & \textbf{Verhalten} \\
+            \hline
+            S & Zahl & Push Zahl auf den Stack \\
+            \hline
+            NS & - & Dupliziere TOS (Top of Stack) \\
+            \hline
+            NT & - & Tausche TOS und NOS (Top und Next on Stack) \\
+            \hline
+            NN & - & Entferne TOS \\
+            \hline
+            TS & Zahl & Kopiere die n-te Zahl vom Stack \\
+            \hline
+            TN & Zahl & Schiebe die obersten n Zahlen vom Stack \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace Stack Manipulations Befehle}
+        \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item Arithmetik verwendet die obersten zwei Stack-Werte
+        \item Ergebnis von TOS op NOS (z.B. $TOS \div NOS$) wird wieder auf den Stack gelegt
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Befehl} & \textbf{Parameter} & \textbf{Verhalten} \\
+            \hline
+            SS & - & Addition \\
+            \hline
+            ST & - & Subtraktion \\
+            \hline
+            SN & - & Multiplikation \\
+            \hline
+            TS & - & Division (Int) \\
+            \hline
+            TT & - & Modulo \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace Arithmetik Befehle}
+        \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item Heap verwendet Adressierung über Stack-Werte
+        \item TOS = Adresse(, NOS = Wert)
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Befehl} & \textbf{Parameter} & \textbf{Verhalten} \\
+            \hline
+            S & - & Speichern \\
+            \hline
+            T & - & Auslesen \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace Heap Befehle}
+        \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item Flow Control steuert den Programmfluss
+        \item Labels sind beliebige Kombinationen von Space und Tab, enden mit Newline
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Befehl} & \textbf{Parameter} & \textbf{Verhalten} \\
+            \hline
+            SS & Label & Erstelelt eine Sprungmarke \\
+            \hline
+            ST & Label & Ruft Subroutine auf \\
+            \hline
+            SN & Label & Sprung zu Label (ohne Bedingung) \\
+            \hline
+            TS & Label & Sprung zu Label (wenn TOS = 0) \\
+            \hline
+            TT & Label & Sprung zu Label (wenn TOS < 0) \\
+            \hline
+            TN & - & Beende Subroutine, übergib Kontrolle auf Aufrufenden \\
+            \hline
+            NN & - & Beendet ds Programm \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace Flow Control Befehle}
+        \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Whitespace}
+    \begin{itemize}
+        \item Die Eingabe erfolgt über die Addressierung im Heap (TOS = Adresse)
+        \item Die Ausgabe verwendet den obersten Stack-Wert
+        \item TOS wird immer entfernt nach Ein-/Ausgabe
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Befehl} & \textbf{Parameter} & \textbf{Verhalten} \\
+            \hline
+            TS & - & Speichert Eingabe als ASCII an Heap Adresse (TOS) \\
+            \hline
+            TT & - & Speichert Eingabe als Zahl an Heap Adresse (TOS) \\
+            \hline
+            SS & - & Ausgabe von TOS als ASCII \\
+            \hline
+            ST & - & Ausgabe von TOS als Zahl \\
+            \hline
+        \end{tabular}
+        \caption{Whitespace I/O Befehle}
+        \end{table}
+\end{frame}
+
+\end{document}
