@@ -316,7 +316,7 @@
     \end{block}
     \vspace{0.5cm}
     \begin{block}{Variationstheorie}
-        Dasselbe Konzept in verschiedenen Kontexten sehen fördert das Verständnis
+        Dasselbe Konzept in verschiedenen Kontexten sehen, fördert das Verständnis
     \end{block}
     \begin{itemize}
         \item Wer Schleifen in Brainfuck versteht, hat das Konzept "Schleife" \textbf{wirklich} verstanden
@@ -749,7 +749,7 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace IMPs}
-        \end{table}
+    \end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Deep Dive: Whitespace}
@@ -779,7 +779,7 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace Stack Manipulations Befehle}
-        \end{table}
+    \end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Deep Dive: Whitespace}
@@ -806,7 +806,7 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace Arithmetik Befehle}
-        \end{table}
+    \end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Deep Dive: Whitespace}
@@ -827,7 +827,7 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace Heap Befehle}
-        \end{table}
+    \end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Deep Dive: Whitespace}
@@ -858,7 +858,7 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace Flow Control Befehle}
-        \end{table}
+    \end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Deep Dive: Whitespace}
@@ -884,7 +884,157 @@ Serves 1.
             \hline
         \end{tabular}
         \caption{Whitespace I/O Befehle}
-        \end{table}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Piet}
+    \begin{itemize}
+        \item Stack basiert (LIFO)
+        \item 18 Farben (6 Farbtöne x 3 Helligkeitsstufen) + Schwarz (Blocker) + Weiß (kein Befehl)
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Piet_Colors.png}
+        \caption{Farben in Piet}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Piet}
+    \begin{itemize}
+        \item Direction Pointer (DP) zeigt die aktuelle Bewegungsrichtung an (Rechts, Unten, Links, Oben)
+        \item DP beginnt oben links und zeigt nach rechts
+        \item Codel Chooser (CC) bestimmt, ob bei Blockaden / Entscheidungsproblemen im Uhrzeigersinn oder gegen den Uhrzeigersinn gedreht wird
+        \item CC beginnt gegen den Uhrzeigersinn
+        \item Bei Blockaden (Schwarz oder Rand) wird zuerst der CC gewechselt, dann der DP gedreht
+        \item Nach 8 erfolglosen Versuchen wird das Programm beendet
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Piet}
+    \begin{itemize}
+        \item Befehle/Instruktionen entstehen durch Farbwechsel oder Helligkeitswechsel
+        \item Die Wechsel sind kreisförmig angeordnet, also kommt Rot nach Magenta, und Light nach Dark (1 darker ist identisch zu 2 lighter)
+    \end{itemize}
+
+    \begin{table}[H]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+             & \multicolumn{3}{c|}{\textbf{Lightness change}} \\
+            \hline
+            \textbf{Hue change} & \textbf{No change} & \textbf{1 darker/2 lighter} & \textbf{2 darker/1 lighter} \\
+            \hline
+            No change & N/A & Push & Pop \\
+            \hline
+            1 step & Add & Subtract & Multiply \\
+            \hline
+            2 steps & Divide & Modulo & Not \\
+            \hline
+            3 steps & Greater & Pointer & Switch \\
+            \hline
+            4 steps & Duplicate & Roll & Input num \\
+            \hline
+            5 steps & Input char & Output num & Output char \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Piet}
+    \begin{itemize}
+        \item Wenn eine Instruktion einen Wert benötigt (z.B. Push), wird die Anzahl der Kacheln im vorherigen Farbbereich als Wert verwendet
+        \item Ein Farbbereich ist eine zusammenhängende Fläche gleicher Farbe (nur kardinale Richtung zählt, also nicht diagonal zusammenhängend)
+        \item Das Folgende Beispiel zeigt die Ausgabe der Zahl 12 nach der Addition von 6 und 6
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.45\textwidth]{Piet_Bsp.png}
+        \caption{Beispielprogramm in Piet}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Brainfuck}
+    \begin{itemize}
+        \item Direkter Zugriff auf Speicherzellen (Array von Bytes)
+        \item Alle Zellen sind initialisiert auf 0
+        \item Pointer zeigt auf die aktuelle Zelle
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Brainfuck}
+    \begin{itemize}
+        \item 8 Instruktionen
+    \end{itemize}
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Instruktion} & \textbf{Verhalten} \\
+            \hline
+            > & Bewege den Pointer nach rechts \\
+            \hline
+            < & Bewege den Pointer nach links \\
+            \hline
+            + & Erhöhe den Wert der aktuellen Zelle um 1\\
+            \hline
+            - & Verringere den Wert der aktuellen Zelle um 1\\
+            \hline
+            . & Gib den ASCII-Wert der aktuellen Zelle aus \\
+            \hline
+            , & Lese ein ASCII-Zeichen ein und speichere es in der aktuellen Zelle \\
+            \hline
+            [ & Springe zum entsprechenden ] wenn der Wert der aktuellen Zelle 0 ist \\
+            \hline
+            ] & Springe zum entsprechenden [ wenn der Wert der aktuellen Zelle nicht 0 ist \\
+            \hline
+        \end{tabular}
+        \caption{Brainfuck Befehle}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Brainfuck}
+    \begin{lstlisting}[basicstyle=\ttfamily\tiny]
++++++ +++               Set Cell #0 to 8
+[
+    >++++               Add 4 to Cell #1; this will always set Cell #1 to 4
+    [                   as the cell will be cleared by the loop
+        >++             Add 4*2 to Cell #2
+        >+++            Add 4*3 to Cell #3
+        >+++            Add 4*3 to Cell #4
+        >+              Add 4 to Cell #5
+        <<<<-           Decrement the loop counter in Cell #1
+    ]                   Loop till Cell #1 is zero
+    >+                  Add 1 to Cell #2
+    >+                  Add 1 to Cell #3
+    >-                  Subtract 1 from Cell #4
+    >>+                 Add 1 to Cell #6
+    [<]                 Move back to the first zero cell you find; this will
+                        be Cell #1 which was cleared by the previous loop
+    <-                  Decrement the loop Counter in Cell #0
+]                       Loop till Cell #0 is zero
+
+The result of this is:
+Cell No :   0   1   2   3   4   5   6
+Contents:   0   0  72 104  88  32   8
+Pointer :   ^
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Deep Dive: Brainfuck}
+    \begin{lstlisting}[basicstyle=\ttfamily\tiny, firstnumber=24]
+>>.                     Cell #2 has value 72 which is 'H'
+>---.                   Subtract 3 from Cell #3 to get 101 which is 'e'
++++++ ++..+++.          Likewise for 'llo' from Cell #3
+>>.                     Cell #5 is 32 for the space
+<-.                     Subtract 1 from Cell #4 for 87 to give a 'W'
+<.                      Cell #3 was set to 'o' from the end of 'Hello'
++++.----- -.----- ---.  Cell #3 for 'rl' and 'd'
+>>+.                    Add 1 to Cell #5 gives us an exclamation point
+>++.                    And finally a newline from Cell #6
+    \end{lstlisting}
 \end{frame}
 
 \end{document}
