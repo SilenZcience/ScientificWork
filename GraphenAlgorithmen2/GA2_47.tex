@@ -1,0 +1,89 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\title{\Huge{Graphenalgorithmen 2}\\Aufgaben}
+\author{\huge{Silas Alexander Kraume}\\sikra111}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+
+\section{Aufgabe 47}
+
+\begin{algorithm}[H]
+\KwIn{2-reduzierbarer Graph $G = \left(V, E\right)$}
+\KwOut{\textbf{true} wenn Hamilton-Kreis existiert, sonst \textbf{false}}
+
+\SetKwFunction{FHamilton}{CheckHamiltonCycleIn2ReducibleGraph}
+\SetKwProg{Fn}{Function}{:}{}
+\Fn{\FHamilton{$G$}}{
+\While{$|\text{V}| > 3$}{
+    $u \gets$ node in $V$ with $\deg_{G}\left(u\right) \leq 2$\;
+
+    \If{$\deg_{G}\left(u\right) < 2$}{
+        \Return \textbf{false}\;
+    }
+
+    Seien $v, w$ die beiden Nachbarn von $u$ in $G$\;
+
+    \tcp{Führe 2-Reduktion durch:}
+    $E \gets E \setminus \{(u,v)\}$\;
+    $E \gets E \setminus \{(u,w)\}$\;
+    $E \gets E \cup \{(v,w)\}$
+    \tcp{Insofern nicht bereits vorhanden}
+    $V \gets V \setminus \{u\}$\;
+}
+\If{$G \neq K_3$}{
+    \Return \textbf{false}\;
+}
+
+\Return \textbf{true}\;
+}
+\caption{Algorithmus zum Test der Existenz eines Hamilton-Kreises in einem 2-reduzierbaren Graphen}
+\end{algorithm}
+
+\subsection*{Beweis der Korrektheit}
+
+\begin{proof}
+Wir zeigen durch Induktion über die Anzahl der Knoten, dass der Algorithmus korrekt entscheidet, ob ein 2-reduzierbarer Graph $G$ einen Hamilton-Kreis besitzt.
+
+\textbf{Invariante:} In jedem Reduktionsschritt gilt: $G$ hat einen Hamilton-Kreis $\Leftrightarrow$ $G'$ (reduzierter Graph) hat einen Hamilton-Kreis.
+
+\textbf{Induktionsanfang:} Für $|V| = 3$ gilt: $G$ hat einen Hamilton-Kreis $\Leftrightarrow$ $G = K_3$ ($K_3$ ist der kleinstmögliche Hamilton-Kreis).
+
+\textbf{Induktionsschritt:} Angenommen, die Invariante gilt für Graphen mit $k$ Knoten. Betrachte Graph $G$ mit $k{+}1$ Knoten. Sei $u$ ein Knoten mit $\deg\left(u\right) = 2$ und Nachbarn $v, w$. Sei $G'$ der Graph nach 2-Reduktion von $u$.
+
+\textit{($\Rightarrow$):} Hat $G$ einen Hamilton-Kreis $H$, so verwendet $H$ beide Kanten $\{u,v\}$ und $\{u,w\}$ (da $u$ Grad 2 in $H$ haben muss). Nach Entfernung von $u$ und Hinzufügen von $\{v,w\}$ entsteht
+\[H' = H \setminus \{\{u,v\}, \{u,w\}\} \cup \{\{v,w\}\},\]
+ein Hamilton-Kreis in $G'$.
+
+\textit{($\Leftarrow$):} Hat $G'$ einen Hamilton-Kreis $H'$ mit Kante $\{v,w\}$, so ersetzen wir $\{v,w\}$ durch den Pfad $v - u - w$ und erhalten
+\[H = H' \setminus \{\{v,w\}\} \cup \{\{u,v\}, \{u,w\}\},\]
+einen Hamilton-Kreis in $G$.
+
+Somit gilt die Invariante auch für Graphen mit $k{+}1$ Knoten.
+
+\textbf{Korrektheit der Abbruchbedingungen:}
+
+Falls $\deg\left(u\right) < 2$: Knoten mit Grad $< 2$ können nicht in einem Hamilton-Kreis liegen $\Rightarrow$ kein Hamilton-Kreis existiert.
+
+Falls $|V| < 3$: Ein Hamilton-Kreis benötigt mindestens 3 Knoten $\Rightarrow$ kein Hamilton-Kreis existiert / Die Schleife wird nie durchlaufen und der Algorithmus gibt \textbf{false} zurück, da $G \neq K_3$.
+
+
+Durch vollständige Induktion folgt die Korrektheit des Algorithmus.
+\end{proof}
+
+\subsection*{Laufzeitanalyse}
+
+\begin{itemize}
+    \item Jede Iteration entfernt genau 1 Knoten $\Rightarrow |V| - 3$ Iterationen bis Abbruchbedingung $|V| = 3$
+    \item Jede Iteration: $O\left(1\right)$ zum Finden eines Knotens mit $\deg \leq 2$, $O\left(1\right)$ für 2-Reduktionsschritt
+    \item \textbf{Gesamtzeitkomplexität: $O\left(|V|\right)$}
+\end{itemize}
+
+\end{document}
