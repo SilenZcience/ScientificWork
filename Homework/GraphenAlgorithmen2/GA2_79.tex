@@ -1,0 +1,103 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\newtheorem{theorem}{Theorem}
+
+\title{\Huge{Graphenalgorithmen 2}\\Aufgaben}
+\author{\huge{Silas Alexander Kraume}\\sikra111}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+
+\section{Aufgabe 79}
+
+\begin{theorem}
+\leavevmode\newline
+Für jeden chordalen Graphen $G = \left(V, E\right)$ gilt
+\[
+\kappa\left(G\right) = \alpha\left(G\right)
+\]
+wobei
+$\kappa\left(G\right)$ die minimale Anzahl von Cliquen in einer Cliquenüberdeckung und
+$\alpha\left(G\right)$ die Größe einer maximalen unabhängigen Menge ist.
+\end{theorem}
+
+\begin{proof}
+\leavevmode\newline
+\noindent\textbf{Ungleichung 1 ($\alpha\left(G\right)\leq\kappa\left(G\right)$).}
+\newline
+Dies gilt für alle Graphen, nicht nur chordale Graphen.
+Sei $\mathcal{C} = \{C_1, C_2, \ldots, C_k\}$
+eine beliebige Cliquenüberdeckung von $G$.
+Eine unabhängige Menge $I$ kann höchstens einen Knoten aus jeder Clique $C_i$ enthalten, da sonst zwei Knoten der unabhängigen Menge adjazent wären.
+Also gilt für jede unabhängige Menge $I \subseteq V$ in $G$:
+\[
+    |I| \leq k = |\mathcal{C}|
+\]
+Da $|\mathcal{C}| = \kappa\left(G\right)$ minimal ist, folgt
+\[
+    \alpha\left(G\right) \leq \kappa\left(G\right)
+\]
+
+\medskip
+\noindent\textbf{Ungleichung 2 ($\alpha\left(G\right)\geq\kappa\left(G\right)$).}
+\newline
+Es gilt: \begin{quote}
+    Ein Graph $G$ ist genau dann chordal, wenn er eine perfekte Eliminationsordnung besitzt.
+\end{quote}
+Das bedeutet, es existiert eine Ordnung der Knoten $v_1, v_2, \ldots, v_n \in V$ so, dass für jeden Knoten $v_i$ die späteren Nachbarn
+\[
+    N^+ \left(v_i\right) = \{ v_j \mid j > i, \{v_i, v_j\} \in E \}
+\]
+eine Clique bilden, also alle $v_i$ simplizial sind.
+
+Mithilfe der Eliminationsordnung lässt sich eine Cliquenüberdeckung konstruieren. Wir definieren für jeden Knoten $v_i$ die Clique
+\[
+    C_i = \{ v_i \} \cup N^+ \left(v_i\right).
+\]
+
+Die Menge der Cliquen $\{C_i \mid i \in \mathcal{I}\}$ mit der Menge $\mathcal{I} = \{i \mid v_i \notin C_j, j < i\}$ aller Indizes bildet eine Cliquenüberdeckung von $G$,
+da jeder Knoten $v_i$ entweder in seiner eigenen Clique $C_i$ oder in einer vorherigen Clique $C_j$ mit $j < i$ enthalten ist.
+
+Sei
+\[
+    \mathcal{S} = \{v_i \mid i \in \mathcal{I}\}
+\]
+eine unabhängige Menge in $G$ mit den entsprechenden $v_i$ als Repräsentanten ihrer jeweiligen Clique $C_i$.
+$\mathcal{S}$ ist unabhängig, denn
+angenommen, es gäbe zwei Knoten $v_i, v_j \in \mathcal{S}$ mit $i<j$ und $\{v_i,v_j\}\in E$.
+Dann gilt $v_j \in N^+\left(v_i\right)$ und somit $v_j \in C_i$, was im Widerspruch dazu steht, dass $j \in \mathcal{I}$.
+Also existiert keine Kante zwischen zwei Knoten aus $\mathcal{S}$.
+\newline
+
+Da $\mathcal{S}$ unabhängig ist, gilt:
+\[
+    |\mathcal{S}| \leq \alpha\left(G\right).
+\]
+
+Die Cliquen $\{C_i \mid v_i \in \mathcal{S}\}$ bilden eine Cliquenüberdeckung der Größe $|\mathcal{S}|$.
+Somit gilt:
+\[
+    \kappa\left(G\right) \leq |\mathcal{S}| \leq \alpha\left(G\right).
+\]
+
+\noindent\textbf{Beweisschluss ($\alpha\left(G\right)=\kappa\left(G\right)$).}
+\newline
+Aus den beiden Ungleichungen folgt:
+\[
+    \alpha\left(G\right) \leq \kappa\left(G\right) \leq \alpha\left(G\right)
+\]
+Also gilt:
+\[
+    \alpha\left(G\right) = \kappa\left(G\right)
+\]
+
+\end{proof}
+
+\end{document}
