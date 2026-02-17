@@ -1,7 +1,23 @@
 # Scientific Work related to LaTeX
 
-- [Bachelor Thesis Exposè (Entkopplung der Z3 Komponente in ProB mit ZeroMQ)](BachelorThesis/Expose/expose.pdf)
-- [Bachelor Thesis (Entkopplung der Z3 Komponente in ProB mit ZeroMQ)](BachelorThesis/Thesis/thesis_signed.pdf)
-- [Bachelor Seminar Report (Social Engineering)](BachelorSeminar/SocialEngineering/Report/SocialEngineeringReport.pdf)
-- [Bachelor Seminar Presentation (Social Engineering)](BachelorSeminar/SocialEngineering/Presentation/SocialEngineeringPresentation.pdf)
+## Bachelor Thesis (Entkopplung der Z3 Komponente in ProB mit ZeroMQ)
+
+- [Exposè](BachelorThesis/Expose/expose.pdf)
+- [Thesis](BachelorThesis/Thesis/thesis_signed.pdf)
+- [Presentation](BachelorThesis/Presentation/master.pdf)
+
+## Bachelor Seminar (Social Engineering)
+
+- [Report](BachelorSeminar/SocialEngineering/Report/SocialEngineeringReport.pdf)
+- [Presentation](BachelorSeminar/SocialEngineering/Presentation/SocialEngineeringPresentation.pdf)
+
+
+## Presentations
+
+- [Esoteric Programming Languages (Dynamic Programming Languages)](Presentations/DynamischeProgrammiersprachen/EsotericLanguagesPresentation.pdf)
+- [Accessibility Testing (UX Design and Management)](Presentations/UXDesign/AccessibilityTesting.pdf)
+
+## Homework
+
 - [Theoretical Computer Science Tests](Homework/TheoretischeInformatik/Testate/Testate.pdf)
+- [Graphenalgorithmen (Aufgabe 79)](Homework/GraphenAlgorithmen2/GA2_79.pdf)
