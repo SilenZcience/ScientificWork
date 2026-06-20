@@ -1,0 +1,664 @@
+﻿\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx, float}
+\graphicspath{{res/}}
+\usepackage{amsfonts,amsmath}
+\usepackage{listings}
+\usepackage{pifont}
+\usepackage{hyperref}
+
+\usetheme{moderno}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  frame=single
+}
+
+\newcommand{\dingcheck}{{\color{moderngreen}\ding{52}}}
+\newcommand{\dingcross}{{\color{modernred}\ding{54}}}
+
+\title{Debug Information Validation for Optimized Code}
+\subtitle{PLDI '20 -- Yuanbo Li, Shuo Ding, Qirun Zhang, Davide Italiano}
+\author{Silas Kraume}
+\institute{Heinrich-Heine-Universit\"at D\"usseldorf}
+\date{08.07.2026}
+
+\begin{document}
+\maketitle
+
+
+\begin{frame}[noframenumbering]{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Motivation}
+
+
+\begin{frame}{Warum optimierten Code debuggen?}
+  \begin{itemize}
+    \item Fast alle Produktionssoftware wird mit Optimierungen kompiliert
+    \item Industriebeispiele:
+      \begin{itemize}
+        \item GNU Autotools: Standard \texttt{-g -O2} in Release-Builds
+        \item Red Hat Developer Guide: Empfiehlt \texttt{-g -O2} f\"ur alle Entwickler
+        \item \dots
+      \end{itemize}
+    \item Post-Mortem Debugging: Analyse von Coredumps nach Crashes in Produktion
+    \item Performance-Bugs: Treten nur in optimiertem Code auf
+    \item Historischer Kontext: Vor 20 Jahren: ``Optimierungen ausschalten zum Debuggen''  Heute: Debuggen von optimiertem Code ist obligatorisch
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Was fehlt im aktuellen Testing?}
+  \begin{itemize}
+    \item Bisheriger Testing-Fokus:
+      \begin{itemize}
+        \item[\dingcheck] Compiler-Korrektheit (Maschinencode-Ausgabe)
+        \item[\dingcheck] Debugger-Funktionalit\"at (interaktives Testing)
+        \item[\dingcross] Korrektheit der Debug-Informationen f\"ur optimierten Code
+      \end{itemize}
+    \item Das Problem: Compiler k\"onnen generieren:
+      \begin{itemize}
+        \item[\dingcheck] Korrekten Maschinencode
+        \item[\dingcross] Falsche Debug-Informationen
+      \end{itemize}
+    \item Konsequenz: Debugger zeigt falsche Werte, obwohl Programm korrekt l\"auft
+    \item Forschungsfrage: Generieren Compiler immer korrekte Debug-Informationen f\"ur optimierten Code?
+  \end{itemize}
+\end{frame}
+
+\section{Hintergrund: Debug-Informationen}
+
+
+\begin{frame}{Was sind Debug-Informationen?}
+  \begin{itemize}
+    \item Zweck: Stellt Verbindung zwischen Quellcode und Maschinencode her
+    \item Generiert von: Compilern mit \texttt{-g} Flag
+    \item Formate:
+      \begin{itemize}
+        \item DWARF (Linux/Unix -- am h\"aufigsten, Fokus dieses Papers)
+        \item PDB (Windows)
+        \item STABS (\"Altere Unix-Systeme)
+      \end{itemize}
+    \item Verwendet von: Debuggern (GDB, LLDB) zur Interpretation laufender Programme
+    \item Enth\"alt: Funktionen, Variablen, Zeilennummern, Typen, Speicherorte
+    \item Kritisch: Debugger verlassen sich vollst\"andig auf diese Informationen zur Anzeige von Variablenwerten
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{DWARF Debug-Information Beispiel}
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+DW_TAG_compile_unit // Kompilierungseinheit-Metadaten (``Wurzelknoten'')
+  DW_AT_producer ("clang ver 7.0.1")
+  DW_AT_language (DW_LANG_C99)
+  DW_AT_name ("a.c")
+  DW_AT_low_pc (0x00400480) // Startadresse der Funktion
+  DW_AT_high_pc (<offset-from-lowpc>50) // Endadresse der Funktion
+
+DW_TAG_subprogram // Funktionsinformationen
+  DW_AT_name ("main")
+  DW_AT_decl_line (2)
+  DW_AT_frame_base (DW_OP_reg6 RBP)
+
+DW_TAG_variable // Variableninformationen
+  DW_AT_name ("a")
+  DW_AT_location (DW_OP_fbreg -8) // Offset von RBP (Variablenort)
+  DW_AT_decl_line (1) // Deklarationszeile im Quellcode
+  DW_AT_type (0x00000060 "int") // Typ-Referenz (z.B. int)
+
+DW_TAG_variable // Variableninformationen
+  DW_AT_name ("b")
+  DW_AT_location (DW_OP_fbreg -12)
+  DW_AT_decl_line (1)
+  DW_AT_type (0x00000060 "int")
+  \end{lstlisting}
+\end{frame}
+
+\section{Problemstellung}
+
+
+\begin{frame}{Problemstellung -- Kernherausforderung}
+  \begin{itemize}
+    \item Kernproblem:
+      \begin{itemize}
+        \item Generieren von geeigneten Eingabeprogrammen $P$ f\"ur systematisches Debug-Info-Testing
+      \end{itemize}
+    \vspace{0.5cm}
+    \item Warum existierende Techniken versagen:
+      \begin{itemize}
+        \item Compiler-Testing generiert Programme mit festen Ausgabe-Statements (print, return)
+        \item Programme werden nur einmal ausgef\"uhrt bzgl. Programmeingabe
+        \item Debugging ist interaktiver -- Benutzer inspizieren mehrere Programmpunkte mit vielen Variablen
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Herausforderungen bei Debug-Info-Validierung}
+  \begin{itemize}
+    \item 1. Code Location Problem:
+      \begin{itemize}
+        \item Compiler-Optimierung rearrangiert Instruktionen und eliminiert Statements
+        \item Viele Programmpunkte im Quellcode k\"onnten wegoptimiert werden
+        \item Breakpoints an diesen Orten stoppen Programmausf\"uhrung nicht notwendigerweise
+      \end{itemize}
+    \item 2. Data Value Problem:
+      \begin{itemize}
+        \item Debugger k\"onnen jede Variable an einem spezifischen Programmpunkt inspizieren
+        \item Ausgabe einer beliebigen Variable kann undefined behaviors (UB) verursachen
+        \item Beispiele: Zugriff auf uninitialisierte Variable, Out-of-Bound-Array-Element
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Formale Definitionen}
+
+
+\begin{frame}{Definition -- Actionable Program}
+  \begin{block}{Definition (Actionable Program)}
+    F\"ur einen spezifischen Optimierungsprozess enth\"alt ein \textbf{actionable program}
+    $P_{\langle s,v\rangle}$ einen Programmort $s$ und eine Variable $v$, sodass sowohl
+    im unoptimierten Programm als auch im optimierten Programm $P'_{\langle s,v\rangle}$ der Debugger an $s$ stoppen
+    kann und die Ausgabe von $v$ an $s$ wohldefiniert ist (kein undefined behaviour).
+  \end{block}
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item Menge der Actionable Programs:
+      \[
+        |\mathcal{P}| = \sum_{i \in I} s_i \cdot v_i
+      \]
+      Wobei:
+      \begin{itemize}
+        \item $I$ = Menge der ausgef\"uhrten Zeilen
+        \item $s_i$ = Programmort
+        \item $v_i$ = Anzahl der wohldefinierten Variablen an jedem Ort
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Definition -- Korrektheit}
+  \begin{itemize}
+    \item Value-Printing Sequence: $A_{\langle s,v\rangle}$ repr\"asentiert \\
+      \texttt{break(s)} $\rightarrow$ \texttt{run} $\rightarrow$ \texttt{print(v)} $\rightarrow$ \texttt{quit}
+    \item Debugger-Ausgabe: $\mathit{DBG}(P, A_{\langle s,v\rangle})$ gibt den Wert von $v$ nach Abschluss der Debugging-Session aus
+    \item Referenzwert: $\mathit{PRINT}(P, s, v)$ bezeichnet den ausgegebenen Referenzwert
+      \begin{itemize}
+        \item Print-Statement einf\"ugen, um Wert von $v$ an $s$ im Quellcode anzuzeigen
+        \item Programm $P$ ohne Optimierung kompilieren und ausf\"uhren
+      \end{itemize}
+  \end{itemize}
+  \vspace{0.3cm}
+  \begin{block}{Definition (Korrektheit)}
+    Die Debug-Informationen f\"ur optimierten Code $P'$ sind korrekt gdw.
+    \[
+      \mathit{DBG}(P', A_{\langle s,v\rangle}) \equiv \mathit{PRINT}(P, s, v)
+    \]
+    wobei $P$ ein unoptimiertes Programm und $P'$ ein optimiertes Programm aus demselben Quellcode ist.
+  \end{block}
+\end{frame}
+
+\section{Konkrete Bug-Beispiele}
+
+% ======================================================================
+
+\begin{frame}{Definition -- Korrektheit anwenden -- Konkrete Szenarien}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+      \textbf{Szenario} & $\mathit{PRINT}(P,s,v)$ & $\mathit{DBG}(P', A_{\langle s,v\rangle})$ & \textbf{Urteil} \\
+      \hline
+      Korrekte Debug-Info & 5 & 5 & \dingcheck\ Korrekt \\
+      \hline
+      Falsche Debug-Info & 5 & 1 & \dingcross\ BUG ($5 \neq 1$) \\
+      \hline
+      Variable Optimized Out & 5 & null & \dingcheck\ Akzeptabel \\
+      \hline
+      Debugger Crash & 5 & crash & \dingcross\ BUG (Debugger sollte nicht crashen) \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Wichtig: ``Optimized out'' ist kein Bug
+    \item Bug-Kriterium: Nur falsche Werte (nicht null) verletzen Korrektheit
+    \item Paper-Fokus: Testing der Korrektheit, nicht Vollst\"andigkeit
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{LLVM Bug 43893 (Clang-9)}
+  \begin{columns}
+    \column{0.55\textwidth}
+      \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\small]
+int c = --a;
+int l = -8L;
+l = c;       // optimized out
+c > (b = 0); // l
+      \end{lstlisting}
+      Erwartet: Variable \texttt{l} sollte \texttt{-1} in Zeile 6 sein \\
+      Tats\"achlich (LLDB, -g -O2): Zeigt \texttt{-8}
+
+    \column{0.42\textwidth}
+      DWARF Bug: InstCombine-Pass verwirft ungenutzte Variable, \\
+      markiert Debug-Info aber nicht als unavailable \\
+      \vspace{0.2cm}
+      Korrektheitsverletzung: \\
+      $\mathit{PRINT}(P,\text{Zeile }6,l) = -1$ \\
+      $\mathit{DBG}(P', A_{\langle 6,l\rangle}) = -8$ \\
+      $-1 \not\equiv -8 \rightarrow$ \alert{BUG} (Definition verletzt) \\
+      \vspace{0.2cm}
+      Status: In Development-Version gefixt
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{GCC Bug 89463 (GCC-8.3)}
+  \begin{columns}
+    \column{0.55\textwidth}
+      \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\small]
+int i;
+for (; a < 10; a++)
+    i = 0;
+for (; i < 6; i++)
+    ;
+opt_me_not(); // i
+      \end{lstlisting}
+      Erwartet: Variable \texttt{i} sollte \texttt{6} in Zeile 8 sein \\
+      Tats\"achlich (GDB, -g -O3): Zeigt \texttt{0} (falsch!)
+
+    \column{0.42\textwidth}
+      Ursache: Dead Code Elimination bereinigt \\
+      degenerierte Phi-Nodes nicht \\
+      \vspace{0.2cm}
+      Korrektheitsverletzung: \\
+      $\mathit{PRINT}(P,\text{Zeile }8,i) = 6$ \\
+      $\mathit{DBG}(P', A_{\langle 8,i\rangle}) = 0$ \\
+      $6 \not\equiv 0 \rightarrow$ \alert{BUG} (Definition verletzt) \\
+      \vspace{0.2cm}
+      Status: In Development-Version gefixt
+  \end{columns}
+\end{frame}
+
+\section{Methodik: Shadow Validation \& Line Augmentation}
+
+\begin{frame}[fragile]{Actionable Program Transformation}
+
+  \begin{itemize}
+    \item Originalprogramm $P$:
+    \begin{lstlisting}[]
+char a,b;
+int main() {
+    unsigned c;
+    --b;
+    c=2;
+    if (a)
+        b=0;
+    return 0;
+}
+  \end{lstlisting}
+    \item Actionable Program $P_{\langle 6,c\rangle}$: Breakpoint in Zeile 6, inspiziere Variable \texttt{c} \dingcheck
+    \item Actionable Program $P_{\langle 5,b\rangle}$: F\"uge \texttt{opt\_me\_not()} in Zeile 5 ein, inspiziere \texttt{b} \dingcheck
+    \item Non-Actionable Program $P_{\langle 4,c\rangle}$: Variable \texttt{c} uninitialisiert in Zeile 4 \dingcross
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Systematisches Testing Framework \"Ubersicht}
+  \textbf{Eingabe:} Wohlgeformtes Seed-Programm $P_w$
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Schritt 1: Pre-Processing
+      \begin{itemize}
+        \item Sammle Line Coverage Information $S$
+        \item Baue Variablenmengen $V_s$ f\"ur jede Zeile (AST-Traversierung)
+      \end{itemize}
+    \item Schritt 2: Actionable Program Generierung
+      \begin{itemize}
+        \item Shadow Validation (l\"ose Data Value Problem)
+        \item Line Augmentation (l\"ose Code Location Problem)
+        \item Generiere Menge der actionable programs $\mathcal{P}$
+      \end{itemize}
+    \item Schritt 3: Systematisches Testing
+      \begin{itemize}
+        \item Kompiliere unoptimiert $\rightarrow$ Erhalte Referenz $\mathit{PRINT}(P,s,v)$
+        \item Kompiliere optimiert $\rightarrow$ Erhalte Debugger-Ausgabe $\mathit{DBG}(P', A_{\langle s,v\rangle})$
+        \item Vergleiche Ausgabe $\rightarrow$ Reporte Bug wenn $\mathit{DBG} \neq \mathit{PRINT}$ und $\mathit{DBG} \neq \texttt{null}$
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Shadow Validation Technik (Data Value Problem)}
+  \begin{itemize}
+    \item Ziel: Sicherstellen, dass Inspizieren von Variable $v$ an Zeile $s$ sicher ist (kein UB)
+    \item Methode:
+      \begin{itemize}
+        \item Erstelle ``Shadow Program'' $P_1$ durch Einf\"ugen von \texttt{print(v)} an Zeile $s$
+        \item F\"uhre $P_1$ mit dynamischer Analyse aus
+        \item Erkenne undefined behaviors (uninitialisierte Reads, Out-of-Bounds, etc.)
+      \end{itemize}
+    \item Ergebnis:
+      \begin{itemize}
+        \item Wenn UB erkannt $\rightarrow$ Kandidat verwerfen (non-actionable)
+        \item Wenn sicher $\rightarrow$ Fahre fort mit Line Augmentation
+      \end{itemize}
+    \item Tools: CompCert Interpreter + Clang UndefinedBehaviorSanitizer
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Shadow Validation Beispiel}
+  \begin{itemize}
+        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+  unsigned c;
+  --b;
+  c=2; // c hier initialisiert
+        \end{lstlisting}
+    \item Shadow Program $P_1$ (Invalide):
+        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+  unsigned c;
+  --b;
+  printf("\%d", c); // UB! c hier uninitialisiert
+  c=2; // c hier initialisiert
+        \end{lstlisting}
+        \begin{itemize}
+          \item Abgelehnt durch Shadow Validation (non-actionable)
+        \end{itemize}
+    \item Shadow Program $P_1$ (Valide):
+        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+  unsigned c;
+  --b;
+  c=2; // c hier initialisiert
+  printf("\%d", c); // sicher, c hier initialisiert
+        \end{lstlisting}
+        \begin{itemize}
+          \item Akzeptiert durch Shadow Validation (actionable)
+        \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Line Augmentation Technik (Code Location Problem)}
+  \begin{itemize}
+    \item Ziel: Sicherstellen, dass Debugger an Zeile $s$ stoppen kann, auch wenn optimiert
+    \item Methode:
+      \begin{itemize}
+        \item Pr\"ufe DWARF Line Number Table f\"ur Zeile $s$
+        \item Wenn Zeile $s$ fehlt/optimiert:
+          \begin{itemize}
+            \item F\"uge Aufruf von unoptimierbarer Funktion \texttt{opt\_me\_not()} vor Zeile $s$ ein
+            \item Dies wirkt als Barriere f\"ur Optimierung
+            \item F\"uge Meta-Information (Kommentare) hinzu, um Variable $v$ zu spezifizieren
+          \end{itemize}
+      \end{itemize}
+    \item Implementierung: \texttt{opt\_me\_not()} in separater Kompilierungseinheit (verhindert Inlining)
+    \item Alternative: \texttt{\_\_asm\_\_ volatile("" ::: "memory")} als zus\"atzliche Barriere
+  \end{itemize}
+\end{frame}
+
+\section{Testalgorithmus}
+
+
+\begin{frame}[fragile]{Systematischer Testalgorithmus}
+  \begin{block}{Systematischer Testalgorithmus}
+    \textbf{Eingabe:} Ein wohlgeformtes Testprogramm $P_w$ \\
+    \begin{enumerate}
+      \item $\mathcal{P} \leftarrow$ \textsc{ActionableProgramGeneration}($P_w$)
+      \item \textbf{for each} $P_{\langle s,v\rangle} \in \mathcal{P}$ \textbf{do}
+        \begin{enumerate}
+          \item $A_{\langle s,v\rangle} \leftarrow$ \textsc{ExtractActions}($P_{\langle s,v\rangle}$)
+          \item $P' \leftarrow$ kompiliere $P_{\langle s,v\rangle}$ mit Optimierung und ``\texttt{-g}''
+          \item \textbf{if} $\mathit{DBG}(P', A_{\langle s,v\rangle})$ ist nicht null \textbf{and} \\
+            $\mathit{DBG}(P', A_{\langle s,v\rangle}) \neq \mathit{PRINT}(P, s, v)$ \textbf{then}
+            \begin{enumerate}
+              \item Reporte Bug mit Programm $P_{\langle s,v\rangle}$, \\
+                Action $A_{\langle s,v\rangle}$ und verwendetem Optimierungs-Flag
+            \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\section{Evaluation \& Ergebnisse}
+
+
+\begin{frame}{Bug-Zusammenfassung}
+  \begin{center}
+    \begin{tabular}{|l|c|c|c|c|}
+      \hline
+      \textbf{Compiler} & \textbf{Reportet} & \textbf{Gefixt} & \textbf{Duplikate} & \textbf{Invalid} \\
+      \hline
+      GCC & 21 & 4 & 3 & 2 \\
+      \hline
+      LLVM/Clang & 26 & 7 & 0 & 1 \\
+      \hline
+      \textbf{Gesamt} & \textbf{47} & \textbf{11} & \textbf{3} & \textbf{3} \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Best\"atigte Bugs Gesamt: 47 (GCC + LLVM)
+    \item GCC: 21 Bugs reportet \\
+      4 Gefixt, 3 Duplikate, 2 Invalid, 21 Wrong Output, 0 Crashes
+    \item LLVM/Clang: 26 Bugs reportet \\
+      7 Gefixt, 0 Duplikate, 1 Invalid, 23 Wrong Output, 3 Crashes
+    \item Status: 11 Bugs zum Zeitpunkt der Ver\"offentlichung gefixt (23\,\%)
+    \item Best\"atigungsrate: 47/47 = 100\,\% (alle Bugs von Entwicklern best\"atigt)
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Betroffene Compiler-Versionen}
+  \begin{itemize}
+    \item Betroffene GCC-Versionen:
+      \begin{itemize}
+        \item GCC 6.X, 7.X, 8.X, 9.X, Trunk
+        \item Einige Bugs datieren zur\"uck zu GCC 4.4 (9 Jahre alt!)
+      \end{itemize}
+    \item Betroffene LLVM-Versionen:
+      \begin{itemize}
+        \item LLVM 5.X, 6.X, 7.X, 8.X, 9.X, Trunk
+      \end{itemize}
+    \item Implikation: Dies ist ein anhaltendes Problem, nicht historisch
+    \item Latente Bugs: Einige Probleme existierten Jahre vor Entdeckung
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Betroffene Optimierungs-Level}
+  \begin{itemize}
+    \item GCC: Bugs bei \texttt{-O1}, \texttt{-O2}, \texttt{-O3}, \texttt{-Og}
+      \begin{itemize}
+        \item Sogar \texttt{-Og} (optimiert f\"ur Debugging) hat Bugs!
+      \end{itemize}
+    \item LLVM: Bugs bei \texttt{-O1}, \texttt{-O2}, \texttt{-O3}
+      \begin{itemize}
+        \item \texttt{-Og} ist Wrapper f\"ur \texttt{-O1} in LLVM
+      \end{itemize}
+    \item Wichtige Erkenntnis: Bugs existieren auf ALLEN Optimierungs-Leveln
+    \item Ursache: Debug-Werte falsch von Passes aktualisiert, folgende Passes l\"oschen falsche Info nicht
+    \item Implikation: Kein Optimierungs-Level f\"ur korrekte Debug-Info vertrauensw\"urdig
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{LLVM-Komponenten mit Bugs}
+  \begin{columns}
+    \column{0.55\textwidth}
+      \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Komponente} & \textbf{Bug-Anzahl} \\
+        \hline
+        DWARF Parser & 6 \\
+        \hline
+        SelectionDAG & 5 \\
+        \hline
+        SROA & 2 \\
+        \hline
+        InstCombine & 2 \\
+        \hline
+        EarlyCSE & 2 \\
+        \hline
+        MachineScheduler & 2 \\
+        \hline
+      \end{tabular}
+    \column{0.45\textwidth}
+      \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Komponente} & \textbf{Bug-Anzahl} \\
+        \hline
+        LoopDeletion & 1 \\
+        \hline
+        SimplifyCFG & 1 \\
+        \hline
+        LSR & 1 \\
+        \hline
+        DeadStoreElimination & 1 \\
+        \hline
+        Inliner & 1 \\
+        \hline
+        CodegenPrepare & 1 \\
+        \hline
+      \end{tabular}
+  \end{columns}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Wichtige Erkenntnis: DWARF Parser hat meiste Bugs (inklusive 3 LLDB Crashes)
+    \item Verteilung: Bugs \"uber viele Optimierungs-Passes verteilt
+  \end{itemize}
+\end{frame}
+
+\section{Fallstudien}
+
+
+\begin{frame}[fragile]{Fallstudie: GCC wrong value bug 92387}
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+static int a[6];
+int b;
+static void c() { b = 5 ^ a[b & 5]; }
+int main() {
+    int i, d = 0;
+    c();
+    i = 0;
+    for (; i < 8; i++) {
+        c();
+        if(d) printf("%d",i); // i
+    }
+}
+  \end{lstlisting}
+  \begin{itemize}
+    \item Optimierung: \texttt{-O1}
+    \item Korrektheitsverletzung: $\mathit{PRINT}(P,\text{Zeile }10,i) = 0 \not\equiv 1 = \mathit{DBG}(P', A_{\langle 10,i\rangle})$ \\
+    $\alert{BUG}$ (Definition verletzt)
+    \item Status: Gefixt
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Fallstudie: LLVM Wrong Value Bug 43957}
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+char a, b;
+int main() {
+    --b;
+    unsigned l_801 = 36901;
+    ++l_801;
+    if (a) // l_801
+        b = 0;
+}
+  \end{lstlisting}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item Optimierung: \texttt{-O3}
+    \item Korrektheitsverletzung: $\mathit{PRINT}(P,\text{Zeile }6,l\_801) = 36902 \not\equiv 36901 = \mathit{DBG}(P', A_{\langle 6,l\_801\rangle})$ \\
+    $\alert{BUG}$ (Definition verletzt)
+    \item Status: Gefixt
+  \end{itemize}
+\end{frame}
+
+
+
+\section{Fazit \& Zuk\"unftige Arbeit}
+
+
+\begin{frame}[fragile]{Framework-Generalisierbarkeit -- Rust Compiler}
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+fn main() {
+    let mut counter = 0;
+    {
+        let mut tick = || counter += 1;
+        tick();
+        tick();
+        lib::opt_me_not();  // counter sollte 2 sein
+    }
+    assert_eq!(counter, 2);
+}
+  \end{lstlisting}
+  \begin{itemize}
+    \item 2 best\"atigte Bugs in 3 Tagen gefunden
+    \item Bug: Rust Debugger zeigt \texttt{counter = 0}, sollte 2 sein
+    \item Optimierung: \texttt{-C opt-level=1}
+    \item Anpassungen n\"otig:
+      \begin{itemize}
+        \item Grammar-Instrumentierung (Rust vs. C)
+        \item Kompilierungseinheit = crate (nicht Datei)
+        \item Rust's safe Code hilft bei UB-Erkennung
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Fazit}
+  \begin{itemize}
+    \item Problem: Debug-Informationen f\"ur optimierten Code sind oft inkorrekt
+    \item L\"osung: Actionable Program Framework mit formalen Definitionen
+      \begin{itemize}
+        \item Algorithmus: Systematisches Testing
+      \end{itemize}
+    \item Auswirkung: 47 Bugs in GCC/LLVM, 2 in Rust
+    \item Community-Reaktion: 11 Bugs gefixt, 100\,\% Best\"atigungsrate
+    \item Zuk\"unftige Arbeit:
+      \begin{itemize}
+        \item Debugger-Korrektheit direkt testen
+        \item Auf mehr Sprachen erweitern
+        \item Vollst\"andigkeit testen (fehlende Debug-Info vs. falsche Info)
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Abschlie\ss{}ende Gedanken}
+  \begin{block}{LLVM-Entwickler (Bug 39896)}
+    ``Thanks for the PR, this was likely a serious quality-of-debug-experience \\
+    issue for anyone hit by it.''
+  \end{block}
+  \vspace{0.3cm}
+  \begin{block}{DWARF-Komiteemitglied}
+    ``[Your bug reports] seem clear and reasonably complete. Generating correct \\
+    debug info for optimized code is important.''
+  \end{block}
+  \vspace{0.3cm}
+  \begin{center}
+    \href{https://www.cc.gatech.edu/~qrzhang/projects/debug/debug.html}{\texttt{cc.gatech.edu/$\sim$qrzhang/projects/debug/}}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \LARGE{Vielen Dank f\"ur Eure Aufmerksamkeit!}
+  \end{center}
+\end{frame}
+
+
+\end{document}
