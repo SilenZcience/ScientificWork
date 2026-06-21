@@ -55,7 +55,10 @@
     \item Historischer Kontext: Vor 20 Jahren: ``Optimierungen ausschalten zum Debuggen''  Heute: Debuggen von optimiertem Code ist obligatorisch
   \end{itemize}
 \end{frame}
-
+% Dies ist nicht theoretisch—große Software wird mit Debug-Info + Optimierungen ausgeliefert.
+% Bei Crashes in Produktion müssen Entwickler optimierte Binärdateien debuggen.
+% Falsche Debug-Info macht Diagnose unmöglich oder irreführend.
+% Diese Arbeit schließt eine kritische Lücke in der Software-Qualitätssicherung.
 
 \begin{frame}{Was fehlt im aktuellen Testing?}
   \begin{itemize}
@@ -74,6 +77,11 @@
     \item Forschungsfrage: Generieren Compiler immer korrekte Debug-Informationen f\"ur optimierten Code?
   \end{itemize}
 \end{frame}
+% Dies ist die zentrale Erkenntnis—Maschinencode und Debug-Info können divergieren.
+% Traditionelles Compiler-Testing erkennt dies nicht.
+% Das Programm läuft korrekt, aber der Debugger lügt.
+% Dies ist extrem gefährlich für Post-Mortem-Debugging.
+% Dieses Paper schließt diese Lücke mit dem ersten systematischen Framework.
 
 \section{Hintergrund: Debug-Informationen}
 
@@ -93,7 +101,11 @@
     \item Kritisch: Debugger verlassen sich vollst\"andig auf diese Informationen zur Anzeige von Variablenwerten
   \end{itemize}
 \end{frame}
-
+% Debug-Informationen sind die Brücke zwischen Quellcode und Executable.
+% DWARF ist das Standardformat für Unix-ähnliche Systeme.
+% Ohne sie können Debugger keine Variablennamen oder Quellzeilen anzeigen.
+% Der Compiler generiert dies zusammen mit Maschinencode.
+% Bei Optimierung muss diese Zuordnung korrekt aktualisiert werden.
 
 \begin{frame}[fragile]{DWARF Debug-Information Beispiel}
   \begin{lstlisting}[basicstyle=\ttfamily\tiny]
@@ -122,6 +134,14 @@ DW_TAG_variable // Variableninformationen
   DW_AT_type (0x00000060 "int")
   \end{lstlisting}
 \end{frame}
+% DWARF ist ein Baum von Einträgen, jeder mit Tags und Attributen.
+% Variablenorte werden mit Debug-Operationen (DW_OP_*) spezifiziert.
+% Bei Optimierung müssen diese Orte korrekt aktualisiert werden.
+% Dies ist Abbildung 2 aus dem Paper—tatsächliche DWARF-Ausgabe von Clang.
+% DW_OP_fbreg -8 bedeutet: Variable 'a' ist bei Frame-Base-Register-Offset -8.
+% Bei Optimierung müssen diese Orte aktualisiert werden.
+% Bugs entstehen, wenn der Ort auf falschen Speicher oder veraltete Werte zeigt.
+% Der Debugger liest dies, um Variablenwerte anzuzeigen.
 
 \section{Problemstellung}
 
@@ -141,7 +161,10 @@ DW_TAG_variable // Variableninformationen
       \end{itemize}
   \end{itemize}
 \end{frame}
-
+% Existierende Compiler-Testing-Techniken sind unzureichend für Debug-Info-Validierung.
+% Der interaktive Charakter des Debuggens erfordert andere Testgenerierung.
+% Compiler-Optimierungen machen dies besonders herausfordernd.
+% Dies motiviert die Notwendigkeit von Actionable Programs.
 
 \begin{frame}{Herausforderungen bei Debug-Info-Validierung}
   \begin{itemize}
@@ -151,6 +174,7 @@ DW_TAG_variable // Variableninformationen
         \item Viele Programmpunkte im Quellcode k\"onnten wegoptimiert werden
         \item Breakpoints an diesen Orten stoppen Programmausf\"uhrung nicht notwendigerweise
       \end{itemize}
+    \vspace{0.5cm}
     \item 2. Data Value Problem:
       \begin{itemize}
         \item Debugger k\"onnen jede Variable an einem spezifischen Programmpunkt inspizieren
@@ -209,8 +233,6 @@ DW_TAG_variable // Variableninformationen
 
 \section{Konkrete Bug-Beispiele}
 
-% ======================================================================
-
 \begin{frame}{Definition -- Korrektheit anwenden -- Konkrete Szenarien}
   \begin{center}
     \footnotesize
@@ -261,7 +283,10 @@ c > (b = 0); // l
       Status: In Development-Version gefixt
   \end{columns}
 \end{frame}
-
+% Der Maschinencode ist korrekt (printf würde -1 zeigen).
+% Aber LLDB zeigt -8, weil DWARF-Info nicht aktualisiert wurde.
+% Der InstCombine-Optimierungs-Pass entfernte die Variable, ließ aber veraltete Debug-Info.
+% Dies ist genau der Bug-Typ, den dieses Framework erkennt.
 
 \begin{frame}[fragile]{GCC Bug 89463 (GCC-8.3)}
   \begin{columns}
@@ -289,6 +314,10 @@ opt_me_not(); // i
       Status: In Development-Version gefixt
   \end{columns}
 \end{frame}
+% Die Schleife wird optimiert, aber Debug-Info sagt i = 0.
+% Phi-Nodes in SSA-Repräsentation wurden nicht korrekt bereinigt.
+% Dies verhinderte Aktualisierung der Debug-Informationen.
+% Wiederum: Maschinencode korrekt, nur Debug-Info falsch.
 
 \section{Methodik: Shadow Validation \& Line Augmentation}
 
@@ -312,7 +341,7 @@ int main() {
     \item Non-Actionable Program $P_{\langle 4,c\rangle}$: Variable \texttt{c} uninitialisiert in Zeile 4 \dingcross
   \end{itemize}
 \end{frame}
-
+% Das Framework bestimmt automatisch, welche Paare gültig sind.
 
 \begin{frame}{Systematisches Testing Framework \"Ubersicht}
   \textbf{Eingabe:} Wohlgeformtes Seed-Programm $P_w$
@@ -356,7 +385,9 @@ int main() {
     \item Tools: CompCert Interpreter + Clang UndefinedBehaviorSanitizer
   \end{itemize}
 \end{frame}
-
+% CompCert ist ein verifizierter Compiler—sein Interpreter ist zuverlässig für UB-Erkennung (beweist formal die korrektheit (mathematisch, formale methodik)).
+% Clang's Sanitizer bietet Runtime-Monitoring.
+% Dies sichert, dass alle Testfälle wohlgeformt sind.
 
 \begin{frame}[fragile]{Shadow Validation Beispiel}
   \begin{itemize}
@@ -406,6 +437,11 @@ int main() {
     \item Alternative: \texttt{\_\_asm\_\_ volatile("" ::: "memory")} als zus\"atzliche Barriere
   \end{itemize}
 \end{frame}
+% Die Funktion ist extern, Compiler kann sie nicht wegoptimieren.
+% Wir können auch Inline-Assembly als zusätzliche Barriere verwenden.
+% Dies zwingt Compiler, den Ort für Debugging zu behalten.
+% Ohne dies wären viele Bugs nicht erkennbar.
+% Dies ermöglicht Testing von Zeilen, die sonst unerreichbar wären.
 
 \section{Testalgorithmus}
 
@@ -458,7 +494,8 @@ int main() {
     \item Best\"atigungsrate: 47/47 = 100\,\% (alle Bugs von Entwicklern best\"atigt)
   \end{itemize}
 \end{frame}
-
+% Meiste Bugs sind "Wrong Output"—Debugger zeigt falsche Werte.
+% 3 LLDB Crashes durch malformed DWARF-Parsing.
 
 \begin{frame}{Betroffene Compiler-Versionen}
   \begin{itemize}
@@ -475,7 +512,11 @@ int main() {
     \item Latente Bugs: Einige Probleme existierten Jahre vor Entdeckung
   \end{itemize}
 \end{frame}
-
+% Bugs spannen mehrere Major-Releases.
+% Einige sind latent über Jahre vor Entdeckung.
+% Sogar Trunk (Development)-Versionen haben Bugs.
+% Dies zeigt Bedarf für kontinuierliches Testing.
+% Das Problem ist nicht gelöst—laufende Forschung nötig.
 
 \begin{frame}{Betroffene Optimierungs-Level}
   \begin{itemize}
@@ -492,7 +533,10 @@ int main() {
     \item Implikation: Kein Optimierungs-Level f\"ur korrekte Debug-Info vertrauensw\"urdig
   \end{itemize}
 \end{frame}
-
+% Sogar debug-freundliche Optimierungs-Flags haben Probleme.
+% Das Problem kaskadiert—ein Pass erstellt falsche Info, spätere Passes fixen nicht.
+% Deshalb ist umfassendes Testing über alle Level wichtig.
+% Entwickler können sich auf kein Optimierungs-Level für Debug-Info verlassen.
 
 \begin{frame}{LLVM-Komponenten mit Bugs}
   \begin{columns}
@@ -559,13 +603,15 @@ int main() {
 }
   \end{lstlisting}
   \begin{itemize}
-    \item Optimierung: \texttt{-O1}
     \item Korrektheitsverletzung: $\mathit{PRINT}(P,\text{Zeile }10,i) = 0 \not\equiv 1 = \mathit{DBG}(P', A_{\langle 10,i\rangle})$ \\
     $\alert{BUG}$ (Definition verletzt)
-    \item Status: Gefixt
+    \item Optimierung: \texttt{-O1}; Status: Gefixt
   \end{itemize}
+  \begin{center}
+    \href{https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92387}{\texttt{gcc.gnu.org/bugzilla/show\_bug.cgi?id=92387}}
+  \end{center}
 \end{frame}
-
+% https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92387
 
 \begin{frame}[fragile]{Fallstudie: LLVM Wrong Value Bug 43957}
   \begin{lstlisting}[basicstyle=\ttfamily\tiny]
@@ -580,13 +626,15 @@ int main() {
   \end{lstlisting}
   \vspace{0.3cm}
   \begin{itemize}
-    \item Optimierung: \texttt{-O3}
     \item Korrektheitsverletzung: $\mathit{PRINT}(P,\text{Zeile }6,l\_801) = 36902 \not\equiv 36901 = \mathit{DBG}(P', A_{\langle 6,l\_801\rangle})$ \\
     $\alert{BUG}$ (Definition verletzt)
-    \item Status: Gefixt
+    \item Optimierung: \texttt{-O3}; Status: Gefixt
   \end{itemize}
+  \begin{center}
+    \href{https://bugs.llvm.org/show_bug.cgi?id=43957}{\texttt{bugs.llvm.org/show\_bug.cgi/?id=43957}}
+  \end{center}
 \end{frame}
-
+% https://bugs.llvm.org/show_bug.cgi?id=43957
 
 
 \section{Fazit \& Zuk\"unftige Arbeit}
@@ -617,7 +665,7 @@ fn main() {
       \end{itemize}
   \end{itemize}
 \end{frame}
-
+% Rust-Bugs beweisen: Framework generalisiert über C hinaus.
 
 \begin{frame}{Fazit}
   \begin{itemize}
