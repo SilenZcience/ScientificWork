@@ -10,6 +10,10 @@
 
 \usetheme{moderno}
 
+\definecolor{rustOrange}{RGB}{247, 140, 108}
+\definecolor{rustComment}{RGB}{128, 128, 128}
+\definecolor{rustLib}{RGB}{224, 180, 97}
+
 \lstset{
   basicstyle=\ttfamily\footnotesize,
   keywordstyle=\color{blue},
@@ -106,32 +110,34 @@
 % Ohne sie können Debugger keine Variablennamen oder Quellzeilen anzeigen.
 % Der Compiler generiert dies zusammen mit Maschinencode.
 % Bei Optimierung muss diese Zuordnung korrekt aktualisiert werden.
+% PDB (Program Database)
+% STABS (Symbol Table Strings)
 
 \begin{frame}[fragile]{DWARF Debug-Information Beispiel}
-  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+  \begin{lstlisting}[language=C,basicstyle=\ttfamily\tiny,escapechar=\#]
 DW_TAG_compile_unit // Kompilierungseinheit-Metadaten (``Wurzelknoten'')
   DW_AT_producer ("clang ver 7.0.1")
   DW_AT_language (DW_LANG_C99)
   DW_AT_name ("a.c")
-  DW_AT_low_pc (0x00400480) // Startadresse der Funktion
-  DW_AT_high_pc (<offset-from-lowpc>50) // Endadresse der Funktion
+  DW_AT_low_pc (#\textcolor{rustOrange}{0x00400480}#) // Startadresse der Funktion
+  DW_AT_high_pc (<offset-from-lowpc>#\textcolor{rustOrange}{50}#) // Endadresse der Funktion
 
 DW_TAG_subprogram // Funktionsinformationen
   DW_AT_name ("main")
-  DW_AT_decl_line (2)
+  DW_AT_decl_line (#\textcolor{rustOrange}{2}#)
   DW_AT_frame_base (DW_OP_reg6 RBP)
 
 DW_TAG_variable // Variableninformationen
   DW_AT_name ("a")
-  DW_AT_location (DW_OP_fbreg -8) // Offset von RBP (Variablenort)
-  DW_AT_decl_line (1) // Deklarationszeile im Quellcode
-  DW_AT_type (0x00000060 "int") // Typ-Referenz (z.B. int)
+  DW_AT_location (DW_OP_fbreg -#\textcolor{rustOrange}{8}#) // Offset von RBP (Variablenort)
+  DW_AT_decl_line (#\textcolor{rustOrange}{1}#) // Deklarationszeile im Quellcode
+  DW_AT_type (#\textcolor{rustOrange}{0x00000060}# "int") // Typ-Referenz (z.B. int)
 
 DW_TAG_variable // Variableninformationen
   DW_AT_name ("b")
-  DW_AT_location (DW_OP_fbreg -12)
-  DW_AT_decl_line (1)
-  DW_AT_type (0x00000060 "int")
+  DW_AT_location (DW_OP_fbreg -#\textcolor{rustOrange}{12}#)
+  DW_AT_decl_line (#\textcolor{rustOrange}{1}#)
+  DW_AT_type (#\textcolor{rustOrange}{0x00000060}# "int")
   \end{lstlisting}
 \end{frame}
 % DWARF ist ein Baum von Einträgen, jeder mit Tags und Attributen.
@@ -262,11 +268,11 @@ DW_TAG_variable // Variableninformationen
 \begin{frame}[fragile]{LLVM Bug 43893 (Clang-9)}
   \begin{columns}
     \column{0.55\textwidth}
-      \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\small]
+      \begin{lstlisting}[language=C,firstnumber=3,basicstyle=\ttfamily\small,escapechar=\#]
 int c = --a;
-int l = -8L;
+int l = -#\textcolor{rustOrange}{8L}#;
 l = c;       // optimized out
-c > (b = 0); // l
+c > (b = #\textcolor{rustOrange}{0}#); // l
       \end{lstlisting}
       Erwartet: Variable \texttt{l} sollte \texttt{-1} in Zeile 6 sein \\
       Tats\"achlich (LLDB, -g -O2): Zeigt \texttt{-8}
@@ -287,15 +293,16 @@ c > (b = 0); // l
 % Aber LLDB zeigt -8, weil DWARF-Info nicht aktualisiert wurde.
 % Der InstCombine-Optimierungs-Pass entfernte die Variable, ließ aber veraltete Debug-Info.
 % Dies ist genau der Bug-Typ, den dieses Framework erkennt.
+% InstCombine = Instruction Combining (z.B. algebraische Vereinfachungen, double negate ..., constant folding ...)
 
 \begin{frame}[fragile]{GCC Bug 89463 (GCC-8.3)}
   \begin{columns}
     \column{0.55\textwidth}
-      \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\small]
+      \begin{lstlisting}[language=C,firstnumber=3,basicstyle=\ttfamily\small,escapechar=\#]
 int i;
-for (; a < 10; a++)
-    i = 0;
-for (; i < 6; i++)
+for (; a < #\textcolor{rustOrange}{10}#; a++)
+    i = #\textcolor{rustOrange}{0}#;
+for (; i < #\textcolor{rustOrange}{6}#; i++)
     ;
 opt_me_not(); // i
       \end{lstlisting}
@@ -304,7 +311,7 @@ opt_me_not(); // i
 
     \column{0.42\textwidth}
       Ursache: Dead Code Elimination bereinigt \\
-      degenerierte Phi-Nodes nicht \\
+      degenerierte Phi-Knoten nicht \\
       \vspace{0.2cm}
       Korrektheitsverletzung: \\
       $\mathit{PRINT}(P,\text{Zeile }8,i) = 6$ \\
@@ -325,15 +332,15 @@ opt_me_not(); // i
 
   \begin{itemize}
     \item Originalprogramm $P$:
-    \begin{lstlisting}[]
+    \begin{lstlisting}[language=C,escapechar=\#]
 char a,b;
 int main() {
     unsigned c;
     --b;
-    c=2;
+    c=#\textcolor{rustOrange}{2}#;
     if (a)
-        b=0;
-    return 0;
+        b=#\textcolor{rustOrange}{0}#;
+    return #\textcolor{rustOrange}{0}#;
 }
   \end{lstlisting}
     \item Actionable Program $P_{\langle 6,c\rangle}$: Breakpoint in Zeile 6, inspiziere Variable \texttt{c} \dingcheck
@@ -391,26 +398,26 @@ int main() {
 
 \begin{frame}[fragile]{Shadow Validation Beispiel}
   \begin{itemize}
-        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+        \begin{lstlisting}[language=C,firstnumber=3,basicstyle=\ttfamily\tiny,escapechar=\#]
   unsigned c;
   --b;
-  c=2; // c hier initialisiert
+  c=#\textcolor{rustOrange}{2}#; // c hier initialisiert
         \end{lstlisting}
     \item Shadow Program $P_1$ (Invalide):
-        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+        \begin{lstlisting}[language=C,firstnumber=3,basicstyle=\ttfamily\tiny,escapechar=\#]
   unsigned c;
   --b;
   printf("\%d", c); // UB! c hier uninitialisiert
-  c=2; // c hier initialisiert
+  c=#\textcolor{rustOrange}{2}#; // c hier initialisiert
         \end{lstlisting}
         \begin{itemize}
           \item Abgelehnt durch Shadow Validation (non-actionable)
         \end{itemize}
     \item Shadow Program $P_1$ (Valide):
-        \begin{lstlisting}[firstnumber=3,basicstyle=\ttfamily\tiny]
+        \begin{lstlisting}[language=C,firstnumber=3,basicstyle=\ttfamily\tiny,escapechar=\#]
   unsigned c;
   --b;
-  c=2; // c hier initialisiert
+  c=#\textcolor{rustOrange}{2}#; // c hier initialisiert
   printf("\%d", c); // sicher, c hier initialisiert
         \end{lstlisting}
         \begin{itemize}
@@ -588,15 +595,15 @@ int main() {
 
 
 \begin{frame}[fragile]{Fallstudie: GCC wrong value bug 92387}
-  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
-static int a[6];
+  \begin{lstlisting}[language=C,basicstyle=\ttfamily\tiny,escapechar=\#]
+static int a[#\textcolor{rustOrange}{6}#];
 int b;
-static void c() { b = 5 ^ a[b & 5]; }
+static void c() { b = #\textcolor{rustOrange}{5}# ^ a[b & #\textcolor{rustOrange}{5}#]; }
 int main() {
-    int i, d = 0;
+    int i, d = #\textcolor{rustOrange}{0}#;
     c();
-    i = 0;
-    for (; i < 8; i++) {
+    i = #\textcolor{rustOrange}{0}#;
+    for (; i < #\textcolor{rustOrange}{8}#; i++) {
         c();
         if(d) printf("%d",i); // i
     }
@@ -614,14 +621,14 @@ int main() {
 % https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92387
 
 \begin{frame}[fragile]{Fallstudie: LLVM Wrong Value Bug 43957}
-  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+  \begin{lstlisting}[language=C,basicstyle=\ttfamily\tiny,escapechar=\#]
 char a, b;
 int main() {
     --b;
-    unsigned l_801 = 36901;
+    unsigned l_801 = #\textcolor{rustOrange}{36901}#;
     ++l_801;
     if (a) // l_801
-        b = 0;
+        b = #\textcolor{rustOrange}{0}#;
 }
   \end{lstlisting}
   \vspace{0.3cm}
@@ -635,22 +642,24 @@ int main() {
   \end{center}
 \end{frame}
 % https://bugs.llvm.org/show_bug.cgi?id=43957
-
+% Einfache Inkrement-Operation, Debug-Info nicht aktualisiert.
+% Clang Trunk betroffen.
+% Zeigt: Sogar Basis-Operationen können Bugs triggern.
 
 \section{Fazit \& Zuk\"unftige Arbeit}
 
 
 \begin{frame}[fragile]{Framework-Generalisierbarkeit -- Rust Compiler}
-  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
-fn main() {
-    let mut counter = 0;
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny,escapechar=\#]
+#\textcolor{rustOrange}{fn}# #\textcolor{Blue}{main}#() {
+    #\textcolor{rustOrange}{let mut}# counter = #\textcolor{rustOrange}{0}#;
     {
-        let mut tick = || counter += 1;
-        tick();
-        tick();
-        lib::opt_me_not();  // counter sollte 2 sein
+        #\textcolor{rustOrange}{let mut}# tick = || counter += #\textcolor{rustOrange}{1}#;
+        #\textcolor{Blue}{tick}#();
+        #\textcolor{Blue}{tick}#();
+        #\textcolor{rustLib}{lib}#::#\textcolor{Blue}{opt\_me\_not}#();  #\textcolor{rustComment}{// counter sollte 2 sein}#
     }
-    assert_eq!(counter, 2);
+    #\textcolor{Blue}{assert\_eq!}#(counter, #\textcolor{rustOrange}{2}#);
 }
   \end{lstlisting}
   \begin{itemize}
@@ -666,6 +675,9 @@ fn main() {
   \end{itemize}
 \end{frame}
 % Rust-Bugs beweisen: Framework generalisiert über C hinaus.
+% Framework auf Rust mit minimalen Änderungen generalisiert.
+% Closure-Variable-Tracking-Bug.
+% Rust Compiler verwendet LLVM-Backend, daher ähnliche Probleme.
 
 \begin{frame}{Fazit}
   \begin{itemize}
