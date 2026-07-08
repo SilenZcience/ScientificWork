@@ -21,4 +21,5 @@
 ## Homework
 
 - [Theoretical Computer Science Tests](Homework/TheoretischeInformatik/Testate/Testate.pdf)
+- [Graphenalgorithmen (Aufgabe 47)](Homework/GraphenAlgorithmen2/GA2_47.pdf)
 - [Graphenalgorithmen (Aufgabe 79)](Homework/GraphenAlgorithmen2/GA2_79.pdf)
