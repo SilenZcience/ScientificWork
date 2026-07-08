@@ -16,6 +16,7 @@
 
 - [Esoteric Programming Languages (Dynamic Programming Languages)](Presentations/DynamischeProgrammiersprachen/EsotericLanguagesPresentation.pdf)
 - [Accessibility Testing (UX Design and Management)](Presentations/UXDesign/AccessibilityTesting.pdf)
+- [Debug Information Validation for Optimized Code (In-Depth Compiler Construction)](Presentations/VertiefungCompilerbau/CoBa2.pdf)
 
 ## Homework
 
