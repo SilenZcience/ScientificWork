@@ -1,0 +1,38 @@
+\documentclass[acmsmall,nonacm]{acmart}
+\pagestyle{empty}\settopmatter{printacmref=false,printfolios=false}
+\begin{document}
+\thispagestyle{empty}
+\section{Numbered Section}
+\begin{theorem}
+The first numbered statement.
+\end{theorem}
+
+\section*{Unnumbered Interlude}
+\begin{theorem}
+The statement after an unnumbered section.
+\end{theorem}
+
+\begin{acks}
+The reviewers improved this test.
+\end{acks}
+\begin{theorem}
+The statement after acknowledgments.
+\end{theorem}
+
+\paragraph{Results:} A colon-terminated run-in heading does not gain a period.
+\paragraph{Consequences;} A semicolon-terminated run-in heading does not gain a period.
+\begin{proof}[Sketch,]
+A comma-terminated proof name does not gain a period.
+\end{proof}
+
+\section{Indent After Environments}
+\begin{theorem}
+A theorem statement whose following paragraph takes the ambient first line indent, as amsthm restores it.
+\end{theorem}
+A paragraph after the theorem is indented by the ambient parindent value here.
+
+\begin{proof}
+A proof body ending in the customary QED square symbol drawn at the right.
+\end{proof}
+A paragraph after the proof is likewise indented by the ambient parindent value.
+\end{document}

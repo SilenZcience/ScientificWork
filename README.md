@@ -1,5 +1,10 @@
 # Scientific Work related to LaTeX
 
+## Master Seminar (Rudra)
+
+- [Report](MasterSeminar/AktuelleTrendsInDerSystemsoftware/Report/main.pdf)
+- [Presentation](MasterSeminar/AktuelleTrendsInDerSystemsoftware/Presentation/Rudra-Final.pdf)
+
 ## Bachelor Thesis (Entkopplung der Z3 Komponente in ProB mit ZeroMQ)
 
 - [Exposè](BachelorThesis/Expose/expose.pdf)

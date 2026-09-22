@@ -1,0 +1,117 @@
+@inproceedings{rudra_paper,
+  author    = {Bae, Yechan and Kim, Youngsuk and Askar, Ammar and Lim, Jungwon and Kim, Taesoo},
+  title     = {Rudra: Finding Memory Safety Bugs in Rust at the Ecosystem Scale},
+  year      = {2021},
+  isbn      = {9781450387095},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3477132.3483570},
+  doi       = {10.1145/3477132.3483570},
+  abstract  = {Rust is a promising system programming language that guarantees memory safety at compile time. To support diverse requirements for system software such as accessing low-level hardware, Rust allows programmers to perform operations that are not protected by the Rust compiler with the unsafe keyword. However, Rust's safety guarantee relies on the soundness of all unsafe code in the program as well as the standard and external libraries, making it hard to reason about their correctness. In other words, a single bug in any unsafe code breaks the whole program's safety guaranteeIn this paper, we introduce RUDRA, a program that analyzes and reports potential memory safety bugs in unsafe Rust. Since a bug in unsafe code threatens the foundation of Rust's safety guarantee, our primary focus is to scale our analysis to all the packages hosted in the Rust package registry. RUDRA can scan the entire registry (43k packages) in 6.5 hours and identified 264 previously unknown memory safety bugs---leading to 76 CVEs and 112 RustSec advisories being filed, which represent 51.6\% of memory safety bugs reported to RustSec since 2016. The new bugs RUDRA found are non-trivial, subtle, and often made by Rust experts: two in the Rust standard library, one in the official futures library, and one in the Rust compiler. RUDRA is open-source, and part of its algorithm is integrated into the official Rust linter.},
+  booktitle = {Proceedings of the ACM SIGOPS 28th Symposium on Operating Systems Principles},
+  pages     = {84–99},
+  numpages  = {16},
+  keywords  = {Rust, Program analysis, Memory-safety},
+  location  = {Virtual Event, Germany},
+  series    = {SOSP '21}
+}
+
+@online{rustlang,
+  author  = {{The Rust Project Developers}},
+  title   = {The {Rust} Programming Language},
+  url     = {https://www.rust-lang.org/},
+  urldate = {2026-08-04}
+}
+
+@online{rust_borrowing,
+  author  = {Steve Klabnik and Carol Nichols},
+  title   = {References and Borrowing - The {Rust} Programming Language},
+  url     = {https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html},
+  urldate = {2026-08-04}
+}
+
+@online{std_dev_guide_safety,
+  title        = {Safety comments - Standard library developers Guide},
+  author       = {{The Rust Project Developers}},
+  url          = {https://std-dev-guide.rust-lang.org/policy/safety-comments.html},
+  urldate      = {2026-08-04},
+  organization = {Rust Programming Language}
+}
+
+@online{docker_website,
+  title        = {Docker: Accelerated Container Application Development},
+  author       = {{Docker, Inc.}},
+  url          = {https://www.docker.com/},
+  urldate      = {2026-08-20},
+  organization = {Docker, Inc.}
+}
+
+@online{clippy,
+  title        = {Clippy: A collection of lints to catch common mistakes and improve your {Rust} code},
+  author       = {{The Rust Project Developers}},
+  url          = {https://github.com/rust-lang/rust-clippy},
+  urldate      = {2026-08-15},
+  organization = {Rust Programming Language}
+}
+
+@online{CVE202036323,
+  title        = {CVE-2020-36323 Detail},
+  url          = {https://nvd.nist.gov/vuln/detail/CVE-2020-36323},
+  urldate      = {2026-08-19},
+  organization = {National Vulnerability Database}
+}
+
+@online{CVE202128875,
+  title        = {CVE-2021-28875 Detail},
+  url          = {https://nvd.nist.gov/vuln/detail/CVE-2021-28875},
+  urldate      = {2026-08-19},
+  organization = {National Vulnerability Database}
+}
+
+@online{CVE202036317,
+  title        = {CVE-2020-36317 Detail},
+  url          = {https://nvd.nist.gov/vuln/detail/CVE-2020-36317},
+  urldate      = {2026-08-19},
+  organization = {National Vulnerability Database}
+}
+
+@online{rustlang_81425,
+  title        = {Rust Lang Issue #81425},
+  url          = {https://github.com/rust-lang/rust/issues/81425},
+  urldate      = {2026-08-19},
+  organization = {Rust Programming Language}
+}
+
+@online{rayon,
+  title        = {Rayon: A data parallelism library for {Rust}},
+  author       = {{The Rayon Project Developers}},
+  url          = {https://github.com/rayon-rs/rayon},
+  urldate      = {2026-08-24},
+  organization = {Rust Programming Language}
+}
+
+@online{rust_miri,
+  author  = {{The Rust Project Developers}},
+  title   = {Miri: An Interpreter for Rust's Mid-level Intermediate Representation},
+  url     = {https://github.com/rust-lang/miri},
+  urldate = {2026-08-20},
+  year    = {2026}
+}
+
+@misc{arxiv_DeepSURF,
+  title         = {deepSURF: Detecting Memory Safety Vulnerabilities in Rust Through Fuzzing LLM-Augmented Harnesses},
+  author        = {Georgios Androutsopoulos and Antonio Bianchi},
+  year          = {2025},
+  eprint        = {2506.15648},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CR},
+  url           = {https://arxiv.org/abs/2506.15648}
+}
+
+@online{llvm_sanitizer,
+  author  = {{Clang Team}},
+  title   = {AddressSanitizer --- Clang Documentation},
+  url     = {https://clang.llvm.org/docs/AddressSanitizer.html},
+  urldate = {2026-08-20},
+  year    = {2026}
+}

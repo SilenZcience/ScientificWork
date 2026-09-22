@@ -1,0 +1,18 @@
+%% keycite — native `@key` citation routing for the bst backend. In Typst, bare
+%% `@Cohen07` refs are intercepted by acmart's `show ref:` rule (installed for
+%% bibliography-backend="bst") and rendered by the bst engine, the way alexandria/
+%% pergamon hook native citations. LaTeX twin of keycite.typ; \cite is the analogue.
+\documentclass[acmsmall,nonacm]{acmart}
+\pagestyle{empty}
+\settopmatter{printacmref=false}
+\begin{document}
+\thispagestyle{empty}% titleless body-only fixture: re-assert empty.
+
+\section{Introduction}
+Native Typst citations \cite{Cohen07}, \cite{Kosiur01}, and \cite{Harel78} route through the bst engine.
+Variants: \citet{Harel78} \citealt{Harel78} \citeyearpar{Harel78} \shortcite{Harel78} and \cite[p.~5]{Harel78}.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+\end{document}
