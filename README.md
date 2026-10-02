@@ -8,7 +8,7 @@
 ## Bachelor Thesis (Entkopplung der Z3 Komponente in ProB mit ZeroMQ)
 
 - [Exposè](BachelorThesis/Expose/expose.pdf)
-- [Thesis](BachelorThesis/Thesis/thesis_signed.pdf)
+- [Thesis](BachelorThesis/Thesis/thesis.pdf)
 - [Presentation](BachelorThesis/Presentation/master.pdf)
 
 ## Bachelor Seminar (Social Engineering)
